@@ -14,9 +14,13 @@ pseudocode. After getting a good understanding of that, I can create my own algo
 # 1 - Requirements Analysis
 Here is a list of things I need to understand:
 - graph representation
-	- 
+	- adjacency lists and matrixes
 - graph traversal algorithms
+	- bfs
+	- dfs
 - shortest path algorithms
+	- a star
+	- dijkstra's algorithm
 - minimum spanning tree algorithms
 - cycle detection
 
