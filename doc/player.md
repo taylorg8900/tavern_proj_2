@@ -10,4 +10,42 @@ I need to first identify which items the player can interact with. This is on th
 
 Now, I will brainstorm potential uses for each item.
 - Pickaxe / Axe tool
-	- penis
+	- Common uses
+		- Mining ores, gems, and decayed structures
+		- Hitting emeies
+		- Throwing at enemies
+		- Slowing descents down walls, and coming to a stop
+	- Less common uses
+		- Starting rockslides by hitting sections of the cave which are unstable, to cut off enemies
+		- Cutting ropes if enemies are climbing them
+		- Climbing up ledges which are just out of reach, like ice climbing picks
+		- Hanging onto walls
+- Runestones
+	- Common uses
+		- Explosions
+			- Mine type explosions
+			- Grenade type explosions
+			- Soft launch style explosion
+			- Light (stuns, I imagine enemies in caves are sensitive to light)
+		- Sight
+			- Throwing into rooms to detect if there enemies
+			- Keeping a glimmering light which can be seen through walls
+			- Showing fastest way back to the start of the level
+			- Showing where gems or loot is
+			- Firespark
+				- Will light up any torches, fireplaces, campfires, whatever that have line of sight to where the runestone hits to provide static light to player
+		- Creating mass
+			- Water
+			- Lava
+			- Smoke
+			- Moss 
+				- Just visually adds some lush to the environment to make it pretty
+		- Destroying mass
+			- Getting rid of water / lava / things in the way, like finding keys that go to locked doors or chests
+		- Movement
+			- Providing 'feather falling' when falling from large heights
+			- Barricading an area so enemies cannot pass (in a magic way though)
+			- Travelling through a wall or floor like an alter Q from Apex Legends
+			- Teleporting to a set location (common trope in all sorts of games)
+		- Remotely retrieving an object, by making the object behave like thor's hammer or something when it hits it
+		- Cloaking the player
