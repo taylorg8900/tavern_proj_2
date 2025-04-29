@@ -20,6 +20,19 @@ Now, I will brainstorm potential uses for each item.
 		- Cutting ropes if enemies are climbing them
 		- Climbing up ledges which are just out of reach, like ice climbing picks
 		- Hanging onto walls
+- Lantern
+	- Common uses
+		- Lighting up environment
+- Ale
+	- Common uses
+		- Healing
+		- Refill stamina
+		- Buffs applied before mission
+			- The player can brew custom beers and get some bonuses before the level starts. I think this could be a good way to reduce inventory clutter or giving the player too many hotkeys or keybinds to worry about, since we already use ale for healing and stamina anyway.
+			- Dwarven rage
+			- Fire ale (makes you breath fire)
+			- Speed boost
+			- 
 - Runestones
 	- Common uses
 		- Explosions
