@@ -7,6 +7,8 @@ I need to first identify which items the player can interact with. This is on th
 - Shield
 - Minecarts
 - Runestones
+- Rucksack
+- Crossbow
 
 Now, I will brainstorm potential uses for each item.
 - Pickaxe / Axe tool
@@ -21,11 +23,18 @@ Now, I will brainstorm potential uses for each item.
 		- Climbing up ledges which are just out of reach, like ice climbing picks
 		- Hanging onto walls
 	- Upgrades
-		- Sharpened (makes it mine ores and gems faster, or easier)
+		- Sharpened (more damage to enemies)
+		- Increase amount of ores / gems obtained, like fortune enchantment in minecraft
+		- Upgrade by actually enchanting it with the help of the wizard you buy runestones from
 - Lantern
+	- Upgrades
+		- Make the flame last longer, giving the player more time they can spend inside missions (like oxygen tank from dave the diver)
 	- Common uses
 		- Lighting up environment
 - Ale
+	- Upgrades
+		- Increase potency of healing / stamina / buff ales
+		- Do this buy 'spiking' drinks with minerals found in the caves / mines
 	- Common uses
 		- Healing
 		- Refill stamina
@@ -40,17 +49,33 @@ Now, I will brainstorm potential uses for each item.
 			- Chilled (reduces damage from fire, lava, etc)
 			- Spicy (reduces damage from ice or something idk)
 - Shield
+	- Upgrades
+		- Reduce damage taken from enemies
+		- Increase movement speed while blocking
 	- Common uses
 		- Blocking enemies duh
+		- Ramming into enemies to create space at the cost of some health
 		- Movement
 			- Sliding around, sledding down slopes
 - Runestones
+	- Upgrades
+		- Just increase potency of whichever runestone, not rocket science
+		- Increase distance you can throw them, speed you can throw them, etc
+		- Increase amount in the 'goodie bags' by spending gold, permanent upgrade
+		- Increase 'luck' (amount of loot in the key and lock style generation) by "Giving the mines back some of it's fortune" or something like that
+	- Creation
+		- Use gems specifically for this? Like crafting them before missions
+			- Buy from a wizard with both gems and gold, so you need specific items to get specific runestones
+		- Find naturally in environment analagous to keys and locked chests
+		- Can buy 'goodie bags' full of a random assortment of them with just gold 
+			- Display some kind of tooltip that shows the player potentially what they could get out of it before buying, like some bags are more focused on sight, some are more focused on explosions etc
 	- Common uses
 		- Explosions
 			- Mine type explosions
 			- Grenade type explosions
 			- Soft launch style explosion
 			- Light (stuns, I imagine enemies in caves are sensitive to light)
+			- Firewall (blocks an area, like a call of duty zombie trap)
 		- Sight
 			- Throwing into rooms to detect if there enemies
 			- Keeping a glimmering light which can be seen through walls
@@ -72,4 +97,23 @@ Now, I will brainstorm potential uses for each item.
 			- Travelling through a wall or floor like an alter Q from Apex Legends
 			- Teleporting to a set location (common trope in all sorts of games)
 		- Remotely retrieving an object, by making the object behave like thor's hammer or something when it hits it
+			- Could control the path the stone travels by similar to boomerang mechanic from the DS zelda games where you draw a line first for it to follow
 		- Cloaking the player
+		- 'Melting' ores the player has found, to make them smaller and easier to carry (Take up less space in inventory?)
+- Minecarts
+	- Common uses
+		- Carrying ores for the player
+			- If I had it set up like multiple checkpoints such as REPO, this could be a good tile design where the player can dump things into it and send it off
+		- Very fast travel speed, like terraria minecarts
+		- Special mission types where the player has to escort it for big profit, defend objective kind of thing
+- Rucksack
+	- Upgrades
+		- Increase grid size of bag, to hold more items
+		- Increase amount of runestones it can hold
+		- Increase amount of Ale flasks it can hold
+	- Common uses
+		- Used to store ores, gems the player finds. Uses an inventory system like in Delta Force where different items have a different size they take up. The rucksack can be upgraded to hold more items by increasing the grid size inside, and runestones can decrease the size of ores / gems found within missions to make it so you can carry even more.
+- Crossbow
+	- Common uses
+		- Shooting enemies duh
+		- Grappling and swinging around the environment on certain structures, like Legend of Zelda Wind Waker grappling hook
