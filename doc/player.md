@@ -20,6 +20,8 @@ Now, I will brainstorm potential uses for each item.
 		- Cutting ropes if enemies are climbing them
 		- Climbing up ledges which are just out of reach, like ice climbing picks
 		- Hanging onto walls
+	- Upgrades
+		- Sharpened (makes it mine ores and gems faster, or easier)
 - Lantern
 	- Common uses
 		- Lighting up environment
@@ -29,10 +31,19 @@ Now, I will brainstorm potential uses for each item.
 		- Refill stamina
 		- Buffs applied before mission
 			- The player can brew custom beers and get some bonuses before the level starts. I think this could be a good way to reduce inventory clutter or giving the player too many hotkeys or keybinds to worry about, since we already use ale for healing and stamina anyway.
-			- Dwarven rage
-			- Fire ale (makes you breath fire)
+			- Damage boost
 			- Speed boost
-			- 
+			- Increase carry capacity
+			- Drunkenness (increase effect of healing and stamina further, because more drunk = more dwarven)
+			- Night vision (increases how far the lantern's light goes for player)
+			- Cozy (increases health regen speed - "This ale reminds me of my childhood!")
+			- Chilled (reduces damage from fire, lava, etc)
+			- Spicy (reduces damage from ice or something idk)
+- Shield
+	- Common uses
+		- Blocking enemies duh
+		- Movement
+			- Sliding around, sledding down slopes
 - Runestones
 	- Common uses
 		- Explosions
