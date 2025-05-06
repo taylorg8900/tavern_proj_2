@@ -1,3 +1,11 @@
+# Player upgrades
+
+Health
+	- Beard
+		- Upgrade by buying things like beard oil, hair care products etc
+		- Restore health with washing beard, getting trims done, etc
+
+
 # Player Actions
 
 I need to first identify which items the player can interact with. This is on the level of which tools they use, what weapons are available to them, that sort of thing.
@@ -14,7 +22,7 @@ Now, I will brainstorm potential uses for each item.
 - Pickaxe / Axe tool
 	- Common uses
 		- Mining ores, gems, and decayed structures
-		- Hitting emeies
+		- Hitting enemies
 		- Throwing at enemies
 		- Slowing descents down walls, and coming to a stop
 	- Less common uses
@@ -34,7 +42,7 @@ Now, I will brainstorm potential uses for each item.
 - Ale
 	- Upgrades
 		- Increase potency of healing / stamina / buff ales
-		- Do this buy 'spiking' drinks with minerals found in the caves / mines
+		- Do this by 'spiking' drinks with minerals found in the caves / mines
 	- Common uses
 		- Healing
 		- Refill stamina
@@ -63,19 +71,29 @@ Now, I will brainstorm potential uses for each item.
 		- Increase distance you can throw them, speed you can throw them, etc
 		- Increase amount in the 'goodie bags' by spending gold, permanent upgrade
 		- Increase 'luck' (amount of loot in the key and lock style generation) by "Giving the mines back some of it's fortune" or something like that
-	- Creation
+	- Creation / Purchasing
 		- Use gems specifically for this? Like crafting them before missions
 			- Buy from a wizard with both gems and gold, so you need specific items to get specific runestones
 		- Find naturally in environment analagous to keys and locked chests
 		- Can buy 'goodie bags' full of a random assortment of them with just gold 
 			- Display some kind of tooltip that shows the player potentially what they could get out of it before buying, like some bags are more focused on sight, some are more focused on explosions etc
 	- Common uses
-		- Explosions
+		- Enemy effects
+			- Slow down enemy
+			- Make enemy do less damage
+			- Make enemy have less health
+			- Freeze enemy
+		- Damage
 			- Mine type explosions
 			- Grenade type explosions
 			- Soft launch style explosion
 			- Light (stuns, I imagine enemies in caves are sensitive to light)
-			- Firewall (blocks an area, like a call of duty zombie trap)
+			- Lava
+				- Similar to spikes (see below)
+			- Spikes
+				- Like an airburst shell that shoots shrapnel out when it is going to hit an enemy
+			- Midas
+				- Turns an enemy completely into gold, very valuable and rare, cannot be crafted
 		- Sight
 			- Throwing into rooms to detect if there enemies
 			- Keeping a glimmering light which can be seen through walls
@@ -83,23 +101,23 @@ Now, I will brainstorm potential uses for each item.
 			- Showing where gems or loot is
 			- Firespark
 				- Will light up any torches, fireplaces, campfires, whatever that have line of sight to where the runestone hits to provide static light to player
-		- Creating mass
-			- Water
-			- Lava
-			- Smoke
+		- Barricades
+			- Firewall (blocks an area, like a call of duty zombie trap)
 			- Moss 
-				- Just visually adds some lush to the environment to make it pretty
-		- Destroying mass
+				- On top of looking nice, this can slow down enemies that walk into it
+		- Puzzles
 			- Getting rid of water / lava / things in the way, like finding keys that go to locked doors or chests
-		- Movement
+		- Player Effects
+			- Make player faster for a period of time
+			- Time rune
+				- Makes player faster, makes everything else slower
 			- Providing 'feather falling' when falling from large heights
-			- Barricading an area so enemies cannot pass (in a magic way though)
 			- Travelling through a wall or floor like an alter Q from Apex Legends
 			- Teleporting to a set location (common trope in all sorts of games)
-		- Remotely retrieving an object, by making the object behave like thor's hammer or something when it hits it
-			- Could control the path the stone travels by similar to boomerang mechanic from the DS zelda games where you draw a line first for it to follow
-		- Cloaking the player
-		- 'Melting' ores the player has found, to make them smaller and easier to carry (Take up less space in inventory?)
+			- Remotely retrieving an object, by making the object behave like thor's hammer or something when it hits it
+				- Could control the path the stone travels by similar to boomerang mechanic from the DS zelda games where you draw a line first for it to follow
+			- Cloaking the player
+			- 'Melting' ores the player has found, to make them smaller and easier to carry (Take up less space in inventory?)
 - Minecarts
 	- Common uses
 		- Carrying ores for the player
