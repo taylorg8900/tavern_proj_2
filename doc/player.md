@@ -84,6 +84,7 @@ Now, I will brainstorm potential uses for each item.
 			- Make enemy have less health
 			- Freeze enemy
 		- Damage
+			- Fireball
 			- Mine type explosions
 			- Grenade type explosions
 			- Soft launch style explosion
@@ -91,12 +92,13 @@ Now, I will brainstorm potential uses for each item.
 			- Lava
 				- Similar to spikes (see below)
 			- Spikes
+				- Ice spikes and rock spikes
 				- Like an airburst shell that shoots shrapnel out when it is going to hit an enemy
 			- Midas
 				- Turns an enemy completely into gold, very valuable and rare, cannot be crafted
 		- Sight
 			- Throwing into rooms to detect if there enemies
-			- Keeping a glimmering light which can be seen through walls
+			- Keeping a glimmering light which can be seen through walls, fancy blueish orb that floats there
 			- Showing fastest way back to the start of the level
 			- Showing where gems or loot is
 			- Firespark

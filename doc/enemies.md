@@ -23,5 +23,8 @@ Enemies brainstorm
 		- Like hoarder from DRG, has a lot of health but is slow and doesn't attack
 		- Drops a lot of gems / minerals / ores when it dies
 		- Can be a golem
-	- Flaming skull
-		- Easy to kill enemy that flies around, has fire around itself
+	- Ghosts / skeletons
+		- Flaming skull
+			- Easy to kill enemy that flies around, has fire around itself
+			- Variants which either move quickly or have more health, inverse relationship between the two (Small, Medium, Large)
+	- 
