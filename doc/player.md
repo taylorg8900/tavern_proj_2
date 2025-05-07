@@ -1,3 +1,8 @@
+# Player movement
+
+The first thing I need to check out is something called a state machine. I'm not sure how this works yet, but I want some behaviors that can be inherited by enemies later, and figuring out how to implement a state machine for the player seems like a good start.
+
+
 # Player upgrades
 
 Health
