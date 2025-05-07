@@ -6,3 +6,7 @@ Version 1
 Version 2
 	- The player is a sort of mercenary dwarf, who lingers around taverns and finds local jobs available which are posted on message boards inside the taverns or by talking to patrons. You order ale before each mission, buy runestones from wizards, upgrade gear by buying from wandering merchants, etc. You are just a dwarf travelling around hoping to hit it big someday by taking these odd jobs.
 	- Like soda dungeon I guess
+	
+# Art 
+
+I was messing around with the pickaxe axe tool, and while trying to rotate it I realized that it gets abstracted way too much to even be cohesive. There was a [youtube video](https://www.youtube.com/shorts/FCJWPYqV0TI) that I found that solves the issue by just not dealing with creating a new sprite for each rotation, and I really like this solution. I especially like it because having subpixel movement would make the game look smoother anyway, so I should embrace it and save lots of effort on animating.
