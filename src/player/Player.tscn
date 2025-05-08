@@ -1,0 +1,97 @@
+[gd_scene load_steps=11 format=3 uid="uid://7ig53l6y6f6l"]
+
+[ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(0, 16, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pqhm"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(0, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtmjo"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(48, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q40bx"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(96, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57fty"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(144, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx5eu"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(192, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cvrd"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(240, 48, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54v5a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1obf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pqhm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtmjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q40bx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57fty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kx5eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cvrd")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5j7w1"]
+radius = 4.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_54v5a")
+animation = &"running"
+frame = 1
+frame_progress = 0.414866
+speed_scale = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_5j7w1")
+
+[node name="state_machine" type="Node" parent="."]
+
+[node name="idle" type="Node" parent="state_machine"]
+
+[node name="walk" type="Node" parent="state_machine"]
+
+[node name="sprint" type="Node" parent="state_machine"]
+
+[node name="jump" type="Node" parent="state_machine"]
+
+[node name="fall" type="Node" parent="state_machine"]
+
+[node name="climb" type="Node" parent="state_machine"]
+
+[node name="move_component" type="Node" parent="."]
