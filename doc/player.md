@@ -45,6 +45,8 @@ What are some common player movement things that I should include to make moving
 	- Corner correction (moves the player a little horizontally, avoids pixel perfect collisions which are annoying)
 	- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
 
+[5 tips for better platformer controls](https://www.youtube.com/watch?v=Bsy8pknHc0M) goes over a small fraction of what I have above
+
 This [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) is apparently really good for making a custom jump function
 
 # Player upgrades
