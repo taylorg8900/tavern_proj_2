@@ -8,7 +8,9 @@ What kind of enemies do I want to spend time creating? What kind of enemies does
 	- Fungi
 	- Crabs that use minerals as their shell
 	- Some kind of original idea of mine of an enemy that is made out of goop, or void, or something liquid-y that attaches to rocks, ores, and the like to give itself structure and a shell
-		- 
+	- Abandoned Dwarven Automata
+		- Visual effect would be steam coming out indicating future movement or whatever
+		- In the mines to extract resources, but left down there and now hostile
 
 
 # Basic enemies

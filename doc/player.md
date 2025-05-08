@@ -4,7 +4,7 @@ The first thing I need to check out is something called a state machine. I'm not
 
 Here is a seemingly good video on [state machines](https://www.youtube.com/watch?v=-ZP2Xm-mY4E)
 
-After taking notes on state machines, I need to figure out what some of the movement I want can be specifically for the player.
+After taking notes on state machines, I need to figure out what some of the movement and states I want can be specifically for the player.
 
 Potential states
 	- Movement
@@ -34,7 +34,7 @@ Potential states
 		- Lighting fires manually
 		- Mining (gems / ores)
 
-What are some common player movement things that I should include to make moving around feel more fluid?
+What are some common player movement things that I *could* include to make moving around feel more fluid?
 	- Coyote time
 	- Jump buffering (when you hit the jump button before you actually hit the ground)
 	- Variable jump height
@@ -45,7 +45,7 @@ What are some common player movement things that I should include to make moving
 	- Corner correction (moves the player a little horizontally, avoids pixel perfect collisions which are annoying)
 	- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
 
-[5 tips for better platformer controls](https://www.youtube.com/watch?v=Bsy8pknHc0M) goes over a small fraction of what I have above
+[5 tips for better platformer controls](https://www.youtube.com/watch?v=Bsy8pknHc0M) goes over a small fraction of what I have written above
 
 This [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) is apparently really good for making a custom jump function
 
