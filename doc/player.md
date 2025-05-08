@@ -4,6 +4,49 @@ The first thing I need to check out is something called a state machine. I'm not
 
 Here is a seemingly good video on [state machines](https://www.youtube.com/watch?v=-ZP2Xm-mY4E)
 
+After taking notes on state machines, I need to figure out what some of the movement I want can be specifically for the player.
+
+Potential states
+	- Movement
+		- Walking
+		- Running
+		- Jumping
+		- Climbing
+		- Big climbing (using the axe to go higher)
+		- Slowing fall (falling but using the axe to slow, like grabbing the wall and going slower)
+		- Hanging, coming to a deadstop
+		- Descending down ropes 
+		- Swinging from the grapples that are shot out by crossbow
+	- Combat
+		- Shielding
+		- Shield bash
+		- Attacking
+		- Throwing runestones
+		- Hiding (from enemies)
+		- Using crossbow
+	- Runestone states
+		- Teleporting
+		- Travelling through the walls like an alter Q
+		- Feather falling
+		- Time rune
+	- Misc
+		- Healing
+		- Lighting fires manually
+		- Mining (gems / ores)
+
+What are some common player movement things that I should include to make moving around feel more fluid?
+	- Coyote time
+	- Jump buffering (when you hit the jump button before you actually hit the ground)
+	- Variable jump height
+	- Jump cutting (when you release button early, stop moving upwards)
+	- Hang time at the top of a jump
+	- Acceleration and deceleration
+	- Having air control not be the exact same as when you are on the ground, less responsive
+	- Corner correction (moves the player a little horizontally, avoids pixel perfect collisions which are annoying)
+	- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
+
+This [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) is apparently really good for making a custom jump function
+
 # Player upgrades
 
 Health
