@@ -6,6 +6,8 @@ Here is a seemingly good video on [state machines](https://www.youtube.com/watch
 
 After taking notes on state machines, I need to figure out what some of the movement and states I want can be specifically for the player.
 
+Later, I should reference [this video](https://www.youtube.com/watch?v=kmRUUK30E6k&list=PLUCgJMPcM1I53cdjspBGFzRH6hYI1FYQg&index=6&t=190s) by AdamCYounis for the animation while jumping / falling.
+
 Potential states
 	- Movement
 		- Walking
@@ -48,6 +50,8 @@ What are some common player movement things that I *could* include to make movin
 [5 tips for better platformer controls](https://www.youtube.com/watch?v=Bsy8pknHc0M) goes over a small fraction of what I have written above
 
 This [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) is apparently really good for making a custom jump function
+
+I am going to now try to figure out implementation of a state machine, with documentation somewhere else.
 
 # Player upgrades
 
