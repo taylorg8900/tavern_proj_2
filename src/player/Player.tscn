@@ -1,6 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
+[ext_resource type="Script" path="res://src/player/state_machine.gd" id="2_d0br6"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/walk.gd" id="4_7mxh0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/sprint.gd" id="5_dy1o0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/climb.gd" id="8_cusk0"]
+[ext_resource type="Script" path="res://src/player/move_component.gd" id="9_gwmac"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -69,29 +77,45 @@ radius = 4.0
 height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_54v5a")
-animation = &"running"
-frame = 1
-frame_progress = 0.414866
+animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_5j7w1")
+metadata/_edit_group_ = true
 
-[node name="state_machine" type="Node" parent="."]
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_d0br6")
+starting_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="state_machine"]
+script = ExtResource("3_tcss0")
+animation_name = "idle"
 
-[node name="walk" type="Node" parent="state_machine"]
+[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "fall_state")]
+script = ExtResource("4_7mxh0")
+idle_state = NodePath("../idle")
+fall_state = NodePath("../fall")
+animation_name = "walk"
 
 [node name="sprint" type="Node" parent="state_machine"]
+script = ExtResource("5_dy1o0")
 
 [node name="jump" type="Node" parent="state_machine"]
+script = ExtResource("6_e0fh5")
 
 [node name="fall" type="Node" parent="state_machine"]
+script = ExtResource("7_l34un")
+animation_name = null
+move_speed = null
 
 [node name="climb" type="Node" parent="state_machine"]
+script = ExtResource("8_cusk0")
 
 [node name="move_component" type="Node" parent="."]
+script = ExtResource("9_gwmac")
