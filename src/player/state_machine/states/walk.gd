@@ -6,10 +6,11 @@ extends State
 @export var fall_state : State
 
 func process_physics(delta: float) -> State:
+	parent.velocity.y += gravity * delta
 	if get_jump() and parent.is_on_floor():
 		return jump_state
 
-	parent.velocity.y += gravity * delta
+	#parent.velocity.y += gravity * delta
 
 	var movement = get_movement_input() * move_speed
 	

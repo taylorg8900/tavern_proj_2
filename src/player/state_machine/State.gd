@@ -8,7 +8,6 @@ extends Node
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var parent: CharacterBody2D
 var animations: AnimatedSprite2D
-var move_component
 var label: Label
 
 func enter() -> void:
@@ -28,7 +27,8 @@ func process_frame(delta: float) -> State:
 	return null
 
 func get_movement_input() -> float:
-	return move_component.get_movement_direction()
+	return Input.get_axis('move_left', 'move_right')
 
+# Return a boolean indicating if the character wants to jump
 func get_jump() -> bool:
-	return move_component.wants_jump()
+	return Input.is_action_just_pressed('jump')
