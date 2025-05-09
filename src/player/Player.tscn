@@ -1,11 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
-[ext_resource type="Script" path="res://src/player/state_machine.gd" id="2_d0br6"]
+[ext_resource type="Script" path="res://src/player/state_machine/state_machine.gd" id="2_d0br6"]
 [ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/walk.gd" id="4_7mxh0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/sprint.gd" id="5_dy1o0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
 
@@ -124,6 +125,9 @@ script = ExtResource("7_l34un")
 idle_state = NodePath("../idle")
 walk_state = NodePath("../walk")
 label_text = "falling"
+
+[node name="sprint" type="Node" parent="state_machine"]
+script = ExtResource("5_dy1o0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
