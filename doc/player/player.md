@@ -13,12 +13,12 @@ Potential states
 		- Walking
 		- Running
 		- Jumping
-		- Climbing
-		- Big climbing (using the axe to go higher)
-		- Slowing fall (falling but using the axe to slow, like grabbing the wall and going slower)
-		- Hanging, coming to a deadstop
-		- Descending down ropes 
-		- Swinging from the grapples that are shot out by crossbow
+		- Ledge grabbing
+		- Big ledge grabbing (using the axe to go higher)
+		- Wall sliding (falling but using the axe to slow, like grabbing the wall and going slower)
+		- Wall hanging
+		- Rope descent 
+		- Grapple swinging
 	- Combat
 		- Shielding
 		- Shield bash

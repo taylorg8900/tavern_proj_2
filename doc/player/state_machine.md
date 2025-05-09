@@ -6,12 +6,12 @@ Here are all of the (current) states that the player can be in, for moving. I wi
 	- Sprinting
 	- Jumping
 	- Falling
-	- Climbing by grabbing the edge of ledge
-	- Big climbing (using the axe to go higher than normal climbing)
-	- Slowing fall (falling but using the axe to slow, like grabbing the wall and slowing down)
-	- Hanging, coming to a deadstop
-	- Descending down ropes
-	- Swinging from the grapples that are shot out by crossbow
+	- Ledge grabbing
+	- Big ledge grabbing (using the axe to go higher)
+	- Wall sliding (falling but using the axe to slow, like grabbing the wall and going slower)
+	- Wall hanging
+	- Rope descent 
+	- Grapple swinging
 
 For now, I am only going to worry about these ones
 	- Idle
@@ -59,4 +59,5 @@ How does it work?
 After implementing the sprint state, I actually realise it is pretty annoying to have to physically press the shift if I want to sprint, and having there even be two different states for moving (walking and sprinting). If originally I wanted acceleration, why wouldn't I just have one state called "move" that implements that? Besides, there are tons of games that are 2D which don't have sprinting functionality (among us, terraria, hollow knight, dome keeper, rounds, drg survivor) and instead can delegate that button to some extra function. In all reality I will likely end up having that button as my shielding key, or diving, etc.
 
 ### Creating acceleration for the `move` state
-	- 
+	- We need a value to add to the x velocity each call by multiplying it with delta
+	- We need to define a maximum x velocity value
