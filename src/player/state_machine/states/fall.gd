@@ -8,7 +8,7 @@ func enter() -> void:
 	super()
 
 func process_physics(delta: float) -> State:
-	var movement = get_movement_input() * move_speed
+	var movement = get_movement_input() * max_speed
 	parent.velocity.y += gravity * delta
 	parent.velocity.x = movement
 	if movement != 0:

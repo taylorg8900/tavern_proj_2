@@ -1,5 +1,6 @@
 extends State
 
+#@export_range(min, max, step value) var health
 # States we can transition to from this one
 @export var idle_state : State
 @export var jump_state : State
@@ -8,12 +9,10 @@ extends State
 @export var acceleration_mult: float = .5
 @export var deceleration_mult: float = .5
 
- #float clampf(value: float, min: float, max: float)
-#var speed = 42.1
-#var a = clampf(speed, 1.0, 20.5) # a is 20.5
-#
-#speed = -10.0
-#var b = clampf(speed, -1.0, 1.0) # b is -1.0
+#@export_range(0, 1, .01) var acceleration_mult: float = .5
+
+
+
 
 #func process_physics
 	#if movement input
@@ -24,21 +23,25 @@ extends State
 	#else
 		#idle state
 
+#float move_toward(from: float, to: float, delta: float)
+#move_toward(5, 10, 4)    # Returns 9
+#move_toward(10, 5, 4)    # Returns 6
+#move_toward(5, 10, 9)    # Returns 10
+#move_toward(10, 5, -1.5) # Returns 11.5
+
 func process_physics(delta: float) -> State:
 	var movement = get_movement_input() * delta
+	var acceleration = acceleration_mult * max_speed
 	if movement:
 		print("movement")
-		parent.velocity.x += acceleration_mult * move_speed * movement
-		if parent.velocity.x > 0:
-			parent.velocity.x = clampf(parent.velocity.x, 0, move_speed)
-		else:
-			parent.velocity.x = clampf(parent.velocity.x, -1 * move_speed, 0)
+		# from current velocity towards max velocity * movement input direction, by move speed * acceleration * delta
+		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, max_speed * acceleration * delta)
 	elif movement == 0 && parent.velocity.x != 0:
 		print('slowing down')
 		if parent.velocity.x > 0:
-			parent.velocity.x -= deceleration_mult * delta * move_speed
+			parent.velocity.x -= deceleration_mult * delta * max_speed
 		else:
-			parent.velocity.x += deceleration_mult * delta * move_speed
+			parent.velocity.x += deceleration_mult * delta * max_speed
 	else:
 		return idle_state
 	

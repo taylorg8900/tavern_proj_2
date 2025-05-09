@@ -12,7 +12,7 @@ func enter() -> void:
 	parent.velocity.y = -jump_force
 
 func process_physics(delta: float) -> State:
-	var movement = get_movement_input() * move_speed
+	var movement = get_movement_input() * max_speed
 	parent.velocity.x = movement
 	parent.velocity.y += gravity * delta
 	if movement != 0:
