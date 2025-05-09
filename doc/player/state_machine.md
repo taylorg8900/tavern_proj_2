@@ -26,32 +26,32 @@ Here are the states that can be transitioned to from each current state
 		- Walking (player inputs movement)
 		- Sprinting (player starts moving, but is already holding sprint key)
 		- Jumping (player inputs jump)
-		- Falling (if the player's y velocity > 0, like if something breaks under them)
+		- Falling (player is no longer on ground)
 	- Walking
 		- Idle (player hits a wall or is no longer providing movement input)
-		- Sprinting ()
-		- Jumping
-		- Falling
+		- Sprinting (player inputs sprint key)
+		- Jumping (player inputs jump key)
+		- Falling (player is no longer on ground)
 	- Sprinting
 		- Idle (player hits a wall, or stops moving)
 		- Walking (player runs out of stamina, stops sprinting)
-		- Jumping
-		- Falling
+		- Jumping (player inputs jump key)
+		- Falling (player is no longer on ground)
 	- Jumping
 		- Idle (don't expect this to ever happen, but if something catches up to the player and now they are standing on top of it)
-		- Falling
-		- Climbing
+		- Falling (player y velocity is greater than 0)
+		- Climbing (player is within range to climb and inputs jump key)
 	- Falling
-		- Idle
-		- Walking
-		- Sprinting
-		- Jumping (jump buffering goes here)
-		- Climbing
+		- Idle (player is on ground and is not inputting movement)
+		- Walking (player is on ground and is inputting movement)
+		- Sprinting (player is on ground and is inputting movement and sprint key)
+		- Jumping (player is on ground and inputs jump) (jump buffering goes here)
+		- Climbing (player is within range to climb and inputs jump key)
 	- Climbing by grabbing the edge of ledge
-		- Idle
-		- Walking
-		- Sprinting
-		- Jumping
+		- Idle (player has climbed and inputs movement)
+		- Walking (player has climbed and inputs movement)
+		- Sprinting (player has climbed and inputs movement and sprint key)
+		- Jumping (player has climbed and inputs jump key)
 
 I am going to be using the implementation that The Shaggy Dev uses in his [youtube video](https://www.youtube.com/watch?v=bNdFXooM1MQ&list=PLaiU9HSaKMWtmAIR345HGIz_ijQiyr3kH&index=7), and when I am comfortable with how it works I will start doing my own thing.
 
