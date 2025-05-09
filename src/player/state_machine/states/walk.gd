@@ -10,8 +10,6 @@ func enter() -> void:
 	super()
 
 func process_input(event: InputEvent) -> State:
-	if get_movement_input() == 0.0:
-		return idle_state
 	return null
 
 func process_physics(delta: float) -> State:

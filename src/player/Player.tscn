@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=21 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -77,6 +77,9 @@ animations = [{
 radius = 4.0
 height = 14.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_obavt"]
+font_size = 10
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_blii3")
 metadata/_edit_group_ = true
@@ -100,6 +103,7 @@ script = ExtResource("3_tcss0")
 walk_state = NodePath("../walk")
 fall_state = NodePath("../fall")
 animation_name = "idle"
+label_text = "idle"
 
 [node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "fall_state")]
 script = ExtResource("4_7mxh0")
@@ -124,3 +128,17 @@ script = ExtResource("9_gwmac")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -25.0
+offset_top = -50.0
+offset_right = 25.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "dafa"
+label_settings = SubResource("LabelSettings_obavt")
