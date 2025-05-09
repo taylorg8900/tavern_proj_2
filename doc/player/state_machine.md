@@ -72,9 +72,11 @@ How do we implement deceleration?
 
 ```
 func process_physics
-	if input matches x velocity direction
+	if movement input
 		increase x velocity by acceleration * delta * max move speed
 		limit x velocity so it does not exceed max move speed
-	else
+	else if no movement input, but still x velocity
 		decrease x velocity by deceleration * delta * max move speed
+	else
+		idle state
 ```
