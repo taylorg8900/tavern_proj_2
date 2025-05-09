@@ -1,6 +1,5 @@
 # Movement state machine - basic
 
-.
 
 Here are all of the (current) states that the player can be in, for moving. I will definitely need to have multiple state machines later to handle things like combat, healing, etc at the same time. But since I haven't ever done anything with state machines, I want to just implement a basic one to take care of moving around before getting into everything else.
 	- Idle
@@ -64,4 +63,18 @@ After implementing the sprint state, I actually realise it is pretty annoying to
 
 How do we implement acceleration?
 	- We need a value to add to the x velocity each call by multiplying it with delta
+		- This could be a multiplier, that is compared against our 'max velocity', instead of a confusing number
 	- We need to define a maximum x velocity value
+
+How do we implement deceleration?
+	- We need to slow down the player by an amount each process
+	- When the x velocity of the parent is 0, then we switch to the idle state, not when there is no input
+
+```
+func process_physics
+	if input matches x velocity direction
+		increase x velocity by acceleration * delta * max move speed
+		limit x velocity so it does not exceed max move speed
+	else
+		decrease x velocity by deceleration * delta * max move speed
+```
