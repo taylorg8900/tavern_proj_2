@@ -3,7 +3,7 @@ extends State
 # States we can transition to from this one
 @export var fall_state: State
 @export var idle_state: State
-@export var move_state: State
+@export var walk_state: State
 
 @export var jump_force: float = 900.0
 
@@ -26,7 +26,7 @@ func process_physics(delta: float) -> State:
 	
 	if parent.is_on_floor():
 		if movement != 0:
-			return move_state
+			return walk_state
 		return idle_state
 	
 	return null

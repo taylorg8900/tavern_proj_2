@@ -1,14 +1,13 @@
-[gd_scene load_steps=21 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/state_machine.gd" id="2_d0br6"]
+[ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/walk.gd" id="4_7mxh0"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/sprint.gd" id="5_dy1o0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/climb.gd" id="8_cusk0"]
 [ext_resource type="Script" path="res://src/player/move_component.gd" id="9_gwmac"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
@@ -77,9 +76,6 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[sub_resource type="LabelSettings" id="LabelSettings_obavt"]
-font_size = 10
-
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_blii3")
 metadata/_edit_group_ = true
@@ -94,37 +90,42 @@ position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_5j7w1")
 metadata/_edit_group_ = true
 
+[node name="StateClass" type="Node" parent="."]
+script = ExtResource("3_neal8")
+
 [node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_d0br6")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "fall_state")]
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state")]
 script = ExtResource("3_tcss0")
 walk_state = NodePath("../walk")
+jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
 animation_name = "idle"
 label_text = "idle"
 
-[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "fall_state")]
+[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
 script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
+jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
-animation_name = "walk"
+animation_name = "running"
+label_text = "walk"
 
-[node name="sprint" type="Node" parent="state_machine"]
-script = ExtResource("5_dy1o0")
-
-[node name="jump" type="Node" parent="state_machine"]
+[node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "walk_state")]
 script = ExtResource("6_e0fh5")
+fall_state = NodePath("../fall")
+idle_state = NodePath("../idle")
+walk_state = NodePath("../walk")
+jump_force = 200.0
+label_text = "jump"
 
-[node name="fall" type="Node" parent="state_machine"]
+[node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "walk_state")]
 script = ExtResource("7_l34un")
-
-[node name="climb" type="Node" parent="state_machine"]
-script = ExtResource("8_cusk0")
-
-[node name="move_component" type="Node" parent="."]
-script = ExtResource("9_gwmac")
+idle_state = NodePath("../idle")
+walk_state = NodePath("../walk")
+label_text = "falling"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
@@ -135,10 +136,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -25.0
-offset_top = -50.0
-offset_right = 25.0
+offset_left = -32.0
+offset_top = -23.0
+offset_right = 32.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "dafa"
-label_settings = SubResource("LabelSettings_obavt")
+
+[node name="player_move_component" type="Node" parent="."]
+script = ExtResource("9_gwmac")

@@ -3,8 +3,8 @@ extends CharacterBody2D
 
 @onready var movement_animations: AnimatedSprite2D = $AnimatedSprite2D
 @onready var movement_state_machine: Node = $state_machine
-@onready var player_move_component = $move_component
 @onready var label: Label = $Label
+@onready var player_move_component = $player_move_component
 
 func _ready() -> void:
 	movement_state_machine.init(self, movement_animations, player_move_component, label)
@@ -15,5 +15,5 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	movement_state_machine.process_physics(delta)
 
-#func _process(delta: float) -> void:
-	#movement_state_machine.process_frame(delta)
+func _process(delta: float) -> void:
+	movement_state_machine.process_frame(delta)
