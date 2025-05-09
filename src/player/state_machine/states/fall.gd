@@ -16,6 +16,6 @@ func process_physics(delta: float) -> State:
 	
 	if parent.is_on_floor():
 		if movement != 0:
-			return move_state
+			return walk_state
 		return idle_state
 	return null

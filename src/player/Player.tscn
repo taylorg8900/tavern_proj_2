@@ -1,5 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=20 format=3 uid="uid://7ig53l6y6f6l"]
 
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/state_machine.gd" id="2_d0br6"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
@@ -77,6 +78,7 @@ radius = 4.0
 height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_blii3")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -93,8 +95,10 @@ metadata/_edit_group_ = true
 script = ExtResource("2_d0br6")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="state_machine"]
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "fall_state")]
 script = ExtResource("3_tcss0")
+walk_state = NodePath("../walk")
+fall_state = NodePath("../fall")
 animation_name = "idle"
 
 [node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "fall_state")]
@@ -111,11 +115,12 @@ script = ExtResource("6_e0fh5")
 
 [node name="fall" type="Node" parent="state_machine"]
 script = ExtResource("7_l34un")
-animation_name = null
-move_speed = null
 
 [node name="climb" type="Node" parent="state_machine"]
 script = ExtResource("8_cusk0")
 
 [node name="move_component" type="Node" parent="."]
 script = ExtResource("9_gwmac")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)

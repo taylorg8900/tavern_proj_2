@@ -14,7 +14,8 @@ func enter() -> void:
 func process_input(event: InputEvent) -> State:
 	if parent.is_on_floor && get_movement_input() != 0.0:
 		return walk_state
-	
+	if get_jump() and parent.is_on_floor():
+		return jump_state
 	return null
 
 func process_physics(delta: float) -> State:

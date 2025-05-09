@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=4 uid="uid://cqu216i01cj7n"]
+[gd_scene load_steps=6 format=4 uid="uid://cqu216i01cj7n"]
 
 [ext_resource type="Texture2D" uid="uid://dkkqvntx863ga" path="res://aseprite_files/simple large block.png" id="1_k8wdk"]
 [ext_resource type="PackedScene" uid="uid://7ig53l6y6f6l" path="res://src/player/Player.tscn" id="2_l114u"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ydleq"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8y7k7"]
 texture = ExtResource("1_k8wdk")
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_tsrhh"]
 physics_layer_0/collision_layer = 1
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_ydleq")
 sources/0 = SubResource("TileSetAtlasSource_8y7k7")
 
 [node name="DemoStage" type="Node2D"]
