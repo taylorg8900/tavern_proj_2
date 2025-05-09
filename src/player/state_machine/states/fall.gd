@@ -10,7 +10,7 @@ func enter() -> void:
 func process_physics(delta: float) -> State:
 	var movement = get_movement_input() * move_speed
 	parent.velocity.y += gravity * delta
-	#parent.velocity.x = movement
+	parent.velocity.x = movement
 	if movement != 0:
 		animations.flip_h = movement < 0
 	

@@ -19,7 +19,6 @@ For now, I am only going to worry about these ones
 	- Sprinting
 	- Jumping
 	- Falling
-	- Climbing by grabbing the edge of ledge
 
 Here are the states that can be transitioned to from each current state
 	- Idle
@@ -47,11 +46,7 @@ Here are the states that can be transitioned to from each current state
 		- Sprinting (player is on ground and is inputting movement and sprint key)
 		- Jumping (player is on ground and inputs jump) (jump buffering goes here)
 		- Climbing (player is within range to climb and inputs jump key)
-	- Climbing by grabbing the edge of ledge
-		- Idle (player has climbed and inputs movement)
-		- Walking (player has climbed and inputs movement)
-		- Sprinting (player has climbed and inputs movement and sprint key)
-		- Jumping (player has climbed and inputs jump key)
+
 
 I am going to be using the implementation that The Shaggy Dev uses in his [youtube video](https://www.youtube.com/watch?v=bNdFXooM1MQ&list=PLaiU9HSaKMWtmAIR345HGIz_ijQiyr3kH&index=7), and when I am comfortable with how it works I will start doing my own thing.
 
@@ -60,3 +55,8 @@ How does it work?
 	- The state machine will only switch into another state and call it's `enter` function when it receives a return value that is *not* `null`.
 	- In this way, we will stay inside of a state every frame until it is decided that it should switch into something else in either the `process_input` or `process_physics` function.
 	- We can have special behavior inside of the `enter` function like setting a velocity to a certain value, and state specific values (which are exported to the Inspector for easy modification)
+
+After implementing the sprint state, I actually realise it is pretty annoying to have to physically press the shift if I want to sprint, and having there even be two different states for moving (walking and sprinting). If originally I wanted acceleration, why wouldn't I just have one state called "move" that implements that? Besides, there are tons of games that are 2D which don't have sprinting functionality (among us, terraria, hollow knight, dome keeper, rounds, drg survivor) and instead can delegate that button to some extra function. In all reality I will likely end up having that button as my shielding key, or diving, etc.
+
+### Creating acceleration for the `move` state
+	- 

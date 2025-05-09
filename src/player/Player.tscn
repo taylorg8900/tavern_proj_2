@@ -1,12 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=18 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/state_machine/state_machine.gd" id="2_d0br6"]
 [ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/walk.gd" id="4_7mxh0"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/sprint.gd" id="5_dy1o0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/move.gd" id="4_7mxh0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
 
@@ -96,21 +95,19 @@ script = ExtResource("3_neal8")
 script = ExtResource("2_d0br6")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state", "sprint_state")]
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state")]
 script = ExtResource("3_tcss0")
-walk_state = NodePath("../walk")
+walk_state = NodePath("../move")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
-sprint_state = NodePath("../sprint")
 animation_name = "idle"
 label_text = "idle"
 
-[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "sprint_state")]
+[node name="move" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
 script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
-sprint_state = NodePath("../sprint")
 animation_name = "running"
 label_text = "walk"
 
@@ -118,24 +115,15 @@ label_text = "walk"
 script = ExtResource("6_e0fh5")
 fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
-walk_state = NodePath("../walk")
+walk_state = NodePath("../move")
 jump_force = 300.0
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "walk_state")]
 script = ExtResource("7_l34un")
 idle_state = NodePath("../idle")
-walk_state = NodePath("../walk")
+walk_state = NodePath("../move")
 label_text = "falling"
-
-[node name="sprint" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "walk_state", "jump_state")]
-script = ExtResource("5_dy1o0")
-fall_state = NodePath("../fall")
-idle_state = NodePath("../idle")
-walk_state = NodePath("../walk")
-jump_state = NodePath("../jump")
-sprint_mult = 2
-label_text = "sprint"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
