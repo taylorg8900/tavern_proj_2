@@ -126,8 +126,13 @@ idle_state = NodePath("../idle")
 walk_state = NodePath("../walk")
 label_text = "falling"
 
-[node name="sprint" type="Node" parent="state_machine"]
+[node name="sprint" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "walk_state", "jump_state")]
 script = ExtResource("5_dy1o0")
+fall_state = NodePath("../fall")
+idle_state = NodePath("../idle")
+walk_state = NodePath("../walk")
+jump_state = NodePath("../jump")
+label_text = "sprint"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)

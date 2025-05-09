@@ -29,6 +29,9 @@ func process_frame(delta: float) -> State:
 func get_movement_input() -> float:
 	return Input.get_axis('move_left', 'move_right')
 
+func get_sprint() -> bool:
+	return Input.is_action_just_pressed("sprint")
+
 # Return a boolean indicating if the character wants to jump
 func get_jump() -> bool:
 	return Input.is_action_just_pressed('jump')
