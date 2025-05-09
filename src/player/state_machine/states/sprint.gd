@@ -22,6 +22,9 @@ func process_physics(delta: float) -> State:
 	if movement == 0:
 		return idle_state
 	
+	if movement != 0 && !get_sprint():
+		return walk_state
+	
 	if get_jump() and parent.is_on_floor():
 		return jump_state
 	

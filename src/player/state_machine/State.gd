@@ -30,7 +30,7 @@ func get_movement_input() -> float:
 	return Input.get_axis('move_left', 'move_right')
 
 func get_sprint() -> bool:
-	return Input.is_action_just_pressed("sprint")
+	return Input.is_action_pressed('sprint')
 
 # Return a boolean indicating if the character wants to jump
 func get_jump() -> bool:

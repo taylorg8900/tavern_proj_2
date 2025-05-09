@@ -96,19 +96,21 @@ script = ExtResource("3_neal8")
 script = ExtResource("2_d0br6")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state")]
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state", "sprint_state")]
 script = ExtResource("3_tcss0")
 walk_state = NodePath("../walk")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
+sprint_state = NodePath("../sprint")
 animation_name = "idle"
 label_text = "idle"
 
-[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
+[node name="walk" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "sprint_state")]
 script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
+sprint_state = NodePath("../sprint")
 animation_name = "running"
 label_text = "walk"
 
@@ -117,7 +119,7 @@ script = ExtResource("6_e0fh5")
 fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 walk_state = NodePath("../walk")
-jump_force = 200.0
+jump_force = 300.0
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "walk_state")]
@@ -132,6 +134,7 @@ fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 walk_state = NodePath("../walk")
 jump_state = NodePath("../jump")
+sprint_mult = 2
 label_text = "sprint"
 
 [node name="Camera2D" type="Camera2D" parent="."]
