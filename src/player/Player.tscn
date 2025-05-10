@@ -101,7 +101,6 @@ walk_state = NodePath("../move")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
 animation_name = "idle"
-max_speed = null
 label_text = "idle"
 
 [node name="move" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
@@ -148,8 +147,8 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, -7)
-target_position = Vector2(7, 0)
+target_position = Vector2(16, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, 7)
-target_position = Vector2(7, 0)
+target_position = Vector2(16, 0)

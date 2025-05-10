@@ -12,13 +12,13 @@ extends State
 var acceleration
 var deceleration
 
+
 func enter() -> void:
 	super()
 	acceleration = max_speed / seconds_to_reach_max_speed
 	deceleration = max_speed / seconds_to_reach_zero_speed
 
 func process_physics(delta: float) -> State:
-
 	if get_movement_input() != 0:
 		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, acceleration * delta)
 	elif get_movement_input() == 0:
