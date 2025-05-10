@@ -3,6 +3,7 @@ extends State
 # States we can transition to from this one
 @export var idle_state: State
 @export var walk_state: State
+@export var ledge_grab_state: State
 
 func enter() -> void:
 	super()
@@ -20,4 +21,8 @@ func process_physics(delta: float) -> State:
 		if movement != 0:
 			return walk_state
 		return idle_state
+	
+	if near_ledge():
+		return ledge_grab_state
+	
 	return null

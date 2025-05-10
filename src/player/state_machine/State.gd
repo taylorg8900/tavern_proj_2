@@ -43,5 +43,11 @@ func flip_animation_and_raycast(flip: bool) -> void:
 	else:
 		top_raycast.rotation_degrees = 0
 		bottom_raycast.rotation_degrees = 0
-		
-		
+
+func get_direction() -> float:
+	if animations.flip_h:
+		return -1
+	return 1
+
+func near_ledge() -> bool:
+	return !top_raycast.is_colliding && bottom_raycast.is_colliding

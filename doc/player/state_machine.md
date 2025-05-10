@@ -91,7 +91,6 @@ Here are the next states that I want to work on:
 
 Ledge grabbing is pretty self explanatory. I don't think I want the player to automatically climb up the ledge, because I could imagine that there is a reason that the player would want to wait before doing so. I want it to transition to either 'ledge climbing', or 'dropping'. I could also use the 'dropping' state later, with wall hanging so it seems like that is the way to go. For wall sliding, I want the player to decelerate until they come to a stop; since I can't really have wall sliding without hanging, here is the updated states I actually need right now, along with what they can transition to.
 - Ledge grabbing
-	- Ledge hanging
 	- Ledge climbing
 	- Dropping
 - Ledge climbing

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=19 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/player/state_machine/states/move.gd" id="4_7mxh0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/ledge_grab.gd" id="9_0bnn7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -113,19 +114,27 @@ seconds_to_reach_zero_speed = 0.15
 animation_name = "running"
 label_text = "walk"
 
-[node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "walk_state")]
+[node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "walk_state", "ledge_grab_state")]
 script = ExtResource("6_e0fh5")
 fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 walk_state = NodePath("../move")
+ledge_grab_state = NodePath("../ledge_grab")
 jump_force = 300.0
 label_text = "jump"
 
-[node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "walk_state")]
+[node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "walk_state", "ledge_grab_state")]
 script = ExtResource("7_l34un")
 idle_state = NodePath("../idle")
 walk_state = NodePath("../move")
+ledge_grab_state = NodePath("../ledge_grab")
 label_text = "falling"
+
+[node name="ledge_grab" type="Node" parent="state_machine" node_paths=PackedStringArray("climbing_state", "dropping_state")]
+script = ExtResource("9_0bnn7")
+climbing_state = NodePath("../jump")
+dropping_state = NodePath("../fall")
+label_text = "ledge grab"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
@@ -146,7 +155,7 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -18)
 target_position = Vector2(16, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
