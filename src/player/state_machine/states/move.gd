@@ -18,13 +18,11 @@ func enter() -> void:
 	deceleration = max_speed / seconds_to_reach_zero_speed
 
 func process_physics(delta: float) -> State:
-	#var acceleration = max_speed / seconds_to_reach_max_speed
-	#var deceleration = max_speed / seconds_to_reach_zero_speed
-	var current_velocity = parent.velocity.x
+
 	if get_movement_input() != 0:
-		parent.velocity.x = move_toward(current_velocity, get_movement_input() * max_speed, acceleration * delta)
+		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, acceleration * delta)
 	elif get_movement_input() == 0:
-		parent.velocity.x = move_toward(current_velocity, 0, deceleration * delta)
+		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 	
 	if parent.velocity.x == 0:
 		return idle_state
