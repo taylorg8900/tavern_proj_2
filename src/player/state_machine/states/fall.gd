@@ -15,6 +15,8 @@ func process_physics(delta: float) -> State:
 	if movement != 0:
 		flip_animation_and_raycast(movement < 0)
 	
+
+	
 	parent.move_and_slide()
 	
 	if parent.is_on_floor():

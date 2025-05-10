@@ -50,4 +50,4 @@ func get_direction() -> float:
 	return 1
 
 func near_ledge() -> bool:
-	return !top_raycast.is_colliding && bottom_raycast.is_colliding
+	return !top_raycast.is_colliding() && bottom_raycast.is_colliding()

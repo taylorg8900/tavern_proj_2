@@ -12,6 +12,7 @@ func process_physics(delta: float) -> State:
 		return climbing_state
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():
+			flip_animation_and_raycast(get_movement_input() < 0)
 			return dropping_state
 	return null
 	
