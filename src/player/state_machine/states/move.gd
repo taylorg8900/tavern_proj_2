@@ -6,50 +6,34 @@ extends State
 @export var jump_state : State
 @export var fall_state : State
 
-@export var acceleration_mult: float = .5
-@export var deceleration_mult: float = .5
+@export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float
+@export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float
 
-#@export_range(0, 1, .01) var acceleration_mult: float = .5
+var acceleration
+var deceleration
 
-
-
-
-#func process_physics
-	#if movement input
-		#increase x velocity by acceleration * delta * max move speed
-		#limit x velocity so it does not exceed max move speed
-	#else if no movement input, but still x velocity
-		#decrease x velocity by deceleration * delta * max move speed
-	#else
-		#idle state
-
-#float move_toward(from: float, to: float, delta: float)
-#move_toward(5, 10, 4)    # Returns 9
-#move_toward(10, 5, 4)    # Returns 6
-#move_toward(5, 10, 9)    # Returns 10
-#move_toward(10, 5, -1.5) # Returns 11.5
+func enter() -> void:
+	super()
+	acceleration = max_speed / seconds_to_reach_max_speed
+	deceleration = max_speed / seconds_to_reach_zero_speed
 
 func process_physics(delta: float) -> State:
-	var movement = get_movement_input() * delta
-	var acceleration = acceleration_mult * max_speed
-	if movement:
-		print("movement")
-		# from current velocity towards max velocity * movement input direction, by move speed * acceleration * delta
-		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, max_speed * acceleration * delta)
-	elif movement == 0 && parent.velocity.x != 0:
-		print('slowing down')
-		if parent.velocity.x > 0:
-			parent.velocity.x -= deceleration_mult * delta * max_speed
-		else:
-			parent.velocity.x += deceleration_mult * delta * max_speed
-	else:
+	#var acceleration = max_speed / seconds_to_reach_max_speed
+	#var deceleration = max_speed / seconds_to_reach_zero_speed
+	var current_velocity = parent.velocity.x
+	if get_movement_input() != 0:
+		parent.velocity.x = move_toward(current_velocity, get_movement_input() * max_speed, acceleration * delta)
+	elif get_movement_input() == 0:
+		parent.velocity.x = move_toward(current_velocity, 0, deceleration * delta)
+	
+	if parent.velocity.x == 0:
 		return idle_state
+		
+	# if this is after move_and_slide, small values will get rounded to 0 and flip_h gets called before we enter idle state in the next process
+	animations.flip_h = parent.velocity.x < 0
 	
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
-	
-	# Put this after the idle_state check so the player model doesn't flip back on accident
-	animations.flip_h = parent.velocity.x < 0
 	
 	if get_jump() and parent.is_on_floor():
 		return jump_state
@@ -57,6 +41,3 @@ func process_physics(delta: float) -> State:
 	if !parent.is_on_floor():
 		return fall_state
 	return null
-
-
-	

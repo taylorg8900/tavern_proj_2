@@ -62,21 +62,21 @@ After implementing the sprint state, I actually realise it is pretty annoying to
 ### Creating acceleration for the `move` state
 
 How do we implement acceleration?
-	- We need a value to add to the x velocity each call by multiplying it with delta
-		- This could be a multiplier, that is compared against our 'max velocity', instead of a confusing number
-	- We need to define a maximum x velocity value
+	- Delta means 'per second' in the process functions
+	- We can define the number of seconds it should take to reach our max velocity
+	- Our acceleration will be the max velocity divided by number of seconds it takes to reach it, multiplied by delta
 
 How do we implement deceleration?
-	- We need to slow down the player by an amount each process
+	- We need to slow down the player by an amount each process, if the player has any x velocity
 	- When the x velocity of the parent is 0, then we switch to the idle state, not when there is no input
 
 ```
 func process_physics
 	if movement input
-		increase x velocity by acceleration * delta * max move speed
+		increase x velocity by acceleration value * delta
 		limit x velocity so it does not exceed max move speed
 	else if no movement input, but still x velocity
-		decrease x velocity by deceleration * delta * max move speed
+		decrease x velocity by deceleration value * delta
 	else
 		idle state
 ```
