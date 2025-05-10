@@ -37,15 +37,15 @@ Potential states
 	- Mining (gems / ores)
 
 What are some common player movement things that I *could* include to make moving around feel more fluid?
-	- Coyote time
-	- Jump buffering (when you hit the jump button before you actually hit the ground)
-	- Variable jump height
-	- Jump cutting (when you release button early, stop moving upwards)
-	- Hang time at the top of a jump
-	- Acceleration and deceleration
-	- Having air control not be the exact same as when you are on the ground, less responsive
-	- Corner correction (moves the player a little horizontally, avoids pixel perfect collisions which are annoying)
-	- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
+- Coyote time
+- Jump buffering (when you hit the jump button before you actually hit the ground)
+- Variable jump height
+- Jump cutting (when you release button early, stop moving upwards)
+- Hang time at the top of a jump
+- Acceleration and deceleration
+- Having air control not be the exact same as when you are on the ground, less responsive
+- Corner correction (moves the player a little horizontally, avoids pixel perfect collisions which are annoying)
+- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
 
 [5 tips for better platformer controls](https://www.youtube.com/watch?v=Bsy8pknHc0M) goes over a small fraction of what I have written above
 
@@ -56,9 +56,9 @@ I am going to now try to figure out implementation of a state machine, with docu
 # Player upgrades
 
 Health
-	- Beard
-		- Upgrade by buying things like beard oil, hair care products etc
-		- Restore health with washing beard, getting trims done, etc
+- Beard
+	- Upgrade by buying things like beard oil, hair care products etc
+	- Restore health with washing beard, getting trims done, etc
 
 
 # Player Actions
