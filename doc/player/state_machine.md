@@ -125,3 +125,20 @@ There are some things I need to figure out before I go about actually creating t
 		- It appears that using `raycast.is_colliding()` will work
 		- After googling, you can apparently rotate the raycast. I will try using `set_rotation_degrees(value)` for this
 		- I need two raycasts. If the top one is not detecting anything, but the bottom one is, then we are next to a ledge
+
+### wall sliding
+
+I need to approach this differently than I did with the move state's acceleration and deceleration. Since the player can enter a wall slide state at various speeds, I can't have a fixed amount of time it takes for them to slow down; otherwise, a player falling at mach 1 and barely falling would take the exact same time to slow down, which doesn't make sense. Instead, I need a value by which to slow the descent by every second. I think having a number specifically for how much to slow the y velocity should do the trick, but I also want it to be intuitive. I think having a 'tile slow per second' would make sense. How does the y velocity of the player correlate with the size of tiles in Godot in the first place though?
+- The velocity of the CharacterBody2D is in pixels per second: That means a speed of 16 means it would only cover one 16x16 sized tile per second. I tested this and it seems to hold up.
+
+```
+deceleration = tile size * how many tiles to slow down per second by
+
+func physics_process()
+	slow down y velocity by deceleration amount * delta
+	if y velocity == 0
+		enter wall hang state
+	if movement input not equal to direction we are facing
+		flip animations and raycasts
+		enter drop state
+```

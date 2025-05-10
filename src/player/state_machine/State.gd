@@ -52,5 +52,10 @@ func get_direction() -> float:
 
 func near_ledge() -> bool:
 	# near ledge if only bottom_raycast is colliding
-	print("Top:", top_raycast.is_colliding(), " Bottom:", bottom_raycast.is_colliding(), " Floor:", floor_raycast.is_colliding())
+	#print("Top:", top_raycast.is_colliding(), " Bottom:", bottom_raycast.is_colliding(), " Floor:", floor_raycast.is_colliding())
 	return (!top_raycast.is_colliding() && bottom_raycast.is_colliding()) && !floor_raycast.is_colliding()
+
+func near_wall() -> bool:
+	if top_raycast.is_colliding():
+		print("yes")
+	return top_raycast.is_colliding() 
