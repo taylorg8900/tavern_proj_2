@@ -11,6 +11,7 @@ var animations: AnimatedSprite2D
 var label: Label
 var top_raycast: RayCast2D
 var bottom_raycast: RayCast2D
+var floor_raycast: RayCast2D
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -50,4 +51,6 @@ func get_direction() -> float:
 	return 1
 
 func near_ledge() -> bool:
-	return !top_raycast.is_colliding() && bottom_raycast.is_colliding()
+	# near ledge if only bottom_raycast is colliding
+	print("Top:", top_raycast.is_colliding(), " Bottom:", bottom_raycast.is_colliding(), " Floor:", floor_raycast.is_colliding())
+	return (!top_raycast.is_colliding() && bottom_raycast.is_colliding()) && !floor_raycast.is_colliding()

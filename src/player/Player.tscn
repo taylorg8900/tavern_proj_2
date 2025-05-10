@@ -157,8 +157,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, -6)
-target_position = Vector2(16, 0)
+target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 8)
+target_position = Vector2(5, 0)
+
+[node name="FloorRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, 8)
 target_position = Vector2(0, 32)
