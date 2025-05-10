@@ -9,32 +9,32 @@ After taking notes on state machines, I need to figure out what some of the move
 Later, I should reference [this video](https://www.youtube.com/watch?v=kmRUUK30E6k&list=PLUCgJMPcM1I53cdjspBGFzRH6hYI1FYQg&index=6&t=190s) by AdamCYounis for the animation while jumping / falling.
 
 Potential states
-	- Movement
-		- Walking
-		- Running
-		- Jumping
-		- Ledge grabbing
-		- Big ledge grabbing (using the axe to go higher)
-		- Wall sliding (falling but using the axe to slow, like grabbing the wall and going slower)
-		- Wall hanging
-		- Rope descent 
-		- Grapple swinging
-	- Combat
-		- Shielding
-		- Shield bash
-		- Attacking
-		- Throwing runestones
-		- Hiding (from enemies)
-		- Using crossbow
-	- Runestone states
-		- Teleporting
-		- Travelling through the walls like an alter Q
-		- Feather falling
-		- Time rune
-	- Misc
-		- Healing
-		- Lighting fires manually
-		- Mining (gems / ores)
+- Movement
+	- Walking
+	- Running
+	- Jumping
+	- Ledge grabbing
+	- Big ledge grabbing (using the axe to go higher)
+	- Wall sliding (falling but using the axe to slow, like grabbing the wall and going slower)
+	- Wall hanging
+	- Rope descent 
+	- Grapple swinging
+- Combat
+	- Shielding
+	- Shield bash
+	- Attacking
+	- Throwing runestones
+	- Hiding (from enemies)
+	- Using crossbow
+- Runestone states
+	- Teleporting
+	- Travelling through the walls like an alter Q
+	- Feather falling
+	- Time rune
+- Misc
+	- Healing
+	- Lighting fires manually
+	- Mining (gems / ores)
 
 What are some common player movement things that I *could* include to make moving around feel more fluid?
 	- Coyote time
