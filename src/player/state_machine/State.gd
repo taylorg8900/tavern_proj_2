@@ -9,6 +9,8 @@ var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var parent: CharacterBody2D
 var animations: AnimatedSprite2D
 var label: Label
+var top_raycast: RayCast2D
+var bottom_raycast: RayCast2D
 
 func enter() -> void:
 	animations.play(animation_name)

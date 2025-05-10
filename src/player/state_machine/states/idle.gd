@@ -12,7 +12,7 @@ func enter() -> void:
 
 
 func process_physics(delta: float) -> State:
-	
+	print(raycast.is_colliding())
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
 	

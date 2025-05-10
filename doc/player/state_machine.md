@@ -83,4 +83,46 @@ func process_physics
 
 # Updating the state machine with more states
 
-The next states that I want to work on
+Since I updated 'walk' to just 'move' after getting rid of sprinting, I will now refer to it as such.
+
+Here are the next states that I want to work on:
+- Ledge grabbing
+- Wall sliding
+
+Ledge grabbing is pretty self explanatory. I don't think I want the player to automatically climb up the ledge, because I could imagine that there is a reason that the player would want to wait before doing so. I want it to transition to either 'ledge climbing', or 'dropping'. I could also use the 'dropping' state later, with wall hanging so it seems like that is the way to go. For wall sliding, I want the player to decelerate until they come to a stop; since I can't really have wall sliding without hanging, here is the updated states I actually need right now, along with what they can transition to.
+- Ledge grabbing
+	- Ledge hanging
+	- Ledge climbing
+	- Dropping
+- Ledge climbing
+	- Idle
+	- Moving
+	- Jumping
+- Wall sliding
+	- Wall hanging
+	- Dropping
+- Wall hanging
+	- Dropping
+- Dropping
+	- Idle
+	- Moving
+	- Jumping
+	- Stun and take damage (later)
+
+To expand on what 'dropping' is, I want the player to not be able to perform an unlimited amount of wall hangs or ledge grabs. It basically puts the player into a fall state, but they are unable to transition into another wall slide, wall hang, or ledge grab.
+
+Also, we need to add these states to our previous states. Here's where they will fit in:
+- Jumping
+	- Ledge grabbing
+- Falling
+	- Ledge grabbing (if y velocity is too high, don't let the player do this!)
+	- Wall sliding
+
+There are some things I need to figure out before I go about actually creating these:
+- Do I have the player automatically ledge grab if they are inputting movement into the ledge?
+	- This is the approach I will take right now, since not doing so is like having the sprinting state above, which was really annoying.
+- How do I detect if the player is facing towards a wall / ledge?
+	- I think I need raycasts (if that is what they are called). I need to read the documentation or find out if there is a node I can use for this.
+		- It appears that using `raycast.is_colliding()` will work
+		- After googling, you can apparently rotate the raycast. I will try using `set_rotation_degrees(value)` for this
+		- I need two raycasts. If the top one is not detecting anything, but the bottom one is, then we are next to a ledge
