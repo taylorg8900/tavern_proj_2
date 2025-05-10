@@ -31,7 +31,17 @@ func process_frame(delta: float) -> State:
 func get_movement_input() -> float:
 	return Input.get_axis('move_left', 'move_right')
 
-
 # Return a boolean indicating if the character wants to jump
 func get_jump() -> bool:
 	return Input.is_action_just_pressed('jump')
+
+func flip_animation_and_raycast(flip: bool) -> void:
+	animations.flip_h = flip
+	if flip:
+		top_raycast.rotation_degrees = 180
+		bottom_raycast.rotation_degrees = 180
+	else:
+		top_raycast.rotation_degrees = 0
+		bottom_raycast.rotation_degrees = 0
+		
+		

@@ -16,7 +16,7 @@ func process_physics(delta: float) -> State:
 	parent.velocity.x = movement
 	parent.velocity.y += gravity * delta
 	if movement != 0:
-		animations.flip_h = movement < 0
+		flip_animation_and_raycast(movement < 0)
 	parent.move_and_slide()
 	
 	if parent.velocity.y > 0:

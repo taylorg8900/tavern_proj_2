@@ -28,7 +28,7 @@ func process_physics(delta: float) -> State:
 		return idle_state
 		
 	# if this is after move_and_slide, small values will get rounded to 0 and flip_h gets called before we enter idle state in the next process
-	animations.flip_h = parent.velocity.x < 0
+	flip_animation_and_raycast(parent.velocity.x < 0)
 	
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
