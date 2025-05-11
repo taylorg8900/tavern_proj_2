@@ -36,7 +36,7 @@ func process_physics(delta: float) -> State:
 	if parent.velocity.y > 0:
 		return fall_state
 	
-	if near_wall():
+	if near_wall() && get_movement_input() != 0:
 		return wall_climb_state
 			
 	if parent.is_on_floor():

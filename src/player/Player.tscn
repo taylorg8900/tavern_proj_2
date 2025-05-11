@@ -202,7 +202,7 @@ position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 target_position = Vector2(5, 0)
 
 [node name="FloorRayCast" type="RayCast2D" parent="."]
