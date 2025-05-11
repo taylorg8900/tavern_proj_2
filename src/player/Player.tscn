@@ -94,8 +94,8 @@ metadata/_edit_group_ = true
 [node name="StateClass" type="Node" parent="."]
 script = ExtResource("3_neal8")
 animation_name = null
-label_text = null
 max_speed = null
+label_text = null
 
 [node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_d0br6")
@@ -117,8 +117,8 @@ fall_state = NodePath("../fall")
 seconds_to_reach_max_speed = 0.06
 seconds_to_reach_zero_speed = 0.15
 animation_name = "running"
-label_text = "walk"
 max_speed = 64.0
+label_text = "walk"
 
 [node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state", "ledge_grab_state")]
 script = ExtResource("6_e0fh5")
@@ -126,9 +126,9 @@ fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 ledge_grab_state = NodePath("../ledge_grab")
-jump_height = 30.0
+jump_height = 60.0
 jump_time_to_peak = 1.0
-variable_jump_gravity_mult = 4.0
+peak_time_to_ground = 0.42
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "ledge_grab_state", "wall_slide_state")]
