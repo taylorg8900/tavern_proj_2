@@ -142,3 +142,6 @@ func physics_process()
 		flip animations and raycasts
 		enter drop state
 ```
+
+At this point I am also realizing that the default gravity value is way too high. I am going to watch that [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) about making custom jumps, and maybe it will give me insight into what values for gravity would feel good.
+- I watched it, and watched this [other video](https://www.youtube.com/watch?v=IOe1aGY6hXA) that pretty much just sums up the important parts with some code I can use as well.

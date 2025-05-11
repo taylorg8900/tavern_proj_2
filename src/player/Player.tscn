@@ -123,7 +123,7 @@ fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 ledge_grab_state = NodePath("../ledge_grab")
-jump_force = 300.0
+jump_force = 32.0
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "ledge_grab_state", "wall_slide_state")]
@@ -153,7 +153,7 @@ script = ExtResource("11_7vdch")
 idle_state = NodePath("../idle")
 drop_state = NodePath("../drop")
 wall_hang_state = NodePath("../drop")
-tile_slow_per_second = 2.5
+tile_slow_per_second = 5.0
 label_text = "wall slide"
 
 [node name="Camera2D" type="Camera2D" parent="."]
