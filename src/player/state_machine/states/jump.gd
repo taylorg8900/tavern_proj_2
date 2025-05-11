@@ -10,6 +10,7 @@ extends AirState
 @onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 
 
+
 var switch_to_fast_gravity : bool = false
 
 func enter() -> void:
@@ -17,15 +18,17 @@ func enter() -> void:
 	parent.velocity.y = jump_velocity
 	switch_to_fast_gravity = false
 
+
 func process_physics(delta: float) -> State:
-	var movement = get_movement_input() * max_speed
-	parent.velocity.x = movement
+	change_velocity_x(delta)
+	
 	if switch_to_fast_gravity:
 		parent.velocity.y += fast_gravity * delta
 	else:
 		parent.velocity.y += jump_gravity * delta
-	if movement != 0:
-		flip_animation_and_raycast(movement < 0)
+	
+	if get_movement_input() != 0:
+		flip_animation_and_raycast(get_movement_input() < 0)
 	
 	parent.move_and_slide()
 	
@@ -33,7 +36,7 @@ func process_physics(delta: float) -> State:
 		return fall_state
 	
 	if parent.is_on_floor():
-		if movement != 0:
+		if get_movement_input() != 0:
 			return move_state
 		return idle_state
 	

@@ -6,12 +6,6 @@ extends State
 @export var jump_state : State
 @export var fall_state : State
 
-@export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float
-@export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float
-
-var acceleration
-var deceleration
-
 
 func enter() -> void:
 	super()
@@ -19,10 +13,7 @@ func enter() -> void:
 	deceleration = max_speed / seconds_to_reach_zero_speed
 
 func process_physics(delta: float) -> State:
-	if get_movement_input() != 0:
-		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, acceleration * delta)
-	elif get_movement_input() == 0:
-		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
+	change_velocity_x(delta)
 	
 	if parent.velocity.x == 0:
 		return idle_state
@@ -32,6 +23,8 @@ func process_physics(delta: float) -> State:
 	
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
+	
+	
 	
 	if get_jump() and parent.is_on_floor():
 		return jump_state

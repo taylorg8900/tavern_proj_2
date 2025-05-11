@@ -7,11 +7,10 @@ extends State
 @export var tile_pixel_size: int = 16
 @export_range(0, 5, 0.1) var tile_slow_per_second: float = .5
 
-var deceleration
+@onready var wall_deceleration = tile_pixel_size * tile_slow_per_second
 
 func enter() -> void:
 	super()
-	deceleration = tile_pixel_size * tile_slow_per_second
 
 #deceleration = tile size * how many tiles to slow down per second by
 #
@@ -24,7 +23,7 @@ func enter() -> void:
 		#enter drop state
 
 func process_physics(delta: float) -> State:
-	parent.velocity.y -= deceleration * delta
+	parent.velocity.y -= wall_deceleration * delta
 	if parent.velocity.y == 0:
 		return wall_hang_state
 	var input = get_movement_input()

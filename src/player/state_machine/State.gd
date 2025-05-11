@@ -5,6 +5,12 @@ extends Node
 @export var max_speed: float = 100
 @export var label_text: String
 
+@export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
+@export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float = .1
+
+@onready var acceleration = max_speed / seconds_to_reach_max_speed
+@onready var deceleration = max_speed / seconds_to_reach_zero_speed
+
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var parent: CharacterBody2D
 var animations: AnimatedSprite2D
@@ -57,3 +63,9 @@ func near_ledge() -> bool:
 
 func near_wall() -> bool:
 	return top_raycast.is_colliding() 
+
+func change_velocity_x(delta: float) -> void:
+	if get_movement_input() != 0:
+		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, acceleration * delta)
+	elif get_movement_input() == 0:
+		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
