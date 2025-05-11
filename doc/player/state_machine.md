@@ -149,10 +149,21 @@ At this point I am also realizing that the default gravity value is way too high
 
 What if there was another state for the player to anticipate wall sliding? It is pretty difficult to time this perfectly, just like why I will implement jump buffering soon.
 
-### upgrading the jump state
+### upgrading the jump and fall state
 
 Here are the things I need:
 - A default jump height
 - Amount of time it takes to reach the jump height
 - A multiplier for how fast the standard gravity increases by if the player is not holding the jump button anymore
 - Something to keep track of the player letting go of the jump key; if they do this, then they can't go back to the normal gravity
+
+Here are the things I need to upgrade the fall state to have the same faster gravity as the jump state's variable gravity value:
+- First option
+	- The default jump height value
+	- The amount of time it takes to reach the ground from said value
+- Second option
+	- The default jump height value
+	- The time it takes to reach the jump height
+	- A multiplier for how fast the standard gravity increases
+
+Since I am going to be reusing these values between multiple states, I am actually going to implement them in the State class with the ability to change them later with `@export`. I will want to have other states for things like diving, anticipating a wall slide, etc so this makes sense.
