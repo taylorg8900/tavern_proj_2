@@ -25,6 +25,9 @@ func process_physics(delta: float) -> State:
 	
 	parent.move_and_slide()
 	
+	if !near_wall():
+		return drop_state
+	
 	if parent.is_on_floor():
 		return idle_state
 	

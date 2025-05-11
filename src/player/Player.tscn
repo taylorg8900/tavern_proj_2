@@ -118,7 +118,7 @@ idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
 animation_name = "running"
-label_text = "walk"
+label_text = "move"
 seconds_to_reach_max_speed = 0.12
 
 [node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state", "wall_climb_state", "ledge_grab_state")]
