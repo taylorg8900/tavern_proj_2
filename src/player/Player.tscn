@@ -144,6 +144,7 @@ seconds_to_reach_zero_speed = 0.2
 script = ExtResource("9_0bnn7")
 climbing_state = NodePath("../jump")
 dropping_state = NodePath("../drop")
+animation_name = "idle"
 label_text = "ledge grab"
 
 [node name="wall_slide" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "drop_state", "wall_hang_state")]
@@ -184,7 +185,6 @@ position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, 8)
 target_position = Vector2(5, 0)
 
 [node name="FloorRayCast" type="RayCast2D" parent="."]
