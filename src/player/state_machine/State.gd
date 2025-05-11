@@ -69,3 +69,10 @@ func change_velocity_x(delta: float) -> void:
 		parent.velocity.x = move_toward(parent.velocity.x, get_movement_input() * max_speed, acceleration * delta)
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
+
+func get_diagonal_input() -> float:
+	if Input.is_action_pressed("move_left") && Input.is_action_pressed("up"):
+		return -1
+	elif Input.is_action_pressed("move_right") && Input.is_action_pressed("up"):
+		return 1
+	return 0

@@ -178,3 +178,55 @@ Since having all of these variables inside of the state class was filling up the
 Why did I not consider that we should let the player climb up walls??? It totally makes sense, our guy is a little dwarf. Of course he could climb. We are going to be in caves and stuff, with rocks. I really want to implement that now.
 
 I also still don't have a ledge climbing mechanic in place, so I think I will get all three of those now.
+
+### Entering climbing state
+
+Something I am thinking about is what if we made it so the wall slide thing was automatic? This would save the trouble of pressing a key to enter it, and in future versions of the game where the player is moving around rapidly, I don't think it would be fun to have to think about pressing a key each time you were trying to slow down while getting the fuck away from a monster. It makes sense to delegate that mental effort towards something like exiting the wall slide instead.
+- I changed one line of code and this feels amazing, much better and slick
+
+For climbing, I want it to happen when the player is pressing diagonally, not just to the side and not just up either.
+- I also want to try if the player is pressing the jump key
+
+I think we should enter the climbing state from these states
+- Move
+	- If the player keeps walking into the wall for a certain amount of time (entering the state instantly would be annoying)
+- Wall hang
+	- I think I can get away with not having it be entered from both the jump and wall hang state, so this *might* be good enough. I can always change it later.
+		- It turns out I am changing this lol
+
+I do want some kind of stamina that the player has when they are either wall hanging or wall climbing; this way, the player can't just stay on the wall forever. I kind of have to share the value between the two in the first place, because if the player could enter a climbing state from the wall hang (which would have stamina), then they could stay on the wall forever and that is no good.
+
+### State transitions
+
+Updated transitions from each state
+- Move
+	- Wall climb
+- Jump 
+	- Wall climb
+- Ledge hang
+- Wall hang
+	- Drop
+	- Wall climb
+- Wall climb
+	- Drop
+	- Ledge hang
+
+### implentation
+
+pseudocode for wall climbing
+```
+export var climbing speed
+
+func process phys
+	if player holding diagonally
+		y velocity = climbing speed, prob do some move towards stuff here just cuz
+	else
+		y velocity = 0
+	
+	move and slide (dunno if i need this tbh)
+	
+	if near ledge
+		enter ledge hang state
+	if movement input not equal to direction we are facing
+		enter drop state
+```

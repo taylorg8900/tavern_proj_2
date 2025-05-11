@@ -4,6 +4,7 @@ extends AirState
 @export var fall_state: State
 @export var idle_state: State
 @export var move_state: State
+@export var wall_climb_state: State
 @export var ledge_grab_state: State
 
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
@@ -35,6 +36,9 @@ func process_physics(delta: float) -> State:
 	if parent.velocity.y > 0:
 		return fall_state
 	
+	if near_wall():
+		return wall_climb_state
+			
 	if parent.is_on_floor():
 		if get_movement_input() != 0:
 			return move_state

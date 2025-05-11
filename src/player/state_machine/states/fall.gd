@@ -29,7 +29,7 @@ func process_physics(delta: float) -> State:
 	if near_ledge():
 		return ledge_grab_state
 	
-	if near_wall() && get_jump():
+	if near_wall():
 		return wall_slide_state
 	
 	return null
