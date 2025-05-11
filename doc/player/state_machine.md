@@ -145,3 +145,14 @@ func physics_process()
 
 At this point I am also realizing that the default gravity value is way too high. I am going to watch that [video](https://www.youtube.com/watch?v=hG9SzQxaCm8) about making custom jumps, and maybe it will give me insight into what values for gravity would feel good.
 - I watched it, and watched this [other video](https://www.youtube.com/watch?v=IOe1aGY6hXA) that pretty much just sums up the important parts with some code I can use as well.
+	- It turns out I can't really rely on this because I have two separate states (jumping, and falling) and want to implement variable jump height too.
+
+What if there was another state for the player to anticipate wall sliding? It is pretty difficult to time this perfectly, just like why I will implement jump buffering soon.
+
+### upgrading the jump state
+
+Here are the things I need:
+- A default jump height
+- Amount of time it takes to reach the jump height
+- A multiplier for how fast the standard gravity increases by if the player is not holding the jump button anymore
+- Something to keep track of the player letting go of the jump key; if they do this, then they can't go back to the normal gravity
