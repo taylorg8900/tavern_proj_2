@@ -102,9 +102,9 @@ script = ExtResource("4_l41eu")
 script = ExtResource("2_d0br6")
 starting_state = NodePath("idle")
 
-[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("walk_state", "jump_state", "fall_state")]
+[node name="idle" type="Node" parent="state_machine" node_paths=PackedStringArray("move_state", "jump_state", "fall_state")]
 script = ExtResource("3_tcss0")
-walk_state = NodePath("../move")
+move_state = NodePath("../move")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
 animation_name = "idle"
@@ -126,6 +126,8 @@ fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 ledge_grab_state = NodePath("../ledge_grab")
+jump_height = 43.0
+jump_time_to_peak = 0.44
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "ledge_grab_state", "wall_slide_state")]
@@ -134,6 +136,8 @@ idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 ledge_grab_state = NodePath("../ledge_grab")
 wall_slide_state = NodePath("../wall_slide")
+jump_time_to_peak = 0.5
+peak_time_to_ground = 0.4
 label_text = "falling"
 
 [node name="ledge_grab" type="Node" parent="state_machine" node_paths=PackedStringArray("climbing_state", "dropping_state")]
@@ -143,13 +147,6 @@ dropping_state = NodePath("../drop")
 animation_name = "idle"
 label_text = "ledge grab"
 
-[node name="drop" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "jump_state")]
-script = ExtResource("10_2irxs")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-jump_state = NodePath("../jump")
-label_text = "drop"
-
 [node name="wall_slide" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "drop_state", "wall_hang_state")]
 script = ExtResource("11_7vdch")
 idle_state = NodePath("../idle")
@@ -157,6 +154,13 @@ drop_state = NodePath("../drop")
 wall_hang_state = NodePath("../drop")
 tile_slow_per_second = 5.0
 label_text = "wall slide"
+
+[node name="drop" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "jump_state")]
+script = ExtResource("10_2irxs")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+jump_state = NodePath("../jump")
+label_text = "drop"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)

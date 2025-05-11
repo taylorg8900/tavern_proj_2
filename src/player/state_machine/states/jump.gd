@@ -31,11 +31,6 @@ func process_physics(delta: float) -> State:
 	
 	if parent.velocity.y > 0:
 		return fall_state
-		
-	#parent.move_and_slide()
-	
-	#if parent.velocity.y > 0:
-		#return fall_state
 	
 	if parent.is_on_floor():
 		if movement != 0:

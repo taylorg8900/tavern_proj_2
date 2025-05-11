@@ -56,6 +56,4 @@ func near_ledge() -> bool:
 	return (!top_raycast.is_colliding() && bottom_raycast.is_colliding()) && !floor_raycast.is_colliding()
 
 func near_wall() -> bool:
-	if top_raycast.is_colliding():
-		print("yes")
 	return top_raycast.is_colliding() 

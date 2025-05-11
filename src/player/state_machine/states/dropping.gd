@@ -6,7 +6,7 @@ extends AirState
 
 func process_physics(delta: float) -> State:
 	var movement = get_movement_input() * max_speed
-	parent.velocity.y += gravity * delta
+	parent.velocity.y += fast_gravity * delta
 	parent.velocity.x = movement
 	if movement != 0:
 		flip_animation_and_raycast(movement < 0)
