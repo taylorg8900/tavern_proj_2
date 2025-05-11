@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=22 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/move.gd" id="4_7mxh0"]
+[ext_resource type="Script" path="res://src/player/state_machine/AirState.gd" id="4_l41eu"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/ledge_grab.gd" id="9_0bnn7"]
@@ -93,9 +94,9 @@ metadata/_edit_group_ = true
 
 [node name="StateClass" type="Node" parent="."]
 script = ExtResource("3_neal8")
-animation_name = null
-max_speed = null
-label_text = null
+
+[node name="AirStateClass" type="Node" parent="StateClass"]
+script = ExtResource("4_l41eu")
 
 [node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
 script = ExtResource("2_d0br6")
@@ -114,10 +115,9 @@ script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
-seconds_to_reach_max_speed = 0.06
+seconds_to_reach_max_speed = 0.11
 seconds_to_reach_zero_speed = 0.15
 animation_name = "running"
-max_speed = 64.0
 label_text = "walk"
 
 [node name="jump" type="Node" parent="state_machine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state", "ledge_grab_state")]
@@ -126,9 +126,6 @@ fall_state = NodePath("../fall")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 ledge_grab_state = NodePath("../ledge_grab")
-jump_height = 60.0
-jump_time_to_peak = 1.0
-peak_time_to_ground = 0.42
 label_text = "jump"
 
 [node name="fall" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "move_state", "ledge_grab_state", "wall_slide_state")]

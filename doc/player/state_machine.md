@@ -167,3 +167,8 @@ Here are the things I need to upgrade the fall state to have the same faster gra
 	- A multiplier for how fast the standard gravity increases
 
 Since I am going to be reusing these values between multiple states, I am actually going to implement them in the State class with the ability to change them later with `@export`. I will want to have other states for things like diving, anticipating a wall slide, etc so this makes sense.
+- I found out that if you use the `@onready` thing in the superclass, it will work with the values that you give it in the subclass. Not sure how that works but it is really useful
+
+Also, I realized that it would probably be good to have a terminal velocity AKA a speed that the player can't fall faster than. I'm going to add that as well.
+
+Since having all of these variables inside of the state class was filling up the Inspector, I made another class named AirState that inherits from State, to be used by any class which is in the air.

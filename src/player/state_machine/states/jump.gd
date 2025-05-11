@@ -1,4 +1,4 @@
-extends State
+extends AirState
 
 # States we can transition to from this one
 @export var fall_state: State
@@ -6,13 +6,9 @@ extends State
 @export var move_state: State
 @export var ledge_grab_state: State
 
-@export var jump_height : float
-@export_range(0, 1, .01) var jump_time_to_peak : float
-@export_range(0, 1, .01) var peak_time_to_ground : float
-
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
 @onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
-@onready var fast_gravity : float = (2.0 * jump_height) / (peak_time_to_ground * peak_time_to_ground)
+
 
 var switch_to_fast_gravity : bool = false
 

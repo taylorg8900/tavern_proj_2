@@ -1,4 +1,4 @@
-extends State
+extends AirState
 
 @export var idle_state: State
 @export var move_state: State
