@@ -172,3 +172,9 @@ Since I am going to be reusing these values between multiple states, I am actual
 Also, I realized that it would probably be good to have a terminal velocity AKA a speed that the player can't fall faster than. I'm going to add that as well.
 
 Since having all of these variables inside of the state class was filling up the Inspector, I made another class named AirState that inherits from State, to be used by any class which is in the air.
+
+# Ledge climbing, wall hanging, and wall climbing
+
+Why did I not consider that we should let the player climb up walls??? It totally makes sense, our guy is a little dwarf. Of course he could climb. We are going to be in caves and stuff, with rocks. I really want to implement that now.
+
+I also still don't have a ledge climbing mechanic in place, so I think I will get all three of those now.
