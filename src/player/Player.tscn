@@ -162,6 +162,7 @@ label_text = "hanging"
 script = ExtResource("13_lpkdw")
 ledge_grab_state = NodePath("../ledge_grab")
 drop_state = NodePath("../drop")
+climb_speed = 30.0
 label_text = "climbing"
 
 [node name="ledge_grab" type="Node" parent="state_machine" node_paths=PackedStringArray("climbing_state", "dropping_state")]
@@ -201,6 +202,7 @@ position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, -4)
 target_position = Vector2(5, 0)
 
 [node name="FloorRayCast" type="RayCast2D" parent="."]
