@@ -227,3 +227,7 @@ target_position = Vector2(0, 4)
 [node name="AirRayCast" type="RayCast2D" parent="."]
 position = Vector2(5, -20)
 target_position = Vector2(0, 68)
+
+[node name="HandPosition" type="Marker2D" parent="."]
+position = Vector2(4, -5)
+gizmo_extents = 0.0

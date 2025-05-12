@@ -6,11 +6,12 @@ var current_state: State
 
 # Initialize the state machine by giving each child state a reference to the
 # parent object it belongs to and enter the default starting_state.
-func init(parent: CharacterBody2D, animations: AnimatedSprite2D, label: Label, top_raycast: RayCast2D, wall_raycast: RayCast2D, floor_raycast: RayCast2D, air_raycast: RayCast2D) -> void:
+func init(parent: CharacterBody2D, animations: AnimatedSprite2D, label: Label, hand_position: Marker2D, top_raycast: RayCast2D, wall_raycast: RayCast2D, floor_raycast: RayCast2D, air_raycast: RayCast2D) -> void:
 	for child in get_children():
 		child.parent = parent
 		child.animations = animations
 		child.label = label
+		child.hand_position = hand_position
 		child.top_raycast = top_raycast
 		child.wall_raycast = wall_raycast
 		child.floor_raycast = floor_raycast

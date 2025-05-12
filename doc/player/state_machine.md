@@ -260,4 +260,11 @@ find the offset between our shapecast2d and the collision point
 our character position -= offset
 ```
 
-Interesting things I learned
+updated pseudocode after messing with things
+```
+when we detect that we are near a ledge
+use a raycast pointing down to find the exact location of the first thing intersected
+find the offset between this and wherever our hand is
+	I used the TopRayCast for this, because it is placed where the hand will be
+add the offset to our character
+```

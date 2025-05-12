@@ -19,6 +19,7 @@ var top_raycast: RayCast2D
 var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
 var air_raycast: RayCast2D
+var hand_position: Marker2D
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -75,18 +76,20 @@ func change_velocity_x(delta: float) -> void:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 
 func get_offset() -> Vector2:
-	var intersection = air_raycast.get_collision_point()
-	var target_pos = top_raycast.target_position + top_raycast.global_position
+	var intersection = Vector2(wall_raycast.get_collision_point().x, air_raycast.get_collision_point().y)
+	var target_pos = hand_position.global_position
+	var offset = intersection - target_pos
+	return offset
 	print()
 	print("collision global position =" + str(intersection))
 	print("hand global position =" + str(top_raycast.target_position + top_raycast.global_position))
-	var offset = intersection - target_pos
+	
 	print("offset =" + str(offset))
 	print("old y pos =" + str(parent.position.y))
 	print("new y position =" + str(parent.position.y + offset.y))
-	return offset
+	
 	
 	return Vector2(0,0)
 
 func snap_to_ledge() -> void:
-	parent.position.y += get_offset().y
+	parent.position += get_offset()
