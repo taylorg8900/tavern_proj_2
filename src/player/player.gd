@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @onready var movement_animations: AnimatedSprite2D = $AnimatedSprite2D
-@onready var movement_state_machine: Node = $state_machine
+@onready var movement_state_machine: Node = $StateMachine
 @onready var label: Label = $Label
 @onready var hand_position: Marker2D = $HandPosition
 @onready var top_raycast: RayCast2D = $TopRayCast

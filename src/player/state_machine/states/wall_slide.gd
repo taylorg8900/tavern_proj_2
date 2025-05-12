@@ -13,14 +13,13 @@ extends State
 func enter() -> void:
 	super()
 
-
 func process_physics(delta: float) -> State:
 	parent.velocity.y = move_toward(parent.velocity.y, 0, wall_deceleration * delta)
 	if parent.velocity.y == 0:
 		return wall_hang_state
 	
 	if wants_drop():
-		return drop_state
+		return fall_state
 	
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():

@@ -3,12 +3,9 @@ extends State
 @export var jump_state: State
 @export var drop_state: State
 
-
-
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
-
 
 func process_physics(delta: float) -> State:
 	if wants_drop():

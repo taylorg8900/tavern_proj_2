@@ -8,7 +8,6 @@ extends State
 func enter() -> void:
 	super()
 
-
 func process_physics(delta: float) -> State:
 	if near_ledge():
 		snap_to_ledge()
@@ -25,6 +24,5 @@ func process_physics(delta: float) -> State:
 		parent.velocity.y = move_toward(parent.velocity.y, 0, delta * deceleration)
 	
 	parent.move_and_slide()
-	
 	
 	return null
