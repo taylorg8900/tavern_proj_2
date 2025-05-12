@@ -235,16 +235,18 @@ func process phys
 
 Before going to sleep last night, I saw [this video about ledge climbing](https://www.youtube.com/watch?v=1v514Q_QInc&list=LL&index=1) that uses a collision shape for the player to hang onto ledges. I like this because it is pixel perfect, and I have noticed that for some reason using the raycasts can lead to inconsistent positioning while near ledges. Sometimes the player is a little higher or lower. I'm not sure if I like the idea of having the player transition directly into the jump state, but I will save that for later. If I stick with my original idea of having an animation of climbing up the ledge, then I will still need pixel perfect positioning anyways, and the raycasts aren't doing it tbh
 
+I didn't know how to implement the collisionshape while moving upwards, so I thought that changing how we enter the ledge grab state with the raycasts could be made consistent if I changed how that worked. It still doesn't work, and subpixel movement happens, which we don't want.
 
+I think I could try to figure out a way to snap the player to the right position? Let me read the documentation
+- RayCast2D: get_collider() to figure out what we are intersecting
+- RayCast2D: get_collision_point() - "Returns the collision point at which the ray intersects the closest object, in the global coordinate system."
+	- If the top ray was facing straight down, this would probably work for snapping the character to a certain y position
+- ShapeCast2D: get_closest_collision_safe_fraction() - seems like a complicated version of get_collision_point from RayCast2D, but could be used
 
-Using a collision2d node
-- Have a collisionshape2node above the player, 0 vertical depth so it is pixel perfect
-- It is only active while falling
-	- I think I can get away with not having logic for jumping, since we enter climbing state then ledge climbing if there is movement
-		- The raycasts are still super inconsistent even while climbing, will need to figure it out for that too damn
-	- Since we can't change the direction of a collisionshape2dnode like we can with the raycasts, we need to consider if the player is not facing the right way - we don't want to enter ledge climb in that case
-		- Have a raycast that will enable the collisionshape2d if it detects a wall? otherwise it stays disabled
-			- This will work better than a shapecast2d since we want it to be directional
-- If the FloorRayCast does not detect the ground, it means we are supposed to be in ledge climb and not idle when the collisionshape2dnode hits the 'floor'
-- If the player has movement that does not match the direction we are facing, exit and enter drop state
-	- Disable the collisionshape2dnode
+I think I will try this out:
+- ~~Have 4 raycasts~~ Have 3 raycasts and 1 shapecast
+	- One above and to the side of the character facing down, used to calculate which position we will snap to
+		- This would probably benifit from being a shapecast2d, because then we don't have to rotate it when we flip our animations / direction
+	- One above the character facing sideways, to detect if there is open space
+	- One next to the character facing sideways, to detect walls
+	- One below the character facing down, to detect if we are not above a floor
