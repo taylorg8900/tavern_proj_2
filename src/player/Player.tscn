@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=25 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -92,9 +92,6 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5j7w1"]
 radius = 4.0
 height = 14.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_54asa"]
-size = Vector2(10, 4)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_blii3")
@@ -227,7 +224,6 @@ target_position = Vector2(5, 0)
 position = Vector2(0, 8)
 target_position = Vector2(0, 4)
 
-[node name="AirShapeCast" type="ShapeCast2D" parent="."]
-position = Vector2(0, -7)
-shape = SubResource("RectangleShape2D_54asa")
-target_position = Vector2(0, 0)
+[node name="AirRayCast" type="RayCast2D" parent="."]
+position = Vector2(5, -5)
+target_position = Vector2(0, 68)

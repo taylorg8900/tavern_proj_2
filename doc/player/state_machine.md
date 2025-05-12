@@ -259,3 +259,5 @@ use the shapecast2d to find out the global y position of where the ledge is usin
 find the offset between our shapecast2d and the collision point
 our character position -= offset
 ```
+
+Interesting things I learned

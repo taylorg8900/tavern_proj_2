@@ -18,7 +18,7 @@ var label: Label
 var top_raycast: RayCast2D
 var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
-var air_shapecast: ShapeCast2D
+var air_raycast: RayCast2D
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -50,9 +50,12 @@ func flip_animation_and_raycast(flip: bool) -> void:
 	if flip:
 		top_raycast.rotation_degrees = 180
 		wall_raycast.rotation_degrees = 180
+		air_raycast.position.x = -1 * abs(air_raycast.position.x)
 	else:
 		top_raycast.rotation_degrees = 0
 		wall_raycast.rotation_degrees = 0
+		air_raycast.position.x = abs(air_raycast.position.x)
+	
 
 func get_direction() -> float:
 	if animations.flip_h:
@@ -71,14 +74,16 @@ func change_velocity_x(delta: float) -> void:
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 
-
-func get_ledge_position() -> Vector2:
-	return air_shapecast.global_position - air_shapecast.get_collision_point(0)
-
-func snap_pos_to_ledge() -> void:
-	var offset = air_shapecast.global_position - air_shapecast.get_collision_point(0)
+func get_offset() -> Vector2:
+	var intersection = air_raycast.get_collision_point()
 	print()
-	print("offset =                   " + str(offset))
-	print("air shapecast global pos = " + str(air_shapecast.global_position))
-	print("character global pos =     " + str(parent.global_position))
-	parent.position.y -= offset.y
+	print("collision global position =" + str(intersection))
+	var offset = air_raycast.global_position - intersection
+	print("air raycast global position =" + str(air_raycast.global_position))
+	print("offset =" + str(offset))
+	return offset
+	
+	return Vector2(0,0)
+
+func snap_to_ledge() -> void:
+	parent.position.y += get_offset().y

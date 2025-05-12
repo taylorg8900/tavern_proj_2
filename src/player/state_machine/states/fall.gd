@@ -20,6 +20,7 @@ func process_physics(delta: float) -> State:
 		flip_animation_and_raycast(get_movement_input() < 0)
 	
 	if near_ledge():
+		snap_to_ledge()
 		return ledge_grab_state
 		
 	parent.move_and_slide()

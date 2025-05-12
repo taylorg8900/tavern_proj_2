@@ -24,7 +24,7 @@ func process_physics(delta: float) -> State:
 	change_velocity_x(delta)
 	
 	if near_ledge():
-		snap_pos_to_ledge()
+		snap_to_ledge()
 		return ledge_grab_state
 	
 	if switch_to_fast_gravity:
