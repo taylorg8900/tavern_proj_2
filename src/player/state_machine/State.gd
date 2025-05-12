@@ -52,10 +52,12 @@ func flip_animation_and_raycast(flip: bool) -> void:
 		top_raycast.rotation_degrees = 180
 		wall_raycast.rotation_degrees = 180
 		air_raycast.position.x = -1 * abs(air_raycast.position.x)
+		hand_position.position.x = -1 * abs(hand_position.position.x)
 	else:
 		top_raycast.rotation_degrees = 0
 		wall_raycast.rotation_degrees = 0
 		air_raycast.position.x = abs(air_raycast.position.x)
+		hand_position.position.x = abs(hand_position.position.x)
 	
 
 func get_direction() -> float:
