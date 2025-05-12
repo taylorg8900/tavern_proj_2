@@ -251,3 +251,11 @@ I think I will try this out:
 	- One above the character facing out, to detect if there is open space above diagonally
 	- One next to the character facing sideways, to detect walls
 	- One below the character facing down, to detect if we are not above a floor
+
+pseudocode
+```
+when we detect that we are near a ledge
+use the shapecast2d to find out the global y position of where the ledge is using get_collision_point()
+find the offset between our shapecast2d and the collision point
+our character position -= offset
+```

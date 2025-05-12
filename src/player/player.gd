@@ -16,7 +16,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	movement_state_machine.process_input(event)
 
 func _physics_process(delta: float) -> void:
-	print(position.y)
 	movement_state_machine.process_physics(delta)
 
 func _process(delta: float) -> void:

@@ -1,6 +1,6 @@
 extends State
 
-@export var climbing_state: State
+@export var jump_state: State
 @export var dropping_state: State
 
 func enter() -> void:
@@ -11,7 +11,7 @@ func process_physics(delta: float) -> State:
 	if wants_drop():
 		return dropping_state
 	if get_jump():
-		return climbing_state
+		return jump_state
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():
 			flip_animation_and_raycast(get_movement_input() < 0)

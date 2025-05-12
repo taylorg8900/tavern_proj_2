@@ -72,8 +72,13 @@ func change_velocity_x(delta: float) -> void:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 
 
-func get_relative_ledge_position_y() -> int:
-	return air_shapecast.global_position.y - air_shapecast.get_collision_point(0).y
+func get_ledge_position() -> Vector2:
+	return air_shapecast.global_position - air_shapecast.get_collision_point(0)
 
 func snap_pos_to_ledge() -> void:
-	parent.position.y -= get_relative_ledge_position_y()
+	var offset = air_shapecast.global_position - air_shapecast.get_collision_point(0)
+	print()
+	print("offset =                   " + str(offset))
+	print("air shapecast global pos = " + str(air_shapecast.global_position))
+	print("character global pos =     " + str(parent.global_position))
+	parent.position.y -= offset.y
