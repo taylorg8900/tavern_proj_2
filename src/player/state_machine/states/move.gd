@@ -5,12 +5,17 @@ extends State
 @export var idle_state : State
 @export var jump_state : State
 @export var fall_state : State
+@export var climb_state: State
 
+@export_range(0, 1, .05) var time_to_enter_climb: float = .5
+
+@onready var timer: float
 
 func enter() -> void:
 	super()
 	acceleration = max_speed / seconds_to_reach_max_speed
 	deceleration = max_speed / seconds_to_reach_zero_speed
+	timer = time_to_enter_climb
 
 func process_physics(delta: float) -> State:
 	change_velocity_x(delta)
@@ -24,11 +29,18 @@ func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
 	
-	
-	
 	if get_jump() and parent.is_on_floor():
 		return jump_state
 	
 	if !parent.is_on_floor():
 		return fall_state
+		
+	if near_wall():
+		timer -= delta
+	else: 
+		timer = time_to_enter_climb
+	
+	if timer <= 0:
+		return climb_state
+	
 	return null

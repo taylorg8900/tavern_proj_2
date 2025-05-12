@@ -112,11 +112,13 @@ fall_state = NodePath("../fall")
 animation_name = "idle"
 label_text = "idle"
 
-[node name="move" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state")]
+[node name="move" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "climb_state")]
 script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
+climb_state = NodePath("../wall_climb")
+time_to_enter_climb = 0.3
 animation_name = "running"
 label_text = "move"
 seconds_to_reach_max_speed = 0.12
