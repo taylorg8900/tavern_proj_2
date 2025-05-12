@@ -145,9 +145,10 @@ label_text = "falling"
 seconds_to_reach_max_speed = 0.2
 seconds_to_reach_zero_speed = 0.2
 
-[node name="wall_slide" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "drop_state", "wall_hang_state")]
+[node name="wall_slide" type="Node" parent="state_machine" node_paths=PackedStringArray("idle_state", "fall_state", "drop_state", "wall_hang_state")]
 script = ExtResource("11_7vdch")
 idle_state = NodePath("../idle")
+fall_state = NodePath("../fall")
 drop_state = NodePath("../drop")
 wall_hang_state = NodePath("../wall_hang")
 tile_slow_per_second = 20.0
@@ -204,7 +205,7 @@ position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(0, -5)
 target_position = Vector2(5, 0)
 
 [node name="FloorRayCast" type="RayCast2D" parent="."]

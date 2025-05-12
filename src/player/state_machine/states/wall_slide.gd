@@ -1,6 +1,7 @@
 extends State
 
 @export var idle_state: State
+@export var fall_state: State
 @export var drop_state: State
 @export var wall_hang_state: State
 
@@ -26,7 +27,7 @@ func process_physics(delta: float) -> State:
 	parent.move_and_slide()
 	
 	if !near_wall():
-		return drop_state
+		return fall_state
 	
 	if parent.is_on_floor():
 		return idle_state

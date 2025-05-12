@@ -230,3 +230,13 @@ func process phys
 	if movement input not equal to direction we are facing
 		enter drop state
 ```
+
+# Improving the ledge climb mechanic
+
+Before going to sleep last night, I saw [this video about ledge climbing](https://www.youtube.com/watch?v=1v514Q_QInc&list=LL&index=1) that uses a collision shape for the player to hang onto ledges. I like this because it is pixel perfect, and I have noticed that for some reason using the raycasts can lead to inconsistent positioning while near ledges. Sometimes the player is a little higher or lower. I'm not sure if I like the idea of having the player transition directly into the jump state, but I will save that for later. If I stick with my original idea of having an animation of climbing up the ledge, then I will still need pixel perfect positioning anyways, and the raycasts aren't doing it tbh
+
+I think I will just implement the ledge climb with a collision shape somehow, and transition into the jump state for now before thinking about having it be an animation (even if that's what I want)
+
+Using a collision2d node
+- Have a collisionshape2node above the player, 0 vertical depth so it is pixel perfect
+- It is only active while falling
