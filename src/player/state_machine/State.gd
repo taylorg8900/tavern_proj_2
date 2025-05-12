@@ -16,8 +16,9 @@ var parent: CharacterBody2D
 var animations: AnimatedSprite2D
 var label: Label
 var top_raycast: RayCast2D
-var bottom_raycast: RayCast2D
+var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
+var air_shapecast: ShapeCast2D
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -38,18 +39,20 @@ func process_frame(delta: float) -> State:
 func get_movement_input() -> float:
 	return Input.get_axis('move_left', 'move_right')
 
-# Return a boolean indicating if the character wants to jump
 func get_jump() -> bool:
 	return Input.is_action_just_pressed('jump')
+
+func wants_drop() -> bool:
+	return Input.is_action_just_pressed('down')
 
 func flip_animation_and_raycast(flip: bool) -> void:
 	animations.flip_h = flip
 	if flip:
 		top_raycast.rotation_degrees = 180
-		bottom_raycast.rotation_degrees = 180
+		wall_raycast.rotation_degrees = 180
 	else:
 		top_raycast.rotation_degrees = 0
-		bottom_raycast.rotation_degrees = 0
+		wall_raycast.rotation_degrees = 0
 
 func get_direction() -> float:
 	if animations.flip_h:
@@ -57,12 +60,10 @@ func get_direction() -> float:
 	return 1
 
 func near_ledge() -> bool:
-	# near ledge if only bottom_raycast is colliding
-	#print("Top:", top_raycast.is_colliding(), " Bottom:", bottom_raycast.is_colliding(), " Floor:", floor_raycast.is_colliding())
-	return (!top_raycast.is_colliding() && bottom_raycast.is_colliding())
+	return (!top_raycast.is_colliding() && wall_raycast.is_colliding())
 
 func near_wall() -> bool:
-	return bottom_raycast.is_colliding() 
+	return wall_raycast.is_colliding() 
 
 func change_velocity_x(delta: float) -> void:
 	if get_movement_input() != 0:
@@ -70,9 +71,9 @@ func change_velocity_x(delta: float) -> void:
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 
-func get_diagonal_input() -> float:
-	if Input.is_action_pressed("move_left") && Input.is_action_pressed("up"):
-		return -1
-	elif Input.is_action_pressed("move_right") && Input.is_action_pressed("up"):
-		return 1
-	return 0
+
+func get_relative_ledge_position_y() -> int:
+	return air_shapecast.global_position.y - air_shapecast.get_collision_point(0).y
+
+func snap_pos_to_ledge() -> void:
+	parent.position.y -= get_relative_ledge_position_y()

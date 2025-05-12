@@ -242,11 +242,12 @@ I think I could try to figure out a way to snap the player to the right position
 - RayCast2D: get_collision_point() - "Returns the collision point at which the ray intersects the closest object, in the global coordinate system."
 	- If the top ray was facing straight down, this would probably work for snapping the character to a certain y position
 - ShapeCast2D: get_closest_collision_safe_fraction() - seems like a complicated version of get_collision_point from RayCast2D, but could be used
+- ShapeCast2D: get_collision_point()
 
 I think I will try this out:
-- ~~Have 4 raycasts~~ Have 3 raycasts and 1 shapecast
+- Have 4 raycasts
 	- One above and to the side of the character facing down, used to calculate which position we will snap to
-		- This would probably benifit from being a shapecast2d, because then we don't have to rotate it when we flip our animations / direction
-	- One above the character facing sideways, to detect if there is open space
+		- This might benefit from being a shapecast2d, because then we don't have to rotate it when we flip our animations / direction
+	- One above the character facing out, to detect if there is open space above diagonally
 	- One next to the character facing sideways, to detect walls
 	- One below the character facing down, to detect if we are not above a floor

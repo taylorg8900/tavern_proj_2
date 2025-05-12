@@ -8,6 +8,8 @@ func enter() -> void:
 	parent.velocity.y = 0
 
 func process_physics(delta: float) -> State:
+	if wants_drop():
+		return dropping_state
 	if get_jump():
 		return climbing_state
 	if get_movement_input() != 0:
