@@ -13,6 +13,10 @@ func process_physics(delta: float) -> State:
 	if near_ledge():
 		snap_to_ledge()
 		return ledge_grab_state
+	
+	if wants_drop():
+		return drop_state
+	
 	if get_movement_input() != 0:
 		if (get_movement_input() != get_direction()) or !near_wall():
 			return drop_state

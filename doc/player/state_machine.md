@@ -263,8 +263,13 @@ our character position -= offset
 updated pseudocode after messing with things
 ```
 when we detect that we are near a ledge
-use a raycast pointing down to find the exact location of the first thing intersected
-find the offset between this and wherever our hand is
+use a raycast pointing down to find the y position of whatever we intersect
+use the wall raycast to find the x position of the wall where we intersect
+find the offset between these and wherever our hand is
 	I used the TopRayCast for this, because it is placed where the hand will be
 add the offset to our character
 ```
+
+After I got it working, a bug that got introduced is that checking for jump input using `is_input_just_pressed()` will not really work since it updates each frame, so it treats it like `is_input_pressed()` instead. This means if we enter a ledge hang state and are holding spacebar, we will instantly jump. I don't know how to fix this yet.
+
+Also, none of this would work for platforms which move up and down, so in the future I will need to use the collisionshape2d and only activate it in the ledge hang state. But that's pretty easy and I'm not that worried about it yet.

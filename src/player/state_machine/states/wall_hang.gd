@@ -7,6 +7,8 @@ func enter() -> void:
 	super()
 
 func process_physics(delta: float) -> State:
+	if wants_drop():
+		return drop_state
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():
 			return drop_state

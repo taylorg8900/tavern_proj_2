@@ -81,15 +81,15 @@ func get_offset() -> Vector2:
 	var intersection = Vector2(wall_raycast.get_collision_point().x, air_raycast.get_collision_point().y)
 	var target_pos = hand_position.global_position
 	var offset = intersection - target_pos
-	return offset
+	
 	print()
 	print("collision global position =" + str(intersection))
-	print("hand global position =" + str(top_raycast.target_position + top_raycast.global_position))
+	print("hand global position =" + str(hand_position.global_position))
 	
 	print("offset =" + str(offset))
-	print("old y pos =" + str(parent.position.y))
-	print("new y position =" + str(parent.position.y + offset.y))
-	
+	print("old pos =" + str(parent.position))
+	print("new position =" + str(parent.position + offset))
+	return offset
 	
 	return Vector2(0,0)
 

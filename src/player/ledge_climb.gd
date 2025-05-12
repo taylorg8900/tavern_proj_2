@@ -1,11 +1,11 @@
+# Exactly the same as jump, except we can't enter a ledge climb state
+# Change later if I decide to use an animation or something else
 extends AirState
 
-# States we can transition to from this one
 @export var fall_state: State
 @export var idle_state: State
 @export var move_state: State
 @export var wall_climb_state: State
-@export var ledge_grab_state: State
 
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
 @onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
@@ -17,12 +17,9 @@ func enter() -> void:
 	parent.velocity.y = jump_velocity
 	switch_to_fast_gravity = false
 
+
 func process_physics(delta: float) -> State:
 	change_velocity_x(delta)
-	
-	if near_ledge():
-		snap_to_ledge()
-		return ledge_grab_state
 	
 	if switch_to_fast_gravity:
 		parent.velocity.y += fast_gravity * delta
