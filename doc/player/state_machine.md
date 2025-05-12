@@ -235,10 +235,13 @@ func process phys
 
 Before going to sleep last night, I saw [this video about ledge climbing](https://www.youtube.com/watch?v=1v514Q_QInc&list=LL&index=1) that uses a collision shape for the player to hang onto ledges. I like this because it is pixel perfect, and I have noticed that for some reason using the raycasts can lead to inconsistent positioning while near ledges. Sometimes the player is a little higher or lower. I'm not sure if I like the idea of having the player transition directly into the jump state, but I will save that for later. If I stick with my original idea of having an animation of climbing up the ledge, then I will still need pixel perfect positioning anyways, and the raycasts aren't doing it tbh
 
+
+
 Using a collision2d node
 - Have a collisionshape2node above the player, 0 vertical depth so it is pixel perfect
 - It is only active while falling
 	- I think I can get away with not having logic for jumping, since we enter climbing state then ledge climbing if there is movement
+		- The raycasts are still super inconsistent even while climbing, will need to figure it out for that too damn
 	- Since we can't change the direction of a collisionshape2dnode like we can with the raycasts, we need to consider if the player is not facing the right way - we don't want to enter ledge climb in that case
 		- Have a raycast that will enable the collisionshape2d if it detects a wall? otherwise it stays disabled
 			- This will work better than a shapecast2d since we want it to be directional

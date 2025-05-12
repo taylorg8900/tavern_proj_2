@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=25 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -81,6 +81,9 @@ animations = [{
 radius = 4.0
 height = 14.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_31glm"]
+size = Vector2(10, 0)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_blii3")
 
@@ -93,6 +96,14 @@ speed_scale = 2.0
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_5j7w1")
 metadata/_edit_group_ = true
+
+[node name="LedgeCollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+scale = Vector2(1, 1e-05)
+shape = SubResource("RectangleShape2D_31glm")
+disabled = true
+one_way_collision = true
+one_way_collision_margin = 0.0
 
 [node name="StateClass" type="Node" parent="."]
 script = ExtResource("3_neal8")
@@ -201,11 +212,11 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, -6)
+position = Vector2(0, -7)
 target_position = Vector2(5, 0)
 
 [node name="BottomRayCast" type="RayCast2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="FloorRayCast" type="RayCast2D" parent="."]

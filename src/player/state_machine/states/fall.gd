@@ -19,6 +19,9 @@ func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
 		flip_animation_and_raycast(get_movement_input() < 0)
 	
+	if near_ledge():
+		return ledge_grab_state
+		
 	parent.move_and_slide()
 	
 	if parent.is_on_floor():
@@ -26,8 +29,7 @@ func process_physics(delta: float) -> State:
 			return move_state
 		return idle_state
 	
-	if near_ledge():
-		return ledge_grab_state
+	
 	
 	if near_wall() && get_movement_input() != 0:
 		return wall_slide_state
