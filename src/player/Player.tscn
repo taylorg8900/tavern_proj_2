@@ -225,5 +225,5 @@ position = Vector2(0, 8)
 target_position = Vector2(0, 4)
 
 [node name="AirRayCast" type="RayCast2D" parent="."]
-position = Vector2(5, -5)
+position = Vector2(5, -20)
 target_position = Vector2(0, 68)

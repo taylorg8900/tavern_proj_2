@@ -76,11 +76,14 @@ func change_velocity_x(delta: float) -> void:
 
 func get_offset() -> Vector2:
 	var intersection = air_raycast.get_collision_point()
+	var target_pos = top_raycast.target_position + top_raycast.global_position
 	print()
 	print("collision global position =" + str(intersection))
-	var offset = air_raycast.global_position - intersection
-	print("air raycast global position =" + str(air_raycast.global_position))
+	print("hand global position =" + str(top_raycast.target_position + top_raycast.global_position))
+	var offset = intersection - target_pos
 	print("offset =" + str(offset))
+	print("old y pos =" + str(parent.position.y))
+	print("new y position =" + str(parent.position.y + offset.y))
 	return offset
 	
 	return Vector2(0,0)
