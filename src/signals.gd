@@ -2,7 +2,7 @@
 
 extends Node
 
-signal rope_entered(x_pos: int)
+signal rope_entered(x_pos: int, node: Node2D)
 signal rope_exited
 
 #func rope_entered() -> void:

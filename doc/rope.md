@@ -32,3 +32,14 @@ func near rope
 ```
 
 I need some way of the signal either being emitted each frame while we are near it, or to keep track of if we have entered and haven't left yet. I'm not that smart but it feels wrong for the signal to be emitted each frame, when where it comes from only triggers once when something interesting happens. I think I need some variable to keep track of it inside of the State class instead.
+- I decided to keep track with a bool, and another variable to keep track of the position as well
+
+Right now, the rope will send a signal anytime a Node2D enters, but this is a problem because in the future it will detect anything at all. I want to only update these values if the player specifically triggered the signal. How do I do this?
+- I asked chatGPT and it has a few options for me
+	- Add the player to a 'group', which is in the Node tab next to the Inspector. Check the group each time we emit the signal in the rope script.
+		- This isn't wrong, but I don't want to necessarily couple them together like that
+	- Since my Player is a custom Class, I could include this line inside of the rope script: `if body is Player:`
+		- This is the same as above, but I feel like maybe it is worse because now it is even more coupled
+	- Set the collision layer to only respond to the same one that the player is on
+		- This is super tedious and I'm just not going to do it
+- My idea is what if we also emitted the type of Node2D that entered, along with the x position? And then in the player stuff we can check for that.

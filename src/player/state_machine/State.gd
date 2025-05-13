@@ -21,6 +21,13 @@ var floor_raycast: RayCast2D
 var air_raycast: RayCast2D
 var hand_position: Marker2D
 
+var near_rope = false
+var rope_pos = 0
+
+func _ready() -> void:
+	Signals.rope_entered.connect(entered_rope)
+	Signals.rope_exited.connect(exited_rope)
+
 func enter() -> void:
 	animations.play(animation_name)
 	label.text = label_text
@@ -58,7 +65,6 @@ func flip_animation_and_raycast(flip: bool) -> void:
 		wall_raycast.rotation_degrees = 0
 		air_raycast.position.x = abs(air_raycast.position.x)
 		hand_position.position.x = abs(hand_position.position.x)
-	
 
 func get_direction() -> float:
 	if animations.flip_h:
@@ -85,5 +91,10 @@ func get_offset() -> Vector2:
 func snap_to_ledge() -> void:
 	parent.position += get_offset()
 
-func near_rope() -> void:
-	return
+func entered_rope(x_pos: int) -> void:
+	near_rope = true
+	rope_pos = x_pos
+
+func exited_rope() -> void:
+	near_rope = false
+	

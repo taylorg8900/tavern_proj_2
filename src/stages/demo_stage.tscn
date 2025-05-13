@@ -40,10 +40,10 @@ tile_set = SubResource("TileSet_tsrhh")
 tile_set = SubResource("TileSet_ilc1c")
 
 [node name="Player" parent="." instance=ExtResource("3_prwi5")]
-position = Vector2(-9, 23)
+position = Vector2(-9, 24)
 
 [node name="Rope" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-25, 22)
+position = Vector2(-101, 29)
 
 [node name="Rope2" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(41, -9)
+position = Vector2(-75, 53)

@@ -8,6 +8,8 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.x = 0
+	print(rope_pos)
+	print(near_rope)
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
