@@ -43,7 +43,7 @@ tile_set = SubResource("TileSet_ilc1c")
 position = Vector2(-9, 24)
 
 [node name="Rope" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-101, 29)
+position = Vector2(-102, 22)
 
 [node name="Rope2" parent="." instance=ExtResource("4_2r4kc")]
 position = Vector2(-75, 53)

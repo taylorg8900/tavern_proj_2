@@ -11,6 +11,9 @@ extends Node
 @onready var acceleration = max_speed / seconds_to_reach_max_speed
 @onready var deceleration = max_speed / seconds_to_reach_zero_speed
 
+@onready var near_rope = false
+@onready var rope_pos = null
+
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var parent: CharacterBody2D
 var animations: AnimatedSprite2D
@@ -20,9 +23,6 @@ var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
 var air_raycast: RayCast2D
 var hand_position: Marker2D
-
-var near_rope = false
-var rope_pos = 0
 
 func _ready() -> void:
 	Signals.rope_entered.connect(entered_rope)
@@ -91,10 +91,13 @@ func get_offset() -> Vector2:
 func snap_to_ledge() -> void:
 	parent.position += get_offset()
 
-func entered_rope(x_pos: int) -> void:
-	near_rope = true
-	rope_pos = x_pos
+func entered_rope(x_pos: int, node_type: Node2D) -> void:
+	if node_type is Player:
+		near_rope = true
+		rope_pos = x_pos
 
-func exited_rope() -> void:
-	near_rope = false
+func exited_rope(node_type: Node2D) -> void:
+	if node_type is Player:
+		near_rope = false
+		rope_pos = null
 	
