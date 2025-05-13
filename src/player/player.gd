@@ -23,5 +23,5 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	movement_state_machine.process_frame(delta)
 
-func rope_grabbed() -> void:
-	print("entered rope")
+func rope_grabbed(x_pos: int) -> void:
+	print("entered rope at", x_pos)

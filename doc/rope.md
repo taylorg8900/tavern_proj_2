@@ -17,3 +17,5 @@ Here is a youtube video going over [how to use signals](https://www.youtube.com/
 
 Here is a youtube video about the [message bus pattern](https://www.youtube.com/watch?v=vbw1ncvSUYg), which I might need to connect these signals.
 - A [link](https://www.gdquest.com/tutorial/godot/design-patterns/event-bus-singleton/) to the same concept
+
+I feel like I'm just going to worry about figuring out how to get this signal thing to communicate with the player. I wonder if I can get the signal to give us our information as well?
