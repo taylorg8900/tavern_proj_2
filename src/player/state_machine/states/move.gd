@@ -5,6 +5,7 @@ extends State
 @export var idle_state : State
 @export var jump_state : State
 @export var fall_state : State
+@export var rope_state: State
 @export var climb_state: State
 
 @export_range(0, 1, .05) var time_to_enter_climb: float = .5
@@ -42,5 +43,8 @@ func process_physics(delta: float) -> State:
 	
 	if timer <= 0:
 		return climb_state
+	
+	if near_rope && wants_up():
+		return rope_state
 	
 	return null

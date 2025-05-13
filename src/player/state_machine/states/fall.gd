@@ -3,6 +3,7 @@ extends AirState
 # States we can transition to from this one
 @export var idle_state: State
 @export var move_state: State
+@export var rope_state: State
 @export var ledge_hang_state: State
 @export var wall_slide_state: State
 
@@ -31,5 +32,8 @@ func process_physics(delta: float) -> State:
 	
 	if near_wall() && get_movement_input() != 0:
 		return wall_slide_state
+	
+	if near_rope && Input.is_action_pressed('up'):
+		return rope_state
 	
 	return null

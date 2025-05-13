@@ -121,30 +121,33 @@ starting_state = NodePath("DefaultStates/idle")
 
 [node name="DefaultStates" type="Node" parent="StateMachine"]
 
-[node name="idle" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("move_state", "jump_state", "fall_state")]
+[node name="idle" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("move_state", "jump_state", "fall_state", "rope_state")]
 script = ExtResource("3_tcss0")
 move_state = NodePath("../move")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
 animation_name = "idle"
 label_text = "idle"
 
-[node name="move" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "climb_state")]
+[node name="move" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "rope_state", "climb_state")]
 script = ExtResource("4_7mxh0")
 idle_state = NodePath("../idle")
 jump_state = NodePath("../jump")
 fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
 climb_state = NodePath("../../WallStates/wall_climb")
 time_to_enter_climb = 0.3
 animation_name = "running"
 label_text = "move"
 seconds_to_reach_max_speed = 0.12
 
-[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "wall_climb_state", "ledge_hang_state")]
+[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_climb_state", "ledge_hang_state")]
 script = ExtResource("6_e0fh5")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
 wall_climb_state = NodePath("../../WallStates/wall_climb")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 peak_time_to_ground = 0.25
@@ -152,10 +155,11 @@ label_text = "jump"
 seconds_to_reach_max_speed = 0.2
 seconds_to_reach_zero_speed = 0.2
 
-[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "ledge_hang_state", "wall_slide_state")]
+[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
 script = ExtResource("7_l34un")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
+rope_state = NodePath("../rope")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 wall_slide_state = NodePath("../../WallStates/wall_slide")
 label_text = "falling"

@@ -4,6 +4,7 @@ extends State
 @export var move_state: State
 @export var jump_state: State
 @export var fall_state: State
+@export var rope_state: State
 
 func enter() -> void:
 	super()
@@ -23,4 +24,8 @@ func process_physics(delta: float) -> State:
 	
 	if !parent.is_on_floor():
 		return fall_state
+	
+	if near_rope && wants_up():
+		return rope_state
+	
 	return null
