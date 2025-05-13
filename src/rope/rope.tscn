@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://depaalnoktvuo"]
+
+[ext_resource type="Texture2D" uid="uid://ctfxuucog32kj" path="res://aseprite_files/middle rope.png" id="1_cixc6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_naiap"]
+size = Vector2(2, 16)
+
+[node name="Rope" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_naiap")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+texture = ExtResource("1_cixc6")

@@ -285,3 +285,18 @@ I don't want this to have the same physics as normal jumping, I want it to be a 
 States that can transition into the wall jump
 - wall hang
 - wall climb
+
+# Rope climbing and descent
+
+Wow, this is the last one I planned on making! I don't really know what I will implement after this. Crazy that I actually made it this far already.
+
+I want this to behave the same as the wall climbing and wall sliding, but the climbing part is noticeably faster, and the descent is snappier / more controllable. I also want the player to be able to change directions while on the rope before deciding to jump off.
+
+### creating ropes
+
+(yo how the fuck do I do this???)
+
+My first thought was to create tiles, but I asked chatGPT and it started yapping about Area2Dnodes. I figure in the future when I get into procedural generation, I won't be able to create everything out of tiles anyway so it's not like I need the ropes to be tiles. What can we do with the Area2D node? I haven't used them before.
+- Area2D.body_entered() - tells you if something is inside it, uses signals (which I don't know how to use yet)
+	- Will need this so player can attach to one
+- Sprite2D - need for the texture part

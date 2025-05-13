@@ -16,7 +16,6 @@ extends AirState
 
 func enter() -> void:
 	super()
-
 	parent.velocity = Vector2(max_speed * get_direction() * -1, jump_velocity)
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
