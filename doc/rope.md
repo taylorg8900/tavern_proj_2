@@ -19,3 +19,16 @@ Here is a youtube video about the [message bus pattern](https://www.youtube.com/
 - A [link](https://www.gdquest.com/tutorial/godot/design-patterns/event-bus-singleton/) to the same concept
 
 I feel like I'm just going to worry about figuring out how to get this signal thing to communicate with the player. I wonder if I can get the signal to give us our information as well?
+- Yes, you can do that
+- I have an autoloaded script named Signals, and this is how I connected to it with the x position: `Signals.rope_entered.emit(get_parent().position.x)`
+- In Signals, here is the signal itself: `signal rope_entered(x_pos: int)`
+- And here is wherever we want to access the information: `Signals.rope_entered.connect(FUNCTION_NAME)`
+
+I need some way of knowing if we are near the rope, just like if we are near a ledge. So far I have a signal that just prints out to the screen that we walked past it, but we have no way of checking each frame if we are still in front of it.
+
+```
+func near rope
+	return (if signal is being emitted this frame)
+```
+
+I need some way of the signal either being emitted each frame while we are near it, or to keep track of if we have entered and haven't left yet. I'm not that smart but it feels wrong for the signal to be emitted each frame, when where it comes from only triggers once when something interesting happens. I think I need some variable to keep track of it inside of the State class instead.

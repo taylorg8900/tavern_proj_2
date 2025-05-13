@@ -12,6 +12,7 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	Signals.rope_entered.connect(rope_grabbed)
+	Signals.rope_exited.connect(rope_exited)
 	movement_state_machine.init(self, movement_animations, label, hand_position, top_raycast, wall_raycast, floor_raycast, air_raycast)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -25,3 +26,6 @@ func _process(delta: float) -> void:
 
 func rope_grabbed(x_pos: int) -> void:
 	print("entered rope at", x_pos)
+
+func rope_exited() -> void:
+	print("rope exited")
