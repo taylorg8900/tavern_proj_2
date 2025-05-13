@@ -1,3 +1,11 @@
+# Progression
+
+Here I will note down which things I worked on, in order. This is for me to look back on in the future. If I make a devlog or something it would be really handy.
+- player.md, trying to figure out all of the things I would like the player to do and use
+- state_machine.md, learning how to implement a state machine and creating my own states
+- rope.md
+
+
 # Story
 
 Version 1

@@ -300,3 +300,5 @@ My first thought was to create tiles, but I asked chatGPT and it started yapping
 - Area2D.body_entered() - tells you if something is inside it, uses signals (which I don't know how to use yet)
 	- Will need this so player can attach to one
 - Sprite2D - need for the texture part
+
+I am going to handle creating the ropes in another section of this documentation, 

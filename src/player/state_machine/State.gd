@@ -95,3 +95,6 @@ func get_offset() -> Vector2:
 
 func snap_to_ledge() -> void:
 	parent.position += get_offset()
+
+func near_rope() -> void:
+	return

@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://depaalnoktvuo"]
+[gd_scene load_steps=4 format=3 uid="uid://depaalnoktvuo"]
 
+[ext_resource type="Script" path="res://src/rope/rope.gd" id="1_24kka"]
 [ext_resource type="Texture2D" uid="uid://ctfxuucog32kj" path="res://aseprite_files/middle rope.png" id="1_cixc6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_naiap"]
-size = Vector2(2, 16)
+size = Vector2(2, 18)
 
 [node name="Rope" type="Node2D"]
+script = ExtResource("1_24kka")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -15,3 +17,5 @@ disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture = ExtResource("1_cixc6")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
