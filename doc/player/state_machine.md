@@ -301,4 +301,25 @@ My first thought was to create tiles, but I asked chatGPT and it started yapping
 	- Will need this so player can attach to one
 - Sprite2D - need for the texture part
 
-I am going to handle creating the ropes in another section of this documentation, 
+I am going to handle creating the ropes in another section of this documentation, and only worry about the state itself here.
+
+After figuring out how to make ropes, here is what the state should be able to do:
+- Move up and down the rope at speeds like specified above
+	- Moving up should be handled by either jumping, or holding up
+- Be able to jump off the rope, but only if we are holding a direction sideways and also want to jump
+- Exitting the rope state should put us in wall jump mode, instead of regular jump mode.
+
+Transitions between states
+- States that transition into the rope
+	- Idle
+	- Move
+	- Fall
+		- Will probably need another state for this, like the wall sliding because I don't want the character's velocity to immediately be 0
+	- Wall jump
+	- Ledge climb
+	- Ledge fall
+- Rope, into other states
+	- Idle (if we hit the ground)
+	- Move (if we hit ground, but our movement input is not 0)
+	- Fall (if we descend and the rope runs out of rope)
+	- Wall jump (standard jump for getting off rope)

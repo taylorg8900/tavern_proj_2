@@ -43,3 +43,4 @@ Right now, the rope will send a signal anytime a Node2D enters, but this is a pr
 	- Set the collision layer to only respond to the same one that the player is on
 		- This is super tedious and I'm just not going to do it
 - My idea is what if we also emitted the type of Node2D that entered, along with the x position? And then in the player stuff we can check for that.
+	- I got this working. You need to have the line `if node_type is Player:` to check if the instance of the Node2D that the signal sends out inherits from the Player class
