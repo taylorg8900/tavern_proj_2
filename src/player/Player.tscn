@@ -171,22 +171,31 @@ wall_hang_state = NodePath("../wall_hang")
 tile_slow_per_second = 20.0
 label_text = "wall slide"
 
-[node name="wall_hang" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "climb_state")]
+[node name="wall_hang" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "climb_state", "wall_jump_state")]
 script = ExtResource("11_sygnp")
 fall_state = NodePath("../../DefaultStates/fall")
 climb_state = NodePath("../wall_climb")
+wall_jump_state = NodePath("../wall_jump")
 animation_name = "idle"
 label_text = "hang"
 
-[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "ledge_hang_state")]
+[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "wall_jump_state", "ledge_hang_state")]
 script = ExtResource("13_lpkdw")
 fall_state = NodePath("../../DefaultStates/fall")
+wall_jump_state = NodePath("../wall_jump")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 climb_speed = 30.0
 label_text = "climb"
 
-[node name="wall_jump" type="Node" parent="StateMachine/WallStates"]
+[node name="wall_jump" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
 script = ExtResource("13_3bwbt")
+idle_state = NodePath("../../DefaultStates/idle")
+move_state = NodePath("../../DefaultStates/move")
+wall_slide_state = NodePath("../wall_slide")
+wall_climb_state = NodePath("../wall_climb")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+jump_height_multiplier = 0.65
+max_speed = 110.0
 label_text = "wall jump"
 
 [node name="LedgeStates" type="Node" parent="StateMachine"]

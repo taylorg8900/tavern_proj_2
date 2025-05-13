@@ -16,8 +16,10 @@ func process_physics(delta: float) -> State:
 		return ledge_hang_state
 
 	parent.velocity.y = move_toward(parent.velocity.y, terminal_velocity, fast_gravity * delta)
-	change_velocity_x(delta)
+	
+		
 	if get_movement_input() != 0:
+		change_velocity_x(delta)
 		flip_animation_and_raycast(get_movement_input() < 0)
 		
 	parent.move_and_slide()

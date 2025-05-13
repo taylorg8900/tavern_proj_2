@@ -280,4 +280,8 @@ As a side note, I think it would be more fun to let the player enter the fall st
 
 I don't really have a solid reason for wanting to implement this other than I think it would be really fun, and it is kind of dissapointing to just drop like a rock when I change directions while climbing. Also, what if in the future I have environmental dangers like falling rocks that you need to dodge?
 
-I don't want this to have the same physics as normal jumping, I want it to be a lot more side to side and not so much up and down (if that makes sense).
+I don't want this to have the same physics as normal jumping, I want it to be a lot more side to side and not so much up and down (if that makes sense). Also, if we transition directly into a normal 'fall' state, we won't be able to automatically do all of the cool wall stuff like wall slide since we can't in the fall state. We will need to handle both the upwards and downwards y velocity logic in here, instead of separating them.
+
+States that can transition into the wall jump
+- wall hang
+- wall climb
