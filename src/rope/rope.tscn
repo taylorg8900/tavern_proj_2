@@ -7,15 +7,14 @@
 size = Vector2(2, 18)
 
 [node name="Rope" type="Node2D"]
-script = ExtResource("1_24kka")
 
 [node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_24kka")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_naiap")
-disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
 texture = ExtResource("1_cixc6")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

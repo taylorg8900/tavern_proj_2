@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var air_raycast: RayCast2D = $AirRayCast
 
 func _ready() -> void:
+	Signals.rope_entered.connect(rope_grabbed)
 	movement_state_machine.init(self, movement_animations, label, hand_position, top_raycast, wall_raycast, floor_raycast, air_raycast)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -21,3 +22,6 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	movement_state_machine.process_frame(delta)
+
+func rope_grabbed() -> void:
+	print("entered rope")

@@ -80,18 +80,7 @@ func change_velocity_x(delta: float) -> void:
 func get_offset() -> Vector2:
 	var intersection = Vector2(wall_raycast.get_collision_point().x, air_raycast.get_collision_point().y)
 	var target_pos = hand_position.global_position
-	var offset = intersection - target_pos
-	
-	print()
-	print("collision global position =" + str(intersection))
-	print("hand global position =" + str(hand_position.global_position))
-	
-	print("offset =" + str(offset))
-	print("old pos =" + str(parent.position))
-	print("new position =" + str(parent.position + offset))
-	return offset
-	
-	return Vector2(0,0)
+	return intersection - hand_position.global_position
 
 func snap_to_ledge() -> void:
 	parent.position += get_offset()

@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=4 uid="uid://cqu216i01cj7n"]
+[gd_scene load_steps=10 format=4 uid="uid://cqu216i01cj7n"]
 
-[ext_resource type="Texture2D" uid="uid://dkkqvntx863ga" path="res://aseprite_files/simple large block.png" id="1_k8wdk"]
-[ext_resource type="PackedScene" uid="uid://7ig53l6y6f6l" path="res://src/player/Player.tscn" id="2_l114u"]
-[ext_resource type="Texture2D" uid="uid://b4kedgvbnwd7n" path="res://aseprite_files/rope.png" id="2_ux86d"]
+[ext_resource type="Texture2D" uid="uid://dkkqvntx863ga" path="res://aseprite_files/simple large block.png" id="1_4lg4g"]
+[ext_resource type="Texture2D" uid="uid://b4kedgvbnwd7n" path="res://aseprite_files/rope.png" id="2_5hfo4"]
+[ext_resource type="PackedScene" uid="uid://7ig53l6y6f6l" path="res://src/player/Player.tscn" id="3_prwi5"]
+[ext_resource type="PackedScene" uid="uid://depaalnoktvuo" path="res://src/rope/rope.tscn" id="4_2r4kc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ydleq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8y7k7"]
-texture = ExtResource("1_k8wdk")
+texture = ExtResource("1_4lg4g")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -21,7 +22,7 @@ physics_layer_0/physics_material = SubResource("PhysicsMaterial_ydleq")
 sources/0 = SubResource("TileSetAtlasSource_8y7k7")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w8kjb"]
-texture = ExtResource("2_ux86d")
+texture = ExtResource("2_5hfo4")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -38,5 +39,8 @@ tile_set = SubResource("TileSet_tsrhh")
 [node name="Ropes" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_ilc1c")
 
-[node name="Player" parent="." instance=ExtResource("2_l114u")]
+[node name="Player" parent="." instance=ExtResource("3_prwi5")]
 position = Vector2(-9, 23)
+
+[node name="Rope" parent="." instance=ExtResource("4_2r4kc")]
+position = Vector2(-25, 22)

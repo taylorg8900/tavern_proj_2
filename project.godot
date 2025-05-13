@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="tavern_proj_2"
-run/main_scene="res://src/scenes/stages/demo_stage.tscn"
+run/main_scene="res://src/stages/demo_stage.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Signals="*res://src/signals.gd"
 
 [input]
 
