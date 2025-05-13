@@ -275,3 +275,9 @@ After I got it working, a bug that got introduced is that checking for jump inpu
 Also, none of this would work for platforms which move up and down, so in the future I will need to use the collisionshape2d and only activate it in the ledge hang state. But that's pretty easy and I'm not that worried about it yet.
 
 As a side note, I think it would be more fun to let the player enter the fall state instead of the drop state for all of the wall states. It would be fun to chain wall slides together, and if you got unlucky and had a wall hang like a hundred feet in the air and couldn't avoid dying, that would really fucking suck. I will repurpose the drop state to be a copy of the fall state, but we can't enter a ledge hang again. This is what I am doing for the ledge climb state for now, where it is just a copy of the jump state but we can't enter another wall hang. I will definitely need to change both of these in the future, since I don't like copy and pasting stuff like this.
+
+# Wall jumping
+
+I don't really have a solid reason for wanting to implement this other than I think it would be really fun, and it is kind of dissapointing to just drop like a rock when I change directions while climbing. Also, what if in the future I have environmental dangers like falling rocks that you need to dodge?
+
+I don't want this to have the same physics as normal jumping, I want it to be a lot more side to side and not so much up and down (if that makes sense).

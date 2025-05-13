@@ -2,7 +2,6 @@ extends State
 
 @export var idle_state: State
 @export var fall_state: State
-@export var drop_state: State
 @export var wall_hang_state: State
 
 @export var tile_pixel_size: int = 16
@@ -24,7 +23,7 @@ func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():
 			flip_animation_and_raycast(get_movement_input() < 0)
-			return drop_state
+			return fall_state
 	
 	parent.move_and_slide()
 	

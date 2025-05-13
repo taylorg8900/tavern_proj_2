@@ -3,7 +3,7 @@ extends AirState
 # States we can transition to from this one
 @export var idle_state: State
 @export var move_state: State
-@export var ledge_grab_state: State
+@export var ledge_hang_state: State
 @export var wall_slide_state: State
 
 func enter() -> void:
@@ -13,7 +13,7 @@ func enter() -> void:
 func process_physics(delta: float) -> State:
 	if near_ledge():
 		snap_to_ledge()
-		return ledge_grab_state
+		return ledge_hang_state
 
 	parent.velocity.y = move_toward(parent.velocity.y, terminal_velocity, fast_gravity * delta)
 	change_velocity_x(delta)

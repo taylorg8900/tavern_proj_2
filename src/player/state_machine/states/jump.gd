@@ -1,11 +1,11 @@
 extends AirState
 
 # States we can transition to from this one
-@export var fall_state: State
 @export var idle_state: State
 @export var move_state: State
+@export var fall_state: State
 @export var wall_climb_state: State
-@export var ledge_grab_state: State
+@export var ledge_hang_state: State
 
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
 @onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
@@ -22,7 +22,7 @@ func process_physics(delta: float) -> State:
 	
 	if near_ledge():
 		snap_to_ledge()
-		return ledge_grab_state
+		return ledge_hang_state
 	
 	if switch_to_fast_gravity:
 		parent.velocity.y += fast_gravity * delta
