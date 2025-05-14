@@ -6,6 +6,8 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
+
+func exit() -> void:
 	reset_coyote_time()
 
 func process_physics(delta: float) -> State:

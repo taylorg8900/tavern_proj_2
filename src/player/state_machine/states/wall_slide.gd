@@ -11,7 +11,7 @@ extends State
 
 func enter() -> void:
 	super()
-	reset_coyote_time()
+
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y = move_toward(parent.velocity.y, 0, wall_deceleration * delta)
