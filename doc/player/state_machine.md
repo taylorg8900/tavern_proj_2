@@ -532,6 +532,7 @@ Here are all of the things that were not included in the previous version of the
 	- Move : reset in exit function, not enter function
 - Jump buffer
 	- Jump : Not initiated in `process_physics()` when `get_jump()` is called
+	- Fall : No longer uses the jump buffer to enter directly into a jump
 - State Transitions
 	- Idle -> Jump : didn't check for jump buffer timer
 	- Move -> Jump : didn't check for jump buffer timer
