@@ -371,3 +371,86 @@ What do I need from the timer?
 Using a timer might be a problem in the future. This line of code is in the documentation: "An unstable framerate may cause the timer to end inconsistently, which is especially noticeable if the wait time is lower than roughly 0.05 seconds. For very short timers, it is recommended to write your own code instead of using a Timer node."
 
 I have implemented it, but just to make sure I should identify in which states we want to use the jump buffer timer, and which states we want to reset it in. Then I will double check my implementation so it is correct.
+
+I am also going to reidentify all of the states we can transition into and from, just to make sure everything looks good right now. This might be too much but whatever, being thorough is part of my process.
+- Idle
+	- Reset coyote time, because floor might fall out from under us
+	- States
+		- Move (if movement input)
+		- Jump (if jump input)
+		- Fall (if we are somehow not on the ground anymore)
+		- Rope (if we are near a rope and we press 'up')
+- Move
+	- Reset coyote time, because floor might fall out from under us or we could move off of a ledge
+	- States
+		- Idle (if our x velocity is 0, instead of checking for movement input because we need to consider deceleration)
+		- Jump (if jump input)
+		- Fall (if we are not on ground anymore)
+		- Rope (if we are near a rope and press 'up')
+		- Wall climb (if we try to move into the wall for a certain amount of time)
+- Jump
+	- Reset jump buffer, in the unlikely case that a platform comes up to meet us and we want to jump again
+	- Reset jump buffer, so that the timer will be active in these cases 
+		- (jump -> wall hang -> wall jump)
+		- (jump -> wall climb -> wall jump)
+		- (jump -> ledge hang -> ledge climb)
+		- (jump -> rope -> rope jump)
+	- States
+		- Idle (if a platform comes up to meet us)
+		- Move (if a platform comes up to meet us and we have movement input)
+		- Jump (if a platform comes up to meet us, and our jump buffer timer has time left)
+		- Fall (if our y velocity is > 0)
+		- Rope (if we are near a rope and want to go up or down)
+		- Wall hang (if we are near a wall, input into it, and our y velocity is exactly 0)
+		- wall climb (if we are near a wall, input into it, and our y velocity is < 0)
+		- ledge hang (if we are near a ledge)
+- Fall
+	- Reset jump buffer timer for these cases
+		- (fall -> jump)
+		- (fall -> rope -> rope jump)
+		- (fall -> ledge hang -> ledge climb)
+	- States
+		- Idle (if we are on ground and our movement input is 0, instead of checking for x velocity since that would cause animations to play in the future which would look janky)
+		- Move (if we are on ground and have movement input)
+		- Jump (if our jump buffer time has time left)
+		- Rope (if we are near rope and press either up or down)
+		- Wall slide (if we are near wall and input into it)
+		- Ledge hang (if we are near ledge)
+- Rope
+	- Reset coyote time for these cases
+		- (rope -> fall -> rope jump)
+			- I will need to research some way of keeping track of which state I have been in previously for this to even work properly, or create a new state called 'rope fall', which is the quick and dirty option for right now which I might do)
+	- States
+		- Idle (if we are on ground and have no movement input)
+		- Move (if we are on ground and have movement input)
+		- Rope jump (if we want to jump, or if our jump buffer timer has time left, and if our y velocity is < 0)
+		- Rope fall (if we fall off rope)
+- Rope jump
+	- Reset jump buffer for these cases
+		- (rope jump -> jump)
+			- like if a platform came up to meet us
+		- (rope jump -> rope -> rope jump)
+		- (rope jump -> wall climb -> wall jump)
+		- (rope jump -> wall hang -> wall jump)
+		- (rope jump -> ledge hang -> ledge climb)
+	- States
+		- Idle (if a platform came up to meet us and we have no movement input)
+		- Move (if a platform came up to meet us and we have movement input)
+		- Fall (if our y velocity > 0)
+		- Rope (if we are near rope and want to go up or down)
+		- Wall hang (if we are near wall and press into it and our y velocity is exactly 0)
+		- Wall climb (if we are near wall and press into it and our y velocity is < 0)
+		- Ledge hang (if we are near ledge)
+- Rope fall
+	- Reset coyote time for these cases
+		- (rope fall -> rope jump)
+	- Reset jump buffer for these cases
+		- (rope fall -> jump)
+		- (rope fall -> ledge hang -> ledge climb)
+	- States
+		- Idle (if we hit ground and no movement input)
+		- Move (If we hit ground and have movement input)
+		- Jump (if we hit ground and jump buffer timer has time left)
+		- Rope (if we are near a rope and want to go up or down)
+		- Rope jump (only if the coyote timer has time left)
+		- 

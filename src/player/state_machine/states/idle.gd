@@ -14,8 +14,6 @@ func exit() -> void:
 	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
-	parent.velocity.y += gravity * delta
-	parent.move_and_slide()
 	
 	if get_movement_input() != 0.0:
 		return move_state
@@ -28,5 +26,8 @@ func process_physics(delta: float) -> State:
 	
 	if near_rope && wants_up():
 		return rope_state
+	
+	parent.velocity.y += gravity * delta
+	parent.move_and_slide()
 	
 	return null
