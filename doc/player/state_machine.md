@@ -374,23 +374,27 @@ I have implemented it, but just to make sure I should identify in which states w
 
 I am also going to reidentify all of the states we can transition into and from, just to make sure everything looks good right now. This might be too much but whatever, being thorough is part of my process.
 - Idle
-	- Reset coyote time, because floor might fall out from under us
+	- Reset coyote time for these cases
+		- (Idle -> Fall -> Jump)
 	- States
 		- Move (if movement input)
-		- Jump (if jump input)
+		- Jump (if jump input, or jump buffer has time left)
 		- Fall (if we are somehow not on the ground anymore)
 		- Rope (if we are near a rope and we press 'up')
 - Move
-	- Reset coyote time, because floor might fall out from under us or we could move off of a ledge
+	- Reset coyote time for these cases
+		- (move -> fall -> jump)
 	- States
 		- Idle (if our x velocity is 0, instead of checking for movement input because we need to consider deceleration)
-		- Jump (if jump input)
+		- Jump (if jump input, or jump buffer has time left)
 		- Fall (if we are not on ground anymore)
 		- Rope (if we are near a rope and press 'up')
 		- Wall climb (if we try to move into the wall for a certain amount of time)
 - Jump
 	- Reset jump buffer, in the unlikely case that a platform comes up to meet us and we want to jump again
 	- Reset jump buffer, so that the timer will be active in these cases 
+		- (jump -> idle -> jump)
+		- (jump -> move -> jump)
 		- (jump -> wall hang -> wall jump)
 		- (jump -> wall climb -> wall jump)
 		- (jump -> ledge hang -> ledge climb)
@@ -398,7 +402,6 @@ I am also going to reidentify all of the states we can transition into and from,
 	- States
 		- Idle (if a platform comes up to meet us)
 		- Move (if a platform comes up to meet us and we have movement input)
-		- Jump (if a platform comes up to meet us, and our jump buffer timer has time left)
 		- Fall (if our y velocity is > 0)
 		- Rope (if we are near a rope and want to go up or down)
 		- Wall hang (if we are near a wall, input into it, and our y velocity is exactly 0)
@@ -412,7 +415,7 @@ I am also going to reidentify all of the states we can transition into and from,
 	- States
 		- Idle (if we are on ground and our movement input is 0, instead of checking for x velocity since that would cause animations to play in the future which would look janky)
 		- Move (if we are on ground and have movement input)
-		- Jump (if our jump buffer time has time left)
+		- Jump (if our coyote timer has time left)
 		- Rope (if we are near rope and press either up or down)
 		- Wall slide (if we are near wall and input into it)
 		- Ledge hang (if we are near ledge)
@@ -452,5 +455,61 @@ I am also going to reidentify all of the states we can transition into and from,
 		- Move (If we hit ground and have movement input)
 		- Jump (if we hit ground and jump buffer timer has time left)
 		- Rope (if we are near a rope and want to go up or down)
-		- Rope jump (only if the coyote timer has time left)
-		- 
+		- Rope jump (only if the coyote timer has time left, and we want to jump)
+		- Wall slide (if we are near a wall, input into it)
+		- Ledge hang (if we are near ledge)
+- Wall slide
+	- Reset jump buffer time for these cases
+		- (wall slide -> wall hang -> wall jump)
+	- States
+		- Idle (we hit ground and have no movement)
+		- Move (we hit ground and have movement)
+		- Fall (we are no longer near a wall, because we fell off, or we want to drop by inputting 'down', or we try and change our direction)
+		- Wall hang (our y velocity is 0)
+- Wall hang
+	- States
+		- Fall (we want to drop by inputting 'down', or we try and change our direction)
+		- Wall climb (we want to start climbing by inputting movement into the wall)
+		- Wall jump (we want to jump, or if jump buffer still has time remaining)
+- Wall climb
+	- States
+		- Fall (if we want to drop, or if we change direction)
+		- Wall hang (if our y velocity is 0)
+		- Wall jump (if we want to jump, or if jump buffer timer has time left)
+- Wall jump
+	- Misc
+		- I would like to disable movement during the upwards part of this, actually! I will need to transition from the wall jump to a fall now
+	- Reset jump buffer for these cases
+		- (wall jump -> jump)
+		- (wall jump -> rope -> rope jump)
+		- (wall jump -> wall climb -> wall jump)
+		- (wall jump -> wall hang -> wall jump)
+		- (wall jump -> ledge hang -> ledge climb)
+	- States
+		- Idle (if a platform comes up to meet us, but no movement)
+		- Move (if a platform comes up to meet us, and we have movement)
+		- Jump (if a platform comes up to meet us, and jump buffer timer has time left)
+		- Fall (if y velocity > 0)
+		- Rope (if we are near rope and want to go up or down)
+		- Wall hang (if we are near wall and input into it and our y velocity is exactly 0)
+		- Wall climb (if we are near wall and input into it and our y velocity is < 0)
+		- Ledge hang (if we are near ledge)
+- Ledge hang 
+	- Misc
+		- I think it is actually fine if we transition back to another ledge hang after either falling or 'ledge climbing' (which right now is just a jump), since in the future I will change it to an animation and there's kind of no reason to have either the `ledge_climb` or `ledge_fall` states
+	- States
+		- Idle (if a platform comes up to us and we have no movement, check this by utilizing the FloorRayCast as well since touching wall would trigger `is_on_floor()` im pretty sure)
+		- Move (same as above but if we have movement)
+		- Fall (if we either want to drop by inputting 'down', or if we have movement that does not match our direction)
+		- Ledge climb (if we jump or if jump buffer timer has time left)
+- Ledge climb (current version)
+	- Literally just switch this to 'jump' in the ledge hang export variables, and delete both the `ledge_climb` and `ledge_fall` scripts and states
+- Ledge climb (future version)
+	- Reset jump buffer for these cases
+		- (ledge climb -> idle -> jump)
+		- (ledge climb -> move -> jump)
+		- (ledge climb -> rope -> rope jump)
+	- States
+		- Idle (if we finish animation and have no movement)
+		- Move (if we finish animation and have movement)
+		- Rope (if we finish animation, near rope, and try to go up or down it)
