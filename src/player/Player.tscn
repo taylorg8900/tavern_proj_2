@@ -232,20 +232,22 @@ drop_state = NodePath("../ledge_fall")
 animation_name = "ledge"
 label_text = "ledge hang"
 
-[node name="ledge_climb" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state")]
+[node name="ledge_climb" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_climb_state")]
 script = ExtResource("14_e8ufi")
 idle_state = NodePath("../../DefaultStates/idle")
 move_state = NodePath("../../DefaultStates/move")
 fall_state = NodePath("../ledge_fall")
+rope_climb_state = NodePath("../../DefaultStates/rope")
 peak_time_to_ground = 0.25
 label_text = "ledge jump"
 seconds_to_reach_max_speed = 0.2
 seconds_to_reach_zero_speed = 0.2
 
-[node name="ledge_fall" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state")]
+[node name="ledge_fall" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_climb_state", "wall_slide_state")]
 script = ExtResource("10_2irxs")
 idle_state = NodePath("../../DefaultStates/idle")
 move_state = NodePath("../../DefaultStates/move")
+rope_climb_state = NodePath("../../DefaultStates/rope")
 wall_slide_state = NodePath("../../WallStates/wall_slide")
 label_text = "ledge fall"
 

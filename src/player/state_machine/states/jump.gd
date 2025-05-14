@@ -49,7 +49,7 @@ func process_physics(delta: float) -> State:
 	if !Input.is_action_pressed("jump"):
 		switch_to_fast_gravity = true
 	
-	if near_rope && Input.is_action_pressed('up'):
+	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
 		return rope_state
 	
 	return null

@@ -316,7 +316,6 @@ Transitions between states
 	- Fall
 		- Will probably need another state for this, like the wall sliding because I don't want the character's velocity to immediately be 0
 	- Wall jump
-	- Ledge climb
 	- Ledge fall
 - Rope, into other states
 	- Idle (if we hit the ground)

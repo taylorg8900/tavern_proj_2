@@ -5,6 +5,7 @@ extends AirState
 @export var idle_state: State
 @export var move_state: State
 @export var fall_state: State
+@export var rope_climb_state: State
 
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
 @onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
@@ -40,5 +41,8 @@ func process_physics(delta: float) -> State:
 	
 	if !Input.is_action_pressed("jump"):
 		switch_to_fast_gravity = true
+	
+	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
+		return rope_climb_state
 	
 	return null

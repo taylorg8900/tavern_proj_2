@@ -46,7 +46,7 @@ func process_physics(delta: float) -> State:
 			return move_state
 		return idle_state
 	
-	if near_rope && Input.is_action_pressed('up'):
+	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
 		return rope_climb_state
 	
 	parent.move_and_slide()
