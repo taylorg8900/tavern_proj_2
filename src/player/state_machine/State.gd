@@ -11,6 +11,7 @@ extends Node
 @onready var acceleration = max_speed / seconds_to_reach_max_speed
 @onready var deceleration = max_speed / seconds_to_reach_zero_speed
 
+@onready var rope_id
 @onready var near_rope = false
 @onready var rope_pos = null
 
@@ -94,13 +95,16 @@ func get_offset() -> Vector2:
 func snap_to_ledge() -> void:
 	parent.position += get_offset()
 
-func entered_rope(x_pos: int, node_type: Node2D) -> void:
-	if node_type is Player:
+func entered_rope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
+	if node_entered is Player:
+		rope_id = rope.get_instance_id()
 		near_rope = true
 		rope_pos = x_pos
 
-func exited_rope(node_type: Node2D) -> void:
-	if node_type is Player:
-		near_rope = false
-		rope_pos = null
+func exited_rope(node_entered: Node2D, rope: Node2D) -> void:
+	if node_entered is Player:
+		if rope_id == rope.get_instance_id():
+			rope_id = null
+			near_rope = false
+			rope_pos = null
 	

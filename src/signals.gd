@@ -2,8 +2,8 @@
 
 extends Node
 
-signal rope_entered(x_pos: int, node: Node2D)
-signal rope_exited(node: Node2D)
+signal rope_entered(node_entered: Node2D, self_node: Node2D, x_pos: int)
+signal rope_exited(node_entered: Node2D, self_node: Node2D)
 
 #func rope_entered() -> void:
 	#print('hello')

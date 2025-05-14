@@ -1,0 +1,297 @@
+[gd_scene load_steps=31 format=3 uid="uid://7ig53l6y6f6l"]
+
+[ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
+[ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
+[ext_resource type="Script" path="res://src/player/state_machine/state_machine.gd" id="2_d0br6"]
+[ext_resource type="Script" path="res://src/player/rope_detector.gd" id="2_qi5rl"]
+[ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/move.gd" id="4_7mxh0"]
+[ext_resource type="Script" path="res://src/player/state_machine/AirState.gd" id="4_l41eu"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/ledge_grab.gd" id="9_0bnn7"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/dropping.gd" id="10_2irxs"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/rope.gd" id="10_3t85p"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/rope_jump.gd" id="11_4sady"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/wall_slide.gd" id="11_7vdch"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/wall_hang.gd" id="11_sygnp"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/wall_jump.gd" id="13_3bwbt"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/wall_climb.gd" id="13_lpkdw"]
+[ext_resource type="Script" path="res://src/player/ledge_climb.gd" id="14_e8ufi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5vwn"]
+size = Vector2(6, 2)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(0, 16, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p6lb8"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(0, 80, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pqhm"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(0, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtmjo"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(48, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q40bx"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(96, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57fty"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(144, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kx5eu"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(192, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0cvrd"]
+atlas = ExtResource("1_ojrco")
+region = Rect2(240, 48, 48, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54v5a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1obf")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p6lb8")
+}],
+"loop": true,
+"name": &"ledge",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pqhm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtmjo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q40bx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57fty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kx5eu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0cvrd")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5j7w1"]
+radius = 4.0
+height = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_blii3")
+
+[node name="RopeDetector" type="Area2D" parent="."]
+script = ExtResource("2_qi5rl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RopeDetector"]
+shape = SubResource("RectangleShape2D_l5vwn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_54v5a")
+animation = &"ledge"
+speed_scale = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_5j7w1")
+
+[node name="StateClass" type="Node" parent="."]
+script = ExtResource("3_neal8")
+
+[node name="AirStateClass" type="Node" parent="StateClass"]
+script = ExtResource("4_l41eu")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_d0br6")
+starting_state = NodePath("DefaultStates/idle")
+
+[node name="DefaultStates" type="Node" parent="StateMachine"]
+
+[node name="idle" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("move_state", "jump_state", "fall_state", "rope_state")]
+script = ExtResource("3_tcss0")
+move_state = NodePath("../move")
+jump_state = NodePath("../jump")
+fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
+animation_name = "idle"
+label_text = "idle"
+
+[node name="move" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "rope_state", "climb_state")]
+script = ExtResource("4_7mxh0")
+idle_state = NodePath("../idle")
+jump_state = NodePath("../jump")
+fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
+climb_state = NodePath("../../WallStates/wall_climb")
+time_to_enter_climb = 0.3
+animation_name = "running"
+label_text = "move"
+seconds_to_reach_max_speed = 0.12
+
+[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_climb_state", "ledge_hang_state")]
+script = ExtResource("6_e0fh5")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+fall_state = NodePath("../fall")
+rope_state = NodePath("../rope")
+wall_climb_state = NodePath("../../WallStates/wall_climb")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+peak_time_to_ground = 0.25
+label_text = "jump"
+seconds_to_reach_max_speed = 0.2
+seconds_to_reach_zero_speed = 0.2
+
+[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
+script = ExtResource("7_l34un")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+rope_state = NodePath("../rope")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+wall_slide_state = NodePath("../../WallStates/wall_slide")
+label_text = "falling"
+seconds_to_reach_max_speed = 0.2
+seconds_to_reach_zero_speed = 0.2
+
+[node name="rope" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "wall_jump_state")]
+script = ExtResource("10_3t85p")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+fall_state = NodePath("../fall")
+wall_jump_state = NodePath("../rope_jump")
+label_text = "rope"
+
+[node name="rope_jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
+script = ExtResource("11_4sady")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+wall_slide_state = NodePath("../../WallStates/wall_slide")
+wall_climb_state = NodePath("../../WallStates/wall_climb")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+
+[node name="WallStates" type="Node" parent="StateMachine"]
+
+[node name="wall_slide" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "fall_state", "wall_hang_state")]
+script = ExtResource("11_7vdch")
+idle_state = NodePath("../../DefaultStates/idle")
+fall_state = NodePath("../../DefaultStates/fall")
+wall_hang_state = NodePath("../wall_hang")
+tile_slow_per_second = 20.0
+label_text = "wall slide"
+
+[node name="wall_hang" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "climb_state", "wall_jump_state")]
+script = ExtResource("11_sygnp")
+fall_state = NodePath("../../DefaultStates/fall")
+climb_state = NodePath("../wall_climb")
+wall_jump_state = NodePath("../wall_jump")
+animation_name = "idle"
+label_text = "hang"
+
+[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "wall_jump_state", "ledge_hang_state")]
+script = ExtResource("13_lpkdw")
+fall_state = NodePath("../../DefaultStates/fall")
+wall_jump_state = NodePath("../wall_jump")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+climb_speed = 30.0
+label_text = "climb"
+
+[node name="wall_jump" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
+script = ExtResource("13_3bwbt")
+idle_state = NodePath("../../DefaultStates/idle")
+move_state = NodePath("../../DefaultStates/move")
+wall_slide_state = NodePath("../wall_slide")
+wall_climb_state = NodePath("../wall_climb")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+jump_height_multiplier = 0.65
+max_speed = 110.0
+label_text = "wall jump"
+
+[node name="LedgeStates" type="Node" parent="StateMachine"]
+
+[node name="ledge_hang" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("jump_state", "drop_state")]
+script = ExtResource("9_0bnn7")
+jump_state = NodePath("../ledge_climb")
+drop_state = NodePath("../ledge_fall")
+animation_name = "ledge"
+label_text = "ledge hang"
+
+[node name="ledge_climb" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state")]
+script = ExtResource("14_e8ufi")
+idle_state = NodePath("../../DefaultStates/idle")
+move_state = NodePath("../../DefaultStates/move")
+fall_state = NodePath("../ledge_fall")
+peak_time_to_ground = 0.25
+label_text = "ledge jump"
+seconds_to_reach_max_speed = 0.2
+seconds_to_reach_zero_speed = 0.2
+
+[node name="ledge_fall" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state")]
+script = ExtResource("10_2irxs")
+idle_state = NodePath("../../DefaultStates/idle")
+move_state = NodePath("../../DefaultStates/move")
+wall_slide_state = NodePath("../../WallStates/wall_slide")
+label_text = "ledge fall"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4, 4)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -33.0
+offset_right = 32.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TopRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(5, 0)
+
+[node name="WallRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, -2)
+target_position = Vector2(5, 0)
+
+[node name="FloorRayCast" type="RayCast2D" parent="."]
+position = Vector2(0, 8)
+target_position = Vector2(0, 4)
+
+[node name="AirRayCast" type="RayCast2D" parent="."]
+position = Vector2(5, -13)
+target_position = Vector2(0, 16)
+
+[node name="HandPosition" type="Marker2D" parent="."]
+position = Vector2(4, -5)
+gizmo_extents = 0.0
+
+[connection signal="area_entered" from="RopeDetector" to="RopeDetector" method="_on_area_entered"]
+[connection signal="area_exited" from="RopeDetector" to="RopeDetector" method="_on_area_exited"]
