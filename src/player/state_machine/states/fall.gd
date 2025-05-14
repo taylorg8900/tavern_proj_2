@@ -11,7 +11,6 @@ extends AirState
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
-	#reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 	if near_ledge():

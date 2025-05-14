@@ -10,6 +10,7 @@ extends AirState
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
+	
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y = move_toward(parent.velocity.y, terminal_velocity, fast_gravity * delta)

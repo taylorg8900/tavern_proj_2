@@ -5,4 +5,4 @@ func enter() -> void:
 	parent.velocity = Vector2(max_speed * get_direction(), jump_velocity)
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
-	has_jumped = true
+	coyote_timer = 0

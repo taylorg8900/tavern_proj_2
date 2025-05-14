@@ -19,7 +19,6 @@ func enter() -> void:
 	switch_to_fast_gravity = false
 	coyote_timer = 0
 
-
 func process_physics(delta: float) -> State:
 	
 	change_velocity_x(delta)
