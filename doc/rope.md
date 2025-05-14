@@ -85,5 +85,30 @@ func exited_rope(node_type: Node2D) -> void:
 		rope_id = null
 		near_rope = false
 		rope_pos = null
+```
+I ended up just reusing what I had already set up with the ropes, since it is (seemingly) impossible to get the x_pos of the rope if the signal doesn't come from itself.
 
+# Climbing continuously
+
+However, we still have the issue of not climbing continuously. This can happen if the player is right on the edge of a new rope after entering it, and changes their direction.
+- I might need some way to continuously check if we are overlapping a rope, instead of using a tracker variable.
+- Or I can just keep track of more ropes using something like a list
+	- [This guy](https://gameidea.org/2024/10/15/making-the-player-climb-ropes-and-walls/) used the Groups thingy to do it
+
+```
+var ropes : list
+var near_rope
+var rope_pos
+
+func entered_rope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
+	if node_entered is Player:
+		near_rope = true
+		ropes. add the rope id
+		var rope_pos = x_pos
+func exited_rope(node_entered: Node2D, rope: Node2D) -> void:
+	if node_entered is Player:
+		remove first instance of rope.get_id from ropes
+		if no rope in ropes
+			rope_pos = null
+			near_rope = false 
 ```

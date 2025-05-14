@@ -30,10 +30,19 @@ tile_set = SubResource("TileSet_tsrhh")
 position = Vector2(-9, 24)
 
 [node name="Rope" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, -9)
+position = Vector2(-32, -7)
 
 [node name="Rope2" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, 7)
+position = Vector2(-32, 8)
 
 [node name="Rope3" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, 23)
+position = Vector2(-32, 24)
+
+[node name="Rope4" parent="." instance=ExtResource("4_2r4kc")]
+position = Vector2(-32, -23)
+
+[node name="Rope5" parent="." instance=ExtResource("4_2r4kc")]
+position = Vector2(-32, -39)
+
+[node name="Rope6" parent="." instance=ExtResource("4_2r4kc")]
+position = Vector2(-32, -55)

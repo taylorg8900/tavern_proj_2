@@ -11,7 +11,7 @@ extends Node
 @onready var acceleration = max_speed / seconds_to_reach_max_speed
 @onready var deceleration = max_speed / seconds_to_reach_zero_speed
 
-@onready var rope_id
+@onready var ropes : Array
 @onready var near_rope = false
 @onready var rope_pos = null
 
@@ -97,14 +97,14 @@ func snap_to_ledge() -> void:
 
 func entered_rope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
 	if node_entered is Player:
-		rope_id = rope.get_instance_id()
 		near_rope = true
+		ropes.append(rope.get_instance_id())
 		rope_pos = x_pos
 
 func exited_rope(node_entered: Node2D, rope: Node2D) -> void:
 	if node_entered is Player:
-		if rope_id == rope.get_instance_id():
-			rope_id = null
+		ropes.erase(rope.get_instance_id())
+		if ropes.is_empty():
 			near_rope = false
 			rope_pos = null
 	

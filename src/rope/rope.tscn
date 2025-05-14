@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ctfxuucog32kj" path="res://aseprite_files/middle rope.png" id="1_cixc6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_naiap"]
-size = Vector2(2, 18)
+size = Vector2(2, 16)
 
 [node name="Rope" type="Node2D"]
 

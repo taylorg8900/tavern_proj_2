@@ -44,7 +44,7 @@ func process_physics(delta: float) -> State:
 	if timer <= 0:
 		return climb_state
 	
-	if near_rope && wants_up():
+	if near_rope && Input.is_action_pressed('up'):
 		return rope_state
 	
 	return null
