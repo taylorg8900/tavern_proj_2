@@ -2,6 +2,7 @@ extends AirState
 
 @export var idle_state: State
 @export var move_state: State
+@export var rope_climb_state: State
 @export var wall_slide_state: State
 @export var wall_climb_state: State
 @export var ledge_hang_state: State
@@ -44,6 +45,9 @@ func process_physics(delta: float) -> State:
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
+	
+	if near_rope && Input.is_action_pressed('up'):
+		return rope_climb_state
 	
 	parent.move_and_slide()
 	

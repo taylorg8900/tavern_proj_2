@@ -39,10 +39,10 @@ position = Vector2(-32, 8)
 position = Vector2(-32, 24)
 
 [node name="Rope4" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, -23)
+position = Vector2(-55, -8)
 
 [node name="Rope5" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, -39)
+position = Vector2(-55, 8)
 
 [node name="Rope6" parent="." instance=ExtResource("4_2r4kc")]
-position = Vector2(-32, -55)
+position = Vector2(-55, 24)

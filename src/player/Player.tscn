@@ -175,13 +175,15 @@ fall_state = NodePath("../fall")
 wall_jump_state = NodePath("../rope_jump")
 label_text = "rope"
 
-[node name="rope_jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
+[node name="rope_jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_climb_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
 script = ExtResource("11_4sady")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
+rope_climb_state = NodePath("../rope")
 wall_slide_state = NodePath("../../WallStates/wall_slide")
 wall_climb_state = NodePath("../../WallStates/wall_climb")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
+label_text = "rope jump"
 
 [node name="WallStates" type="Node" parent="StateMachine"]
 
@@ -209,10 +211,11 @@ ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 climb_speed = 30.0
 label_text = "climb"
 
-[node name="wall_jump" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
+[node name="wall_jump" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_climb_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
 script = ExtResource("13_3bwbt")
 idle_state = NodePath("../../DefaultStates/idle")
 move_state = NodePath("../../DefaultStates/move")
+rope_climb_state = NodePath("../../DefaultStates/rope")
 wall_slide_state = NodePath("../wall_slide")
 wall_climb_state = NodePath("../wall_climb")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
