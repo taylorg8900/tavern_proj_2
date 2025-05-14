@@ -342,3 +342,7 @@ While implementing coyote time, it turns out you can just spam jump since the ju
 	- We enter a any jumping state
 - Set `has_jumped` to false when:
 	- We enter any state that doesn't inherit from AirState, AKA anytime we are touching a wall or floor or whatever
+
+Jump buffering also seems easy, but I think I do actually need a timer for this since there are some cases where having a variable changed by delta within just one state probably wouldn't work (falling -> ledge grab -> ledge climb, or jump -> rope -> rope jump)
+- I could maybe just have this as another static variable that gets reset during the `enter()` function of states, and incorporate it into the `get_jump()` function somehow
+- I could check to see if the jump buffer is active anytime we would also check for get_jump, and if it is active then we just transition like how we would normally

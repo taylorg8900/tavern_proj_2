@@ -5,6 +5,7 @@ extends Node
 @export var max_speed: float = 95
 @export var label_text: String
 @export_range(0, 1, 0.01) var coyote_time: float = .1
+@export_range(0, 1, 0.01) var jump_buffer: float = .1
 
 @export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
 @export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float = .1
@@ -24,11 +25,12 @@ var air_raycast: RayCast2D
 var hand_position: Marker2D
 
 # Everything else
-static var has_jumped = false
+static var has_jumped = false # keeps track of coyote time
+static var will_jump = false # keeps track of jump buffer
 
-var ropes : Array
-var near_rope = false
-var rope_pos = null
+static var ropes : Array
+static var near_rope = false
+static var rope_pos = null
 
 func _ready() -> void:
 	Signals.rope_entered.connect(entered_rope)
@@ -62,6 +64,9 @@ func wants_drop() -> bool:
 func wants_up() -> bool:
 	return Input.is_action_just_pressed('up')
 
+func get_coyote_time() -> void:
+	pass
+
 func flip_animation_and_raycast(flip: bool) -> void:
 	animations.flip_h = flip
 	if flip:
@@ -92,13 +97,13 @@ func change_velocity_x(delta: float) -> void:
 	else:
 		parent.velocity.x = move_toward(parent.velocity.x, 0, deceleration * delta)
 
-func get_offset() -> Vector2:
+func get_ledge_offset() -> Vector2:
 	var intersection = Vector2(wall_raycast.get_collision_point().x, air_raycast.get_collision_point().y)
 	var target_pos = hand_position.global_position
 	return intersection - hand_position.global_position
 
 func snap_to_ledge() -> void:
-	parent.position += get_offset()
+	parent.position += get_ledge_offset()
 
 func entered_rope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
 	if node_entered is Player:
