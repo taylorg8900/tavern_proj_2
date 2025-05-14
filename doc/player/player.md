@@ -171,6 +171,7 @@ Now, I will brainstorm potential uses for each item.
 			- Providing 'feather falling' when falling from large heights
 			- Travelling through a wall or floor like an alter Q from Apex Legends
 			- Teleporting to a set location (common trope in all sorts of games)
+			- Setting up portals, like a portal gun
 			- Remotely retrieving an object, by making the object behave like thor's hammer or something when it hits it
 				- Could control the path the stone travels by similar to boomerang mechanic from the DS zelda games where you draw a line first for it to follow
 			- Cloaking the player

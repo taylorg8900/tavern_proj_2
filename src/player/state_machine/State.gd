@@ -30,8 +30,9 @@ var jump_buffer_timer: Timer
 static var coyote_timer
 
 func reset_jump_buffer_timer() -> void:
-	jump_buffer_timer.set_wait_time(jump_buffer)
 	jump_buffer_timer.stop()
+	jump_buffer_timer.set_wait_time(jump_buffer)
+	
 
 func get_jump_buffer_timer() -> bool:
 	return jump_buffer_timer.get_time_left() > 0
@@ -131,10 +132,3 @@ func get_coyote_time(delta: float) -> bool:
 
 func reset_coyote_time() -> void:
 	coyote_timer = coyote_time
-
-#func get_jump_buffer(delta: float) -> bool:
-	#jump_buffer_timer -= delta
-	#return jump_buffer_timer > 0
-#
-#func reset_jump_buffer() -> void:
-	#jump_buffer_timer = jump_buffer

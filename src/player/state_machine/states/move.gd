@@ -10,13 +10,13 @@ extends State
 
 @export_range(0, 1, .05) var time_to_enter_climb: float = .5
 
-@onready var timer: float
+@onready var climb_timer: float
 
 func enter() -> void:
 	super()
 	acceleration = max_speed / seconds_to_reach_max_speed
 	deceleration = max_speed / seconds_to_reach_zero_speed
-	timer = time_to_enter_climb
+	climb_timer = time_to_enter_climb
 
 func exit() -> void:
 	reset_coyote_time()
@@ -34,17 +34,17 @@ func process_physics(delta: float) -> State:
 	parent.move_and_slide()
 	
 	if parent.is_on_floor():
-		if get_jump() or get_jump_buffer_timer():
+		if get_jump():
 			return jump_state
 	else:
 		return fall_state
 		
 	if near_wall():
-		timer -= delta
+		climb_timer -= delta
 	else: 
-		timer = time_to_enter_climb
+		climb_timer = time_to_enter_climb
 	
-	if timer <= 0:
+	if climb_timer <= 0:
 		return climb_state
 	
 	if near_rope && Input.is_action_pressed('up'):

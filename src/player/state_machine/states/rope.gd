@@ -13,8 +13,6 @@ func enter() -> void:
 	parent.position.x = rope_pos
 	parent.velocity.x = 0
 
-#func exit() -> void:
-	#reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 

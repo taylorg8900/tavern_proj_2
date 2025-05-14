@@ -369,3 +369,5 @@ What do I need from the timer?
 	- start()
 
 Using a timer might be a problem in the future. This line of code is in the documentation: "An unstable framerate may cause the timer to end inconsistently, which is especially noticeable if the wait time is lower than roughly 0.05 seconds. For very short timers, it is recommended to write your own code instead of using a Timer node."
+
+I have implemented it, but just to make sure I should identify in which states we want to use the jump buffer timer, and which states we want to reset it in. Then I will double check my implementation so it is correct.

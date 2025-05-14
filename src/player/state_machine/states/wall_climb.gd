@@ -19,7 +19,7 @@ func process_physics(delta: float) -> State:
 	if wants_drop():
 		return fall_state
 	
-	if get_jump():
+	if get_jump() or get_jump_buffer_timer():
 		return wall_jump_state
 	
 	if get_movement_input() != 0:

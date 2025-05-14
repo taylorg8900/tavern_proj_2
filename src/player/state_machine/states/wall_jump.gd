@@ -2,6 +2,7 @@ extends AirState
 
 @export var idle_state: State
 @export var move_state: State
+@export var jump_state: State
 @export var rope_climb_state: State
 @export var wall_slide_state: State
 @export var wall_climb_state: State
@@ -21,6 +22,7 @@ func enter() -> void:
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
 	coyote_timer = 0
+	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
@@ -42,7 +44,12 @@ func process_physics(delta: float) -> State:
 			return wall_climb_state
 		return wall_slide_state
 	
+	if get_jump():
+		jump_buffer_timer.start()
+	
 	if parent.is_on_floor():
+		if get_jump_buffer_timer():
+			return jump_state
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state

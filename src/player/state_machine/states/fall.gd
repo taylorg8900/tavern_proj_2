@@ -11,6 +11,8 @@ extends AirState
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
+	reset_jump_buffer_timer()
+
 
 func process_physics(delta: float) -> State:
 	if near_ledge():
@@ -33,8 +35,11 @@ func process_physics(delta: float) -> State:
 	
 	if get_jump():
 		jump_buffer_timer.start()
+	print(jump_buffer_timer.time_left)
 	
 	if parent.is_on_floor():
+		if get_jump_buffer_timer():
+			return jump_state
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state

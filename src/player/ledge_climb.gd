@@ -4,6 +4,7 @@ extends AirState
 
 @export var idle_state: State
 @export var move_state: State
+@export var jump_state: State
 @export var fall_state: State
 @export var rope_climb_state: State
 
@@ -32,10 +33,15 @@ func process_physics(delta: float) -> State:
 	if parent.velocity.y > 0:
 		return fall_state
 	
+	if get_jump():
+		jump_buffer_timer.start()
+	
 	parent.move_and_slide()
 	
 	
 	if parent.is_on_floor():
+		if get_jump_buffer_timer():
+			return jump_state
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
