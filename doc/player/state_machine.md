@@ -531,7 +531,7 @@ Here are all of the things that were not included in the previous version of the
 	- Idle : reset in exit function, not enter function
 	- Move : reset in exit function, not enter function
 - Jump buffer
-	-
+	- Jump : Not initiated in `process_physics()` when `get_jump()` is called
 - State Transitions
 	- Idle -> Jump : didn't check for jump buffer timer
 	- Move -> Jump : didn't check for jump buffer timer

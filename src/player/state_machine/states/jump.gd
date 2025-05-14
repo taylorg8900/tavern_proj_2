@@ -26,6 +26,9 @@ func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
 		flip_animation_and_raycast(get_movement_input() < 0)
 	
+	if get_jump():
+		jump_buffer_timer.start()
+	
 	if !Input.is_action_pressed("jump"):
 		switch_to_fast_gravity = true
 	
