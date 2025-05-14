@@ -18,6 +18,7 @@ func enter() -> void:
 	parent.velocity.y = jump_velocity
 	switch_to_fast_gravity = false
 	coyote_timer = 0
+	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:
 	
@@ -53,5 +54,8 @@ func process_physics(delta: float) -> State:
 	
 	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
 		return rope_state
+	
+	#if get_jump():
+		#jump_buffer_timer.start()
 	
 	return null

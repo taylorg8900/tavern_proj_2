@@ -331,6 +331,8 @@ Here are a bunch of other things that I need to implement now that all of the st
 - Corner correction (moves the player a little horizontally when they are going to just barely hit ceiling, avoids pixel perfect collisions which are annoying)
 - Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
 
+### Coyote time
+
 Coyote time definitely seems like the easiest one, and it's about time that I learned how to use timers. I don't know if I actually need a timer, since the coyote time doesn't persist between states... I think.
 - Coyote time only happens while you are falling, so do I even need a timer?
 
@@ -349,6 +351,21 @@ I ended up changing these to functions that reset coyote time so it is more read
 - In the enter functions of other states, such as jump, I set the coyote timer to 0 
 	- This is because we don't actually reduce the coyote timer automatically unless we call the function that does that, and it is more efficient to just set the variable to 0
 
+### Jump buffering
+
 Jump buffering also seems easy, but I think I do actually need a timer for this since there are some cases where having a variable changed by delta within just one state probably wouldn't work (falling -> ledge grab -> ledge climb, or jump -> rope -> rope jump)
 - I could maybe just have this as another static variable that gets reset during the `enter()` function of states, and incorporate it into the `get_jump()` function somehow
 - I could check to see if the jump buffer is active anytime we would also check for get_jump, and if it is active then we just transition like how we would normally
+
+I actually want to use a timer, since it is different than using the coyote timer variable - since we don't start taking away from the jump buffer's float value until we trigger a jump input, we would end up needing some kind of tracker variable inside of our states just to know if we are allowed to start taking away delta time in our process_physics. I could definitely do that, but I also want to see if I can figure out the timer thing.
+
+What do I need from the timer?
+- A way to reset the timer just like we have in the exit functions of our states
+	- Having the oneshot property turned off and having it automatically reset might actually be really useful, though it might mean that we can spam jumps in mid air and constantly trigger it so idk
+	- calling stop() is apparently how you do this, which i guess can make sense since pausing would take care of pausing it yo im tired brother
+- A way to see how much time is left, and if is greater than 0
+	- get_time_left() would work
+- A way to start the timer
+	- start()
+
+Using a timer might be a problem in the future. This line of code is in the documentation: "An unstable framerate may cause the timer to end inconsistently, which is especially noticeable if the wait time is lower than roughly 0.05 seconds. For very short timers, it is recommended to write your own code instead of using a Timer node."

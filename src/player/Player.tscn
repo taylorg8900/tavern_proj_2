@@ -100,6 +100,8 @@ height = 14.0
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_blii3")
 
+[node name="JumpBufferTimer" type="Timer" parent="."]
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_54v5a")
 animation = &"ledge"
@@ -141,6 +143,7 @@ climb_state = NodePath("../../WallStates/wall_climb")
 time_to_enter_climb = 0.3
 animation_name = "running"
 label_text = "move"
+coyote_time = 0.47
 seconds_to_reach_max_speed = 0.12
 
 [node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_climb_state", "ledge_hang_state")]

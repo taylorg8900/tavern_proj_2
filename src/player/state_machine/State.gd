@@ -23,20 +23,18 @@ var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
 var air_raycast: RayCast2D
 var hand_position: Marker2D
+var jump_buffer_timer: Timer
 
 # Everything else
-static var has_jumped = false # keeps track of coyote time
-static var will_jump = false # keeps track of jump buffer
 
 static var coyote_timer
-static var jump_buffer_timer
 
-func get_coyote_time(delta: float) -> bool:
-	coyote_timer -= delta
-	return coyote_timer > 0
+func reset_jump_buffer_timer() -> void:
+	jump_buffer_timer.set_wait_time(jump_buffer)
+	jump_buffer_timer.stop()
 
-func reset_coyote_time() -> void:
-	coyote_timer = coyote_time
+func get_jump_buffer_timer() -> bool:
+	return jump_buffer_timer.get_time_left() > 0
 
 static var ropes : Array
 static var near_rope = false
@@ -45,6 +43,7 @@ static var rope_pos = null
 func _ready() -> void:
 	Signals.rope_entered.connect(entered_rope)
 	Signals.rope_exited.connect(exited_rope)
+	
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -126,3 +125,16 @@ func exited_rope(node_entered: Node2D, rope: Node2D) -> void:
 			near_rope = false
 			rope_pos = null
 	
+func get_coyote_time(delta: float) -> bool:
+	coyote_timer -= delta
+	return coyote_timer > 0
+
+func reset_coyote_time() -> void:
+	coyote_timer = coyote_time
+
+#func get_jump_buffer(delta: float) -> bool:
+	#jump_buffer_timer -= delta
+	#return jump_buffer_timer > 0
+#
+#func reset_jump_buffer() -> void:
+	#jump_buffer_timer = jump_buffer

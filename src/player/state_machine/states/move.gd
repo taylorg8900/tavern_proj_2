@@ -33,10 +33,10 @@ func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
 	
-	if get_jump() and parent.is_on_floor():
-		return jump_state
-	
-	if !parent.is_on_floor():
+	if parent.is_on_floor():
+		if get_jump() or get_jump_buffer_timer():
+			return jump_state
+	else:
 		return fall_state
 		
 	if near_wall():
