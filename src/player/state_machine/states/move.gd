@@ -14,15 +14,14 @@ extends State
 
 func enter() -> void:
 	super()
-	acceleration = max_speed / seconds_to_reach_max_speed
-	deceleration = max_speed / seconds_to_reach_zero_speed
 	climb_timer = time_to_enter_climb
-
-func exit() -> void:
 	reset_coyote_time()
 
+
 func process_physics(delta: float) -> State:
-	change_velocity_x(delta)
+	
+	# Keep this before idle state check, or it will always enter idle state
+	change_velocity_x(delta) 
 	
 	if parent.velocity.x == 0:
 		return idle_state
@@ -30,24 +29,23 @@ func process_physics(delta: float) -> State:
 	# if this is after move_and_slide, small values will get rounded to 0 and flip_h gets called before we enter idle state in the next process
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	
-	parent.velocity.y += gravity * delta
-	parent.move_and_slide()
-	
 	if parent.is_on_floor():
-		if get_jump():
+		if get_jump() or get_jump_buffer_timer():
 			return jump_state
 	else:
 		return fall_state
-		
+	
 	if near_wall():
 		climb_timer -= delta
+		if climb_timer <= 0:
+			return climb_state
 	else: 
 		climb_timer = time_to_enter_climb
-	
-	if climb_timer <= 0:
-		return climb_state
 	
 	if near_rope && Input.is_action_pressed('up'):
 		return rope_state
 	
+	
+	parent.velocity.y += gravity * delta
+	parent.move_and_slide()
 	return null

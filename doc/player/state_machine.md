@@ -519,3 +519,18 @@ I am also going to reidentify all of the states we can transition into and from,
 		- Idle (if we finish animation and have no movement)
 		- Move (if we finish animation and have movement)
 		- Rope (if we finish animation, near rope, and try to go up or down it)
+
+Other things to change:
+- Jump -> Wall Climb : make this automatic
+- Jump -> Wall hang : make this automatic
+
+
+Here are all of the things that were not included in the previous version of the states, before updating the states to match what I have written above!
+- Coyote Time
+	- Idle : reset in exit function, not enter function
+	- Move : reset in exit function, not enter function
+- Jump buffer
+	-
+- State Transitions
+	- Idle -> Jump : didn't check for jump buffer timer
+	- Move -> Jump : didn't check for jump buffer timer

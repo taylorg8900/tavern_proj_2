@@ -9,8 +9,6 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.x = 0
-
-func exit() -> void:
 	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
@@ -19,7 +17,7 @@ func process_physics(delta: float) -> State:
 		return move_state
 	
 	if parent.is_on_floor():
-		if get_jump():
+		if get_jump() or get_jump_buffer_timer():
 			return jump_state
 	else:
 		return fall_state
