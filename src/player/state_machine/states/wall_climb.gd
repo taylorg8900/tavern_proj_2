@@ -9,7 +9,7 @@ extends State
 
 func enter() -> void:
 	super()
-	has_jumped = false
+	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 	if near_ledge():

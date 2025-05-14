@@ -8,24 +8,19 @@ extends AirState
 @export var ledge_hang_state: State
 @export var wall_slide_state: State
 
-@onready var coyote_timer = coyote_time
-
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
-	coyote_timer = coyote_time
+	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 	if near_ledge():
 		snap_to_ledge()
 		return ledge_hang_state
 	
-	if coyote_timer > 0 && get_jump() && !has_jumped:
+	if get_coyote_time(delta) && get_jump():
 		return jump_state
-	#if coyote_timer <= 0:
-		#return jump_state
 	
-	coyote_timer -= delta
 
 	parent.velocity.y = move_toward(parent.velocity.y, terminal_velocity, fast_gravity * delta)
 	

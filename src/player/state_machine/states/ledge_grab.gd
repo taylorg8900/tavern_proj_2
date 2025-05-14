@@ -6,7 +6,7 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.y = 0
-	has_jumped = false
+	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 	if wants_drop():

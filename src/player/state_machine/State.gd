@@ -28,6 +28,16 @@ var hand_position: Marker2D
 static var has_jumped = false # keeps track of coyote time
 static var will_jump = false # keeps track of jump buffer
 
+static var coyote_timer
+static var jump_buffer_timer
+
+func get_coyote_time(delta: float) -> bool:
+	coyote_timer -= delta
+	return coyote_timer > 0
+
+func reset_coyote_time() -> void:
+	coyote_timer = coyote_time
+
 static var ropes : Array
 static var near_rope = false
 static var rope_pos = null
@@ -64,8 +74,6 @@ func wants_drop() -> bool:
 func wants_up() -> bool:
 	return Input.is_action_just_pressed('up')
 
-func get_coyote_time() -> void:
-	pass
 
 func flip_animation_and_raycast(flip: bool) -> void:
 	animations.flip_h = flip

@@ -9,7 +9,7 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.x = 0
-	has_jumped = false
+	reset_coyote_time()
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta

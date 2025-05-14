@@ -12,13 +12,11 @@ func enter() -> void:
 	parent.position.y -= 1
 	parent.position.x = rope_pos
 	parent.velocity.x = 0
-	has_jumped = false
+	reset_coyote_time()
 
 
 func process_physics(delta: float) -> State:
-	
-	#if get_jump():
-		#return wall_jump_state
+
 	
 	if get_movement_input() != 0:
 		flip_animation_and_raycast(get_movement_input() < 0)

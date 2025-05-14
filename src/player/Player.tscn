@@ -165,6 +165,7 @@ rope_state = NodePath("../rope")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 wall_slide_state = NodePath("../../WallStates/wall_slide")
 label_text = "falling"
+coyote_time = 0.67
 seconds_to_reach_max_speed = 0.2
 seconds_to_reach_zero_speed = 0.2
 

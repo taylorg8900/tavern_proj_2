@@ -20,7 +20,7 @@ func enter() -> void:
 	parent.velocity = Vector2(max_speed * get_direction() * -1, jump_velocity)
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
-	has_jumped = true
+
 
 func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
