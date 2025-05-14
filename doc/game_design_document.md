@@ -3,7 +3,8 @@
 Here I will note down which things I worked on, in order. This is for me to look back on in the future. If I make a devlog or something it would be really handy.
 - player.md, trying to figure out all of the things I would like the player to do and use
 - state_machine.md, learning how to implement a state machine and creating my own states
-- rope.md
+- rope.md, and the rope state, learned how signals work and how to attach them to a global autoload script to be accessed anywhere
+- state_machine.md, implementing things like coyote time and jump buffering, learned you can use static typing in Godot
 
 
 # Story

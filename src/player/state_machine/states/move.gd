@@ -17,6 +17,7 @@ func enter() -> void:
 	acceleration = max_speed / seconds_to_reach_max_speed
 	deceleration = max_speed / seconds_to_reach_zero_speed
 	timer = time_to_enter_climb
+	has_jumped = false
 
 func process_physics(delta: float) -> State:
 	change_velocity_x(delta)

@@ -322,3 +322,23 @@ Transitions between states
 	- Move (if we hit ground, but our movement input is not 0)
 	- Fall (if we descend and the rope runs out of rope)
 	- Wall jump (standard jump for getting off rope)
+
+# QOL
+
+Here are a bunch of other things that I need to implement now that all of the states I set out to make are working (crazy that I've come this far)
+- Coyote time
+- Jump buffering (when you hit the jump button before you actually hit the ground)
+- Corner correction (moves the player a little horizontally when they are going to just barely hit ceiling, avoids pixel perfect collisions which are annoying)
+- Ledge magnetism (moves the player over a few pixels if they just barely would have missed otherwise)
+
+Coyote time definitely seems like the easiest one, and it's about time that I learned how to use timers. I don't know if I actually need a timer, since the coyote time doesn't persist between states... I think.
+- Coyote time only happens while you are falling, so do I even need a timer?
+
+While implementing coyote time, it turns out you can just spam jump since the jump and fall states can now transition to each other, allowing you to fly. I am going to fix this by having another variable to keep track of if we have jumped, and reset it when we exit the falling states.
+- Since inheritance means the 
+- Bro you can use static variables and functions in godot what the fuck wait a minute
+	- I am going to use this to keep the variable shared between classes (im also too hungry to remember why this works but i know it does)
+- Set `has_jumped` to true when:
+	- We enter a any jumping state
+- Set `has_jumped` to false when:
+	- We enter any state that doesn't inherit from AirState, AKA anytime we are touching a wall or floor or whatever

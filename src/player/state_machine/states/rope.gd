@@ -12,6 +12,7 @@ func enter() -> void:
 	parent.position.y -= 1
 	parent.position.x = rope_pos
 	parent.velocity.x = 0
+	has_jumped = false
 
 
 func process_physics(delta: float) -> State:

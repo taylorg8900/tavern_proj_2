@@ -17,6 +17,8 @@ func enter() -> void:
 	super()
 	parent.velocity.y = jump_velocity
 	switch_to_fast_gravity = false
+	has_jumped = true
+
 
 func process_physics(delta: float) -> State:
 	change_velocity_x(delta)

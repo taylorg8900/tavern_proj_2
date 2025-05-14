@@ -6,6 +6,7 @@ extends State
 
 func enter() -> void:
 	super()
+	has_jumped = false
 
 func process_physics(delta: float) -> State:
 	if wants_drop():

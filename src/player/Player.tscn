@@ -156,10 +156,11 @@ label_text = "jump"
 seconds_to_reach_max_speed = 0.2
 seconds_to_reach_zero_speed = 0.2
 
-[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
+[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
 script = ExtResource("7_l34un")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
+jump_state = NodePath("../jump")
 rope_state = NodePath("../rope")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 wall_slide_state = NodePath("../../WallStates/wall_slide")

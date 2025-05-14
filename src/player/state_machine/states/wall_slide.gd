@@ -11,19 +11,21 @@ extends State
 
 func enter() -> void:
 	super()
+	has_jumped = false
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y = move_toward(parent.velocity.y, 0, wall_deceleration * delta)
 	if parent.velocity.y == 0:
 		return wall_hang_state
 	
-	if wants_drop():
-		return fall_state
-	
 	if get_movement_input() != 0:
 		if get_movement_input() != get_direction():
 			flip_animation_and_raycast(get_movement_input() < 0)
 			return fall_state
+	if wants_drop():
+		return fall_state
+	
+	
 	
 	parent.move_and_slide()
 	

@@ -4,6 +4,7 @@ extends Node
 @export var animation_name: String
 @export var max_speed: float = 95
 @export var label_text: String
+@export_range(0, 1, 0.01) var coyote_time: float = .1
 
 @export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
 @export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float = .1
@@ -11,10 +12,7 @@ extends Node
 @onready var acceleration = max_speed / seconds_to_reach_max_speed
 @onready var deceleration = max_speed / seconds_to_reach_zero_speed
 
-@onready var ropes : Array
-@onready var near_rope = false
-@onready var rope_pos = null
-
+# variables that get set by our State Manager
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 var parent: CharacterBody2D
 var animations: AnimatedSprite2D
@@ -24,6 +22,13 @@ var wall_raycast: RayCast2D
 var floor_raycast: RayCast2D
 var air_raycast: RayCast2D
 var hand_position: Marker2D
+
+# Everything else
+static var has_jumped = false
+
+var ropes : Array
+var near_rope = false
+var rope_pos = null
 
 func _ready() -> void:
 	Signals.rope_entered.connect(entered_rope)
