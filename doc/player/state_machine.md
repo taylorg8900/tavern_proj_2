@@ -409,7 +409,8 @@ I am also going to reidentify all of the states we can transition into and from,
 		- ledge hang (if we are near a ledge)
 - Fall
 	- Reset jump buffer timer for these cases
-		- (fall -> jump)
+		- (fall -> idle -> jump)
+		- (fall -> move -> jump)
 		- (fall -> rope -> rope jump)
 		- (fall -> ledge hang -> ledge climb)
 	- States
@@ -421,16 +422,19 @@ I am also going to reidentify all of the states we can transition into and from,
 		- Ledge hang (if we are near ledge)
 - Rope
 	- Reset coyote time for these cases
-		- (rope -> fall -> rope jump)
+		- (rope -> rope fall -> rope jump)
 			- I will need to research some way of keeping track of which state I have been in previously for this to even work properly, or create a new state called 'rope fall', which is the quick and dirty option for right now which I might do)
 	- States
 		- Idle (if we are on ground and have no movement input)
 		- Move (if we are on ground and have movement input)
-		- Rope jump (if we want to jump, or if our jump buffer timer has time left, and if our y velocity is < 0)
+		- Rope jump (if we want to jump, or if our jump buffer timer has time left)
 		- Rope fall (if we fall off rope)
 - Rope jump
+	- Misc
+		- I would like to disable movement during the upwards part of this, just like with wall jumping (handled below)
 	- Reset jump buffer for these cases
-		- (rope jump -> jump)
+		- (rope jump -> idle -> jump)
+		- (rope jump -> move -> jump)
 			- like if a platform came up to meet us
 		- (rope jump -> rope -> rope jump)
 		- (rope jump -> wall climb -> wall jump)
@@ -445,21 +449,22 @@ I am also going to reidentify all of the states we can transition into and from,
 		- Wall climb (if we are near wall and press into it and our y velocity is < 0)
 		- Ledge hang (if we are near ledge)
 - Rope fall
-	- Reset coyote time for these cases
-		- (rope fall -> rope jump)
 	- Reset jump buffer for these cases
-		- (rope fall -> jump)
+		- (rope fall -> idle -> jump)
+		- (rope fall -> move -> jump)
+		- (rope fall -> rope -> rope jump)
 		- (rope fall -> ledge hang -> ledge climb)
 	- States
 		- Idle (if we hit ground and no movement input)
 		- Move (If we hit ground and have movement input)
-		- Jump (if we hit ground and jump buffer timer has time left)
 		- Rope (if we are near a rope and want to go up or down)
 		- Rope jump (only if the coyote timer has time left, and we want to jump)
 		- Wall slide (if we are near a wall, input into it)
 		- Ledge hang (if we are near ledge)
 - Wall slide
 	- Reset jump buffer time for these cases
+		- (wall slide -> idle -> jump)
+		- (wall slide -> move -> jump)
 		- (wall slide -> wall hang -> wall jump)
 	- States
 		- Idle (we hit ground and have no movement)
@@ -480,7 +485,8 @@ I am also going to reidentify all of the states we can transition into and from,
 	- Misc
 		- I would like to disable movement during the upwards part of this, actually! I will need to transition from the wall jump to a fall now
 	- Reset jump buffer for these cases
-		- (wall jump -> jump)
+		- (wall jump -> idle -> jump)
+		- (wall jump -> move -> jump)
 		- (wall jump -> rope -> rope jump)
 		- (wall jump -> wall climb -> wall jump)
 		- (wall jump -> wall hang -> wall jump)
@@ -488,7 +494,6 @@ I am also going to reidentify all of the states we can transition into and from,
 	- States
 		- Idle (if a platform comes up to meet us, but no movement)
 		- Move (if a platform comes up to meet us, and we have movement)
-		- Jump (if a platform comes up to meet us, and jump buffer timer has time left)
 		- Fall (if y velocity > 0)
 		- Rope (if we are near rope and want to go up or down)
 		- Wall hang (if we are near wall and input into it and our y velocity is exactly 0)
@@ -497,6 +502,7 @@ I am also going to reidentify all of the states we can transition into and from,
 - Ledge hang 
 	- Misc
 		- I think it is actually fine if we transition back to another ledge hang after either falling or 'ledge climbing' (which right now is just a jump), since in the future I will change it to an animation and there's kind of no reason to have either the `ledge_climb` or `ledge_fall` states
+		- Basically delete the `ledge climb` and `ledge fall` states
 	- States
 		- Idle (if a platform comes up to us and we have no movement, check this by utilizing the FloorRayCast as well since touching wall would trigger `is_on_floor()` im pretty sure)
 		- Move (same as above but if we have movement)
