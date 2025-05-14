@@ -5,6 +5,7 @@ extends AirState
 @export var move_state: State
 @export var fall_state: State
 @export var rope_state: State
+@export var wall_hang_state: State
 @export var wall_climb_state: State
 @export var ledge_hang_state: State
 
@@ -17,7 +18,6 @@ func enter() -> void:
 	super()
 	parent.velocity.y = jump_velocity
 	switch_to_fast_gravity = false
-	coyote_timer = 0
 	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:

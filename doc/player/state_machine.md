@@ -523,6 +523,7 @@ I am also going to reidentify all of the states we can transition into and from,
 Other things to change:
 - Jump -> Wall Climb : make this automatic
 - Jump -> Wall hang : make this automatic
+- Wall slide -> Fall : remove this
 
 
 Here are all of the things that were not included in the previous version of the states, before updating the states to match what I have written above!
