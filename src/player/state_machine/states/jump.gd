@@ -21,41 +21,40 @@ func enter() -> void:
 	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:
-	
 	change_velocity_x(delta)
 	
-	if near_ledge():
-		snap_to_ledge()
-		return ledge_hang_state
+	if get_movement_input() != 0:
+		flip_animation_and_raycast(get_movement_input() < 0)
+	
+	if !Input.is_action_pressed("jump"):
+		switch_to_fast_gravity = true
 	
 	if switch_to_fast_gravity:
 		parent.velocity.y += fast_gravity * delta
 	else:
 		parent.velocity.y += jump_gravity * delta
-		
-	if get_movement_input() != 0:
-		flip_animation_and_raycast(get_movement_input() < 0)
-		
-	parent.move_and_slide()
 	
 	if parent.velocity.y > 0:
 		return fall_state
 	
-	if near_wall() && get_movement_input() != 0:
-		return wall_climb_state
-			
+	# Keep before `parent.is_on_floor()` check
+	parent.move_and_slide()
+	
 	if parent.is_on_floor():
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
 	
-	if !Input.is_action_pressed("jump"):
-		switch_to_fast_gravity = true
+	if near_wall():
+		if parent.velocity.y == 0:
+			return wall_hang_state
+		return wall_climb_state
 	
-	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
+	if near_ledge():
+		snap_to_ledge()
+		return ledge_hang_state
+	
+	if near_rope && (wants_drop() or wants_up()):
 		return rope_state
-	
-	#if get_jump():
-		#jump_buffer_timer.start()
 	
 	return null

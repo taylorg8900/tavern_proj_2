@@ -535,3 +535,4 @@ Here are all of the things that were not included in the previous version of the
 - State Transitions
 	- Idle -> Jump : didn't check for jump buffer timer
 	- Move -> Jump : didn't check for jump buffer timer
+	- Jump -> Wall hang : transition nonexistent

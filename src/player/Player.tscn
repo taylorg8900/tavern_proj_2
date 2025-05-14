@@ -146,12 +146,13 @@ animation_name = "running"
 label_text = "move"
 seconds_to_reach_max_speed = 0.12
 
-[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_climb_state", "ledge_hang_state")]
+[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_hang_state", "wall_climb_state", "ledge_hang_state")]
 script = ExtResource("6_e0fh5")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 fall_state = NodePath("../fall")
 rope_state = NodePath("../rope")
+wall_hang_state = NodePath("../../WallStates/wall_hang")
 wall_climb_state = NodePath("../../WallStates/wall_climb")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 peak_time_to_ground = 0.25
