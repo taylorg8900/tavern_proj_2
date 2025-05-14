@@ -44,3 +44,46 @@ Right now, the rope will send a signal anytime a Node2D enters, but this is a pr
 		- This is super tedious and I'm just not going to do it
 - My idea is what if we also emitted the type of Node2D that entered, along with the x position? And then in the player stuff we can check for that.
 	- I got this working. You need to have the line `if node_type is Player:` to check if the instance of the Node2D that the signal sends out inherits from the Player class
+
+# Signalling from the player, and not the rope
+
+An issue I am running into now that my State is working properly is that when I chain multiple ropes together, I can't stay in the state continuously between them. This is obviously caused by me resetting my `near_rope` bool that sets to true on the `body_entered` signal from the rope, and sets to false on `body_exited`. Since whenever we leave one part of the rope, the bool is false before the next piece can set it to true, we have a problem.
+
+I learned that we can explicitly check to see if the body we have entered is a certain class - I have been using this to check for if the player was the thing that the rope signal emits had entered, but what if that was backwards? And what if instead of checking to see if the body exited was just any rope, I kept track of exactly which rope it was? And then whenever we would get a `body_exited`, we would have already replaced the rope we are tracking so it would return false and we wouldn't switch states on accident.
+- Object : get_instance_id()
+	- Right now this looks like the only way I can keep track of individual ropes
+
+psuedocode
+```
+(inside the Signals global autoload script)
+
+signal rope_entered(node: node2d, x_pos: int)
+signal rope_exited(node: node2d)
+
+(somewhere inside of our player)
+_on_body_entered(body: node2d)
+	if it is of class Rope
+		Signals.rope_entered.emit(body.get_instance_id(), body.position.x)
+_on_body_exited(body: node2d)
+	if of class Rope
+		Signals.rope_exited.... same as above pretty much
+
+(in our State class)
+
+var rope_id
+var near_rope
+var rope_pos
+
+func entered_rope(node: node2d, x_pos) -> void:
+	if node_type is Rope:
+		rope_id = node.get_instance_id()
+		near_rope = true
+		rope_pos = x_pos
+
+func exited_rope(node_type: Node2D) -> void:
+	if node_type is Rope:
+		rope_id = null
+		near_rope = false
+		rope_pos = null
+
+```
