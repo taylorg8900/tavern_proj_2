@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=29 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://src/player/state_machine/states/ledge_grab.gd" id="9_0bnn7"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/dropping.gd" id="10_2irxs"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/rope.gd" id="10_3t85p"]
+[ext_resource type="Script" path="res://src/player/state_machine/states/rope_jump.gd" id="11_4sady"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/wall_slide.gd" id="11_7vdch"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/wall_hang.gd" id="11_sygnp"]
 [ext_resource type="Script" path="res://src/player/state_machine/states/wall_jump.gd" id="13_3bwbt"]
@@ -171,8 +172,16 @@ script = ExtResource("10_3t85p")
 idle_state = NodePath("../idle")
 move_state = NodePath("../move")
 fall_state = NodePath("../fall")
-wall_jump_state = NodePath("../../WallStates/wall_jump")
+wall_jump_state = NodePath("../rope_jump")
 label_text = "rope"
+
+[node name="rope_jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "wall_slide_state", "wall_climb_state", "ledge_hang_state")]
+script = ExtResource("11_4sady")
+idle_state = NodePath("../idle")
+move_state = NodePath("../move")
+wall_slide_state = NodePath("../../WallStates/wall_slide")
+wall_climb_state = NodePath("../../WallStates/wall_climb")
+ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 
 [node name="WallStates" type="Node" parent="StateMachine"]
 

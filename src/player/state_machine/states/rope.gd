@@ -17,13 +17,15 @@ func enter() -> void:
 
 func process_physics(delta: float) -> State:
 	
-	if get_jump():
-		return wall_jump_state
+	#if get_jump():
+		#return wall_jump_state
 	
 	if get_movement_input() != 0:
 		flip_animation_and_raycast(get_movement_input() < 0)
+		print(get_direction())
 		if get_jump():
-			flip_animation_and_raycast(get_direction() > 0)
+			flip_animation_and_raycast(get_movement_input() > 0)
+			print(get_direction())
 			return wall_jump_state
 	elif Input.is_action_pressed('jump') or Input.is_action_pressed('up'):
 		parent.velocity.y = move_toward(parent.velocity.y, -1 * climb_speed, delta * acceleration)
