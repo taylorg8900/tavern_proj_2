@@ -138,6 +138,7 @@ Now, I will brainstorm potential uses for each item.
 			- Make enemy do less damage
 			- Make enemy have less health
 			- Freeze enemy
+			- Turn enemy into a banana with the same animations as from [this video](https://www.tiktok.com/@burningonion_/video/7327765285044325664?lang=en) ("Important question! How would a banana move?")
 		- Damage
 			- Fireball
 			- Mine type explosions
