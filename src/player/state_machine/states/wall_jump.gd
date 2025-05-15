@@ -25,7 +25,7 @@ func enter() -> void:
 func process_physics(delta: float) -> State:
 	if get_movement_input() != 0:
 		change_velocity_x(delta)
-		# having this isolated will cause the animations to flip if somehow we hit a wall without triggering near_wall or near_ledge, so keep it up here
+		# having this isolated will cause the animations to flip if somehow we hit a wall without triggering near_wall or near_ledge, so keep it up here (like if our bottom half hits above a ledge without triggering enter ledge)
 		flip_animation_and_raycast(parent.velocity.x < 0)
 	
 	if near_ledge():

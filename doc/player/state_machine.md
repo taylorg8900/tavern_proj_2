@@ -526,6 +526,7 @@ Other things to change:
 - Jump -> Wall hang : make this automatic
 - Wall slide -> Fall : remove this
 - Fall -> Wall hang : add a threshold so instead of entering wall slide, we can instead immediately enter wall hang
+- Add coyote time to wall jumping, reset in wall hang and wall climb
 
 
 Here are ~~all of the things~~ the things I remembered to include that were not part of the previous version of the states, before updating the states to match what I have written above!
