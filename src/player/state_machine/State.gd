@@ -69,10 +69,10 @@ func get_jump() -> bool:
 	return Input.is_action_just_pressed('jump')
 
 func wants_drop() -> bool:
-	return Input.is_action_just_pressed('down')
+	return Input.is_action_pressed('down')
 
 func wants_up() -> bool:
-	return Input.is_action_just_pressed('up')
+	return Input.is_action_pressed('up')
 
 
 func flip_animation_and_raycast(flip: bool) -> void:

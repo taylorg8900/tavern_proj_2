@@ -13,7 +13,6 @@ func enter() -> void:
 	parent.velocity.y = 0
 	reset_jump_buffer_timer()
 
-
 func process_physics(delta: float) -> State:
 	if get_jump():
 		jump_buffer_timer.start()

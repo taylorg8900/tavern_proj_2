@@ -11,6 +11,7 @@ extends State
 
 func enter() -> void:
 	super()
+	reset_jump_buffer_timer()
 
 
 func process_physics(delta: float) -> State:
@@ -18,14 +19,8 @@ func process_physics(delta: float) -> State:
 	if parent.velocity.y == 0:
 		return wall_hang_state
 	
-	if get_movement_input() != 0:
-		if get_movement_input() != get_direction():
-			flip_animation_and_raycast(get_movement_input() < 0)
-			return fall_state
-	if wants_drop():
-		return fall_state
-	
-	
+	if get_jump():
+		jump_buffer_timer.start()
 	
 	parent.move_and_slide()
 	
