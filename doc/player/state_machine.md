@@ -549,3 +549,14 @@ Here are ~~all of the things~~ the things I remembered to include that were not 
 Also, sadly we do still need to keep ledge climb and ledge fall as they are, at least unless there is a way for me to keep track of which states I have been in previously and exclude certain states from being transitioned to based on that... Which someone smarter than me has definitely figured out already.
 - Maybe this is what a hierarchical state machine is for
 - I am still going to clean up the duplicated code that I have so that transitioning to another state machine would be easier
+
+Now that I have all of this implemented, what else do I want?
+- If our velocity is under a certain threshold, stop when we hit an overhang of the wall as a saving grace
+	- A really nice animation where our guy swings a little would be amazing
+- If our velocity is under a certain threshold, enter a wall hang instead of wall slide when transitioning from falling
+- There has to be a better way of maintaining these states than having these somewhat duplicated states that do slightly different things
+- Make wall jumping feel better, because right now if you have the habit of holding a direction you just instantly fall right after jumping to another wall
+- I still want jump cutting and ledge magnetism
+- Make the player enter a ledge hanging state if they press 'down' while standing / moving near a ledge
+	- This is a FUCKING GREAT idea, would make the climbing feel very dynamic PLEASE DO THIS FUTURE ME
+- Make walking down slopes not bouncy, look up how to do this because im sure it is a simple fix

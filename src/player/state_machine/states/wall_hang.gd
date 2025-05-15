@@ -6,6 +6,7 @@ extends State
 
 func enter() -> void:
 	super()
+	reset_coyote_time()
 
 
 func process_physics(delta: float) -> State:
