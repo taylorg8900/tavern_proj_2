@@ -97,7 +97,7 @@ func near_ledge() -> bool:
 	return (!top_raycast.is_colliding() && wall_raycast.is_colliding())
 
 func near_wall() -> bool:
-	return wall_raycast.is_colliding() 
+	return wall_raycast.is_colliding() and top_raycast.is_colliding()
 
 func change_velocity_x(delta: float) -> void:
 	if get_movement_input() != 0:

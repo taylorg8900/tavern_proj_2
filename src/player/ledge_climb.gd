@@ -9,7 +9,7 @@ extends AirState
 @export var rope_climb_state: State
 
 @onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
-@onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
+#@onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 
 var switch_to_fast_gravity : bool = false
 

@@ -12,7 +12,6 @@ extends AirState
 @export_range(0, 1, .05) var jump_height_multiplier = .6
 
 @onready var jump_velocity : float = jump_height_multiplier * (-2.0 * jump_height) / jump_time_to_peak
-@onready var jump_gravity : float = (2.0 * jump_height) / (jump_time_to_peak * jump_time_to_peak)
 
 @onready var switch_to_fast_gravity : bool = false
 
@@ -21,7 +20,6 @@ func enter() -> void:
 	parent.velocity = Vector2(max_speed * get_direction() * -1, jump_velocity)
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
-	coyote_timer = 0
 	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:
