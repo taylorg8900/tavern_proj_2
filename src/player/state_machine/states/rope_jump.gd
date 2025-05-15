@@ -6,3 +6,6 @@ func enter() -> void:
 	flip_animation_and_raycast(parent.velocity.x > 0)
 	parent.velocity = Vector2(max_speed * get_direction(), jump_velocity)
 	flip_animation_and_raycast(parent.velocity.x < 0)
+
+func process_physics(delta: float) -> State:
+	return super(delta)

@@ -2,9 +2,10 @@ extends AirState
 
 @export var idle_state: State
 @export var move_state: State
-@export var jump_state: State
+#@export var jump_state: State
+@export var fall_state: State
 @export var rope_climb_state: State
-@export var wall_slide_state: State
+@export var wall_hang_state: State
 @export var wall_climb_state: State
 @export var ledge_hang_state: State
 
@@ -23,10 +24,11 @@ func enter() -> void:
 	reset_jump_buffer_timer()
 
 func process_physics(delta: float) -> State:
-	if get_movement_input() != 0:
-		change_velocity_x(delta)
-		# having this isolated will cause the animations to flip if somehow we hit a wall without triggering near_wall or near_ledge, so keep it up here (like if our bottom half hits above a ledge without triggering enter ledge)
-		flip_animation_and_raycast(parent.velocity.x < 0)
+	#print(parent.velocity.y)
+	#if get_movement_input() != 0:
+		#change_velocity_x(delta)
+		## having this isolated will cause the animations to flip if somehow we hit a wall without triggering near_wall or near_ledge, so keep it up here (like if our bottom half hits above a ledge without triggering enter ledge)
+	#flip_animation_and_raycast(parent.velocity.x < 0)
 	
 	if near_ledge():
 		snap_to_ledge()
@@ -37,17 +39,21 @@ func process_physics(delta: float) -> State:
 	else:
 		parent.velocity.y += jump_gravity * delta
 	
+	if parent.velocity.y > 0:
+		return fall_state
+	
 	if near_wall():
 		if parent.velocity.y < 0:
 			return wall_climb_state
-		return wall_slide_state
+		elif parent.velocity.y == 0:
+			return wall_hang_state
 	
 	if get_jump():
 		jump_buffer_timer.start()
 	
 	if parent.is_on_floor():
-		if get_jump_buffer_timer():
-			return jump_state
+		#if get_jump_buffer_timer():
+			#return jump_state
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
