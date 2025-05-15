@@ -33,12 +33,13 @@ func process_physics(delta: float) -> State:
 			return move_state
 		return idle_state
 	
-	if near_wall() && get_movement_input() != 0:
-		return wall_slide_state
-	
+	# Make sure to check this before checking the wall!
 	if near_ledge():
 		snap_to_ledge()
 		return ledge_hang_state
+	
+	if near_wall() && get_movement_input() != 0:
+		return wall_slide_state
 	
 	if near_rope && (wants_up() or wants_drop()):
 		return rope_state

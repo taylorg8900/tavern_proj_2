@@ -481,6 +481,7 @@ I am also going to reidentify all of the states we can transition into and from,
 		- Fall (if we want to drop, or if we change direction)
 		- Wall hang (if our y velocity is 0)
 		- Wall jump (if we want to jump, or if jump buffer timer has time left)
+		- Ledge grab (if we are near ledge)
 - Wall jump
 	- Misc
 		- I would like to disable movement during the upwards part of this, actually! I will need to transition from the wall jump to a fall now
@@ -527,7 +528,7 @@ Other things to change:
 - Fall -> Wall hang : add a threshold so instead of entering wall slide, we can instead immediately enter wall hang
 
 
-Here are all of the things that were not included in the previous version of the states, before updating the states to match what I have written above!
+Here are ~~all of the things~~ the things I remembered to include that were not part of the previous version of the states, before updating the states to match what I have written above!
 - Coyote Time
 	- Idle : reset in exit function, not enter function
 	- Move : reset in exit function, not enter function
@@ -536,9 +537,11 @@ Here are all of the things that were not included in the previous version of the
 	- Jump : Not initiated in `process_physics()` when `get_jump()` is called
 	- Fall : No longer uses the jump buffer to enter directly into a jump
 	- Wall slide : Wasn't reset in `enter()` or initiated in `process_physics()`
+	- Wall hang : unused to transition states
 - State Transitions
 	- Idle -> Jump : didn't check for jump buffer timer
 	- Move -> Jump : didn't check for jump buffer timer
 	- Jump -> Wall hang : transition nonexistent
 	- Rope -> Rope fall : created state, inherits from 'fall'
 	- Wall slide -> fall : no longer responds to user input
+	- Wall hang -> wall jump : didn't check for jump buffer timer

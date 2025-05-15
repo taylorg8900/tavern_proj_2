@@ -223,9 +223,10 @@ wall_jump_state = NodePath("../wall_jump")
 animation_name = "idle"
 label_text = "hang"
 
-[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "wall_jump_state", "ledge_hang_state")]
+[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "wall_hang_state", "wall_jump_state", "ledge_hang_state")]
 script = ExtResource("13_lpkdw")
 fall_state = NodePath("../../DefaultStates/fall")
+wall_hang_state = NodePath("../wall_hang")
 wall_jump_state = NodePath("../wall_jump")
 ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
 climb_speed = 30.0
