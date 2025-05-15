@@ -42,11 +42,18 @@ func process_physics(delta: float) -> State:
 	if parent.velocity.y > 0:
 		return fall_state
 	
+	if near_ledge():
+		snap_to_ledge()
+		return ledge_hang_state
+	
 	if near_wall():
 		if parent.velocity.y < 0:
 			return wall_climb_state
 		elif parent.velocity.y == 0:
 			return wall_hang_state
+	
+	if near_rope and (wants_up() or wants_drop()):
+		return rope_climb_state
 	
 	parent.move_and_slide()
 	
@@ -54,12 +61,5 @@ func process_physics(delta: float) -> State:
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
-	
-	if near_ledge():
-		snap_to_ledge()
-		return ledge_hang_state
-	
-	if near_rope and (wants_up() or wants_drop()):
-		return rope_climb_state
 	
 	return null

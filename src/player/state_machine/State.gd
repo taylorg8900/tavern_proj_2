@@ -4,7 +4,7 @@ extends Node
 @export var animation_name: String
 @export var max_speed: float = 95
 @export var label_text: String
-@export_range(0, 1, 0.01) var coyote_time: float = .1
+@export_range(0, 1, 0.01) var coyote_time: float = .12
 @export_range(0, 1, 0.01) var jump_buffer: float = .1
 
 @export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
@@ -28,14 +28,6 @@ var jump_buffer_timer: Timer
 # Everything else
 
 static var coyote_timer
-
-func reset_jump_buffer_timer() -> void:
-	jump_buffer_timer.stop()
-	jump_buffer_timer.set_wait_time(jump_buffer)
-	
-
-func get_jump_buffer_timer() -> bool:
-	return jump_buffer_timer.get_time_left() > 0
 
 static var ropes : Array
 static var near_rope = false
@@ -132,3 +124,11 @@ func get_coyote_time(delta: float) -> bool:
 
 func reset_coyote_time() -> void:
 	coyote_timer = coyote_time
+
+func reset_jump_buffer_timer() -> void:
+	if jump_buffer_timer.is_stopped():
+		jump_buffer_timer.stop()
+		jump_buffer_timer.set_wait_time(jump_buffer)
+
+func get_jump_buffer_timer() -> bool:
+	return jump_buffer_timer.get_time_left() > 0

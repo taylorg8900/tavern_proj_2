@@ -528,7 +528,6 @@ Other things to change:
 - Fall -> Wall hang : add a threshold so instead of entering wall slide, we can instead immediately enter wall hang
 - Add coyote time to wall jumping, reset in wall hang and wall climb
 
-
 Here are ~~all of the things~~ the things I remembered to include that were not part of the previous version of the states, before updating the states to match what I have written above!
 - Coyote Time
 	- Idle : reset in exit function, not enter function
@@ -546,3 +545,7 @@ Here are ~~all of the things~~ the things I remembered to include that were not 
 	- Rope -> Rope fall : created state, inherits from 'fall'
 	- Wall slide -> fall : no longer responds to user input
 	- Wall hang -> wall jump : didn't check for jump buffer timer
+
+Also, sadly we do still need to keep ledge climb and ledge fall as they are, at least unless there is a way for me to keep track of which states I have been in previously and exclude certain states from being transitioned to based on that... Which someone smarter than me has definitely figured out already.
+- Maybe this is what a hierarchical state machine is for
+- I am still going to clean up the duplicated code that I have so that transitioning to another state machine would be easier

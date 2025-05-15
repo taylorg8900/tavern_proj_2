@@ -8,7 +8,7 @@ extends State
 @export var rope_state: State
 @export var climb_state: State
 
-@export_range(0, 1, .05) var time_to_enter_climb: float = .5
+@export_range(0, 1, .05) var time_to_enter_climb: float = .25
 
 @onready var climb_timer: float
 
