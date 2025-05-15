@@ -12,13 +12,11 @@ extends AirState
 # since changing the jump height in the inspector will change our value for gravity, i have this instead
 @export_range(0, 1, .05) var jump_height_multiplier = .6
 
-@onready var jump_velocity : float = jump_height_multiplier * (-2.0 * jump_height) / jump_time_to_peak
-
 @onready var switch_to_fast_gravity : bool = false
 
 func enter() -> void:
 	super()
-	parent.velocity = Vector2(max_speed * get_direction() * -1, jump_velocity)
+	parent.velocity = Vector2(max_speed * get_direction() * -1, jump_velocity * jump_height_multiplier)
 	flip_animation_and_raycast(parent.velocity.x < 0)
 	switch_to_fast_gravity = false
 	reset_jump_buffer_timer()
@@ -30,9 +28,11 @@ func process_physics(delta: float) -> State:
 		## having this isolated will cause the animations to flip if somehow we hit a wall without triggering near_wall or near_ledge, so keep it up here (like if our bottom half hits above a ledge without triggering enter ledge)
 	#flip_animation_and_raycast(parent.velocity.x < 0)
 	
-	if near_ledge():
-		snap_to_ledge()
-		return ledge_hang_state
+	if get_jump():
+		jump_buffer_timer.start()
+	
+	if !Input.is_action_pressed("jump"):
+		switch_to_fast_gravity = true
 	
 	if switch_to_fast_gravity:
 		parent.velocity.y += fast_gravity * delta
@@ -48,22 +48,18 @@ func process_physics(delta: float) -> State:
 		elif parent.velocity.y == 0:
 			return wall_hang_state
 	
-	if get_jump():
-		jump_buffer_timer.start()
+	parent.move_and_slide()
 	
 	if parent.is_on_floor():
-		#if get_jump_buffer_timer():
-			#return jump_state
 		if get_movement_input() != 0:
 			return move_state
 		return idle_state
 	
-	if (near_rope && Input.is_action_pressed('up')) or (near_rope && Input.is_action_pressed("down")):
+	if near_ledge():
+		snap_to_ledge()
+		return ledge_hang_state
+	
+	if near_rope and (wants_up() or wants_drop()):
 		return rope_climb_state
-	
-	parent.move_and_slide()
-	
-	if !Input.is_action_pressed("jump"):
-		switch_to_fast_gravity = true
 	
 	return null

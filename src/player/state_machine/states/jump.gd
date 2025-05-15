@@ -9,8 +9,6 @@ extends AirState
 @export var wall_climb_state: State
 @export var ledge_hang_state: State
 
-@onready var jump_velocity : float = (-2.0 * jump_height) / jump_time_to_peak
-
 var switch_to_fast_gravity : bool = false
 
 func enter() -> void:
