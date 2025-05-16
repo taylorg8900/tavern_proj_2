@@ -597,3 +597,7 @@ Let's look at some situation that could happen.
 7. The LedgeStateManager decides that the state we should enter into is a Ledge hang
 
 I don't know how to implement this yet, but I know that it would definitely cut down on repeated code if I got it working. Right now I have the check for if we want to enter a rope climb state in 7 different places, but this way it could just exist in our PlayerStateManager.
+
+I spent the rest of my time today going over both of these videos, and honestly it was really hard and I will come back and rethink things tomorrow.
+- [Code class - Build your own State Machines!](https://www.youtube.com/watch?v=-jkT4oFi1vk)
+- [Code Class - Hierarchical State Machines](https://www.youtube.com/watch?v=Z0fmGAQSQG8&t=1565s)
