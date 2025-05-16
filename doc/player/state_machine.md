@@ -551,12 +551,49 @@ Also, sadly we do still need to keep ledge climb and ledge fall as they are, at 
 - I am still going to clean up the duplicated code that I have so that transitioning to another state machine would be easier
 
 Now that I have all of this implemented, what else do I want?
-- If our velocity is under a certain threshold, stop when we hit an overhang of the wall as a saving grace
+- If our velocity is under a certain threshold, stop when we hit an overhang of the wall while wall sliding as a saving grace
 	- A really nice animation where our guy swings a little would be amazing
 - If our velocity is under a certain threshold, enter a wall hang instead of wall slide when transitioning from falling
 - There has to be a better way of maintaining these states than having these somewhat duplicated states that do slightly different things
 - Make wall jumping feel better, because right now if you have the habit of holding a direction you just instantly fall right after jumping to another wall
+	- Make player input the direction twice as a way to say 'hey are you sure bro?'
 - I still want jump cutting and ledge magnetism
 - Make the player enter a ledge hanging state if they press 'down' while standing / moving near a ledge
 	- This is a FUCKING GREAT idea, would make the climbing feel very dynamic PLEASE DO THIS FUTURE ME
 - Make walking down slopes not bouncy, look up how to do this because im sure it is a simple fix
+
+# Upgrading our State machine
+
+So we have a couple of problems so far. I feel like even though each state is unique, there is a LOT of duplicated calls to functions, and honestly writing out everything that I have up there is just way too much to keep track of. One thing that really bothers me right now is that we actually have to do this (wall hang -> wall fall -> rope jump) instead of (wall hang -> wall fall -> wall jump) because rope jump is just the exact same thing as wall jump, just with a reversed starting x velocity.
+
+There's also this - I felt like I had a lot of situations where I would think about transitioning straight to a jump state from a state where it doesn't actually make sense to do so. Instead of doing something like (fall -> move -> jump), my first instinct was to instead do (fall -> jump) if the jump buffer was active. 
+
+What if we took the same principle of delegating that responsibility of jumping to one of our ground states, but took it further? What if we had a structure like this that contains essentially everything we already have set up?
+
+Player State Manager
+- GroundStatesManager
+	- Idle
+	- Move
+- AirStatesManager
+	- Standard jump
+	- Fall
+	- Side jump
+	- Reverse side jump
+- WallStatesManager
+	- Wall sliding
+	- Wall climbing (includes wall hanging, since that doesn't need to really be a separate state until we get the overhang detection thing going)
+- RopeStatesManager
+	- Rope climbing
+- LedgeStatesManager
+	- Ledge hanging
+
+Let's look at some situation that could happen.
+1. We are currently in a wall climb, which is a state managed by our WallStatesManager
+2. The PlayerStateManager contains the logic for detecting that we are near a ledge
+3. During the physics process of the PlayerStateManager, we detect that we are near a ledge
+4. The PlayerStateManager somehow tells the LedgeStateManager that we want to enter a LedgeState
+5. We go to the LedgeStateManager
+6. The LedgeStateManager examines our state, and finds that our jump buffer is not active
+7. The LedgeStateManager decides that the state we should enter into is a Ledge hang
+
+I don't know how to implement this yet, but I know that it would definitely cut down on repeated code if I got it working. Right now I have the check for if we want to enter a rope climb state in 7 different places, but this way it could just exist in our PlayerStateManager.
