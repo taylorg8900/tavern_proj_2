@@ -4,10 +4,10 @@ class_name StateMachine
 
 var state : State
 
-function to compare a given State to state, and call exit() and all that and enter new state yada yada
 func SetState(new_state: State, forcereset: bool = false)
 	if new state != state or forcereset
-		state.exit
+		state.exit()
+		new_state.Initialise(state) <- this might not work, i am trying to keep a reference to the original state within whichever state we enter for later
 		state = new_state
-		state.enter
+		state.enter()
 ```
