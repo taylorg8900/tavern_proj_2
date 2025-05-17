@@ -653,6 +653,8 @@ States diagram
 	- Rope climb
 		- Side jump
 
+I am going to separate my pseudocode for each of the classes into their own md files since it is hard to keep track of everything when it is all together like this
+
 What would my StateMachine class look like?
 ```
 variable state State to keep track of
@@ -670,6 +672,7 @@ What would my 'core' class look like?
 ```
 class_name StateManagerCore
 default Godot nodes present in every player / npc / enemy, see if we can export these?
+	- CollisionObject2d or PhysicsBody2d, the thing that CharacterBody2d inherits from
 	- AnimatedSprite2d
 	- CollisionShape2d
 	- Label (for now)
@@ -688,8 +691,12 @@ inherits StateManagerCore
 get reference to the following
 	- all raycasts
 	- the jump buffer timer
+	- a coyote time timer
+		- The reason for this being a node now is that I want to be able to set it's time within states if needed, which we can do from here since they wouldn't inherit from PlayerManager
 
-export coyote_time : float
+
+@export jump buffer time amount : float
+@export coyote time amount : float
 
 input : Vector2
 
@@ -703,6 +710,7 @@ ropes : array
 
 _ready()
 	call SetUpStates() from our StateManagerCore
+	connect rope signals with our rope functions
 	set up our starting state with state_machine.Set()
 
 _physics_process(delta: float)
@@ -715,6 +723,7 @@ _process(delta: float)
 
 GetInput():
 	just figure out what x and y should be for input based off of wasd, left is negative and down is negative
+	for example left and up being pressed at same time is Vector2(-1, 1) since our x component is -1 and y component is +1
 
 OnGround() -> bool:
 	if we are on ground return true
@@ -733,4 +742,39 @@ NearRope() -> bool:
 
 SnapToLedge() -> void:
 	set player position to ledge 
+
+GetDirection() -> void:
+	returns -1 if our animatedsprite2d is facing left, +1 if facing right
+
+FlipDirection() -> void:
+	flips the animation and raycasts for our character
+
+ResetCoyoteTime() -> void:
+	resets our timer
+
+ResetJumpBuffer() -> void:
+	resets our jump buffer timer
+
+EnterRope(node_entered, rope, x_pos)
+	copy this from where it currently is inside State.gd
+
+ExitRope(node_entered, rope, x_pos)
+	copy this from where it is in State.gd
+```
+
+What would my State class look like now that I have separated a lot of it's functionality and given it to PlayerStateManager?
+```
+var is_done : bool
+
+var state_core : StateManagerCore
+
+func Enter() -> void:
+func Exit() -> void:
+func Do() -> void:
+func DoPhysics() -> void:
+
+func DoBranch() -> void:
+	Do()
+	state_core.state_machine.DoBranch()
+
 ```

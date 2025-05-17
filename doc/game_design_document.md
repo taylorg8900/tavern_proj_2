@@ -5,6 +5,7 @@ Here I will note down which things I worked on, in order. This is for me to look
 - state_machine.md, learning how to implement a state machine and creating my own states
 - rope.md, and the rope state, learned how signals work and how to attach them to a global autoload script to be accessed anywhere
 - state_machine.md, implementing things like coyote time and jump buffering, learned you can use static typing in Godot
+- switching to a hierarchical state machine so my state machine can be a lot more modular and less spaghetti
 
 
 # Story
