@@ -601,3 +601,136 @@ I don't know how to implement this yet, but I know that it would definitely cut 
 I spent the rest of my time today going over both of these videos, and honestly it was really hard and I will come back and rethink things tomorrow.
 - [Code class - Build your own State Machines!](https://www.youtube.com/watch?v=-jkT4oFi1vk)
 - [Code Class - Hierarchical State Machines](https://www.youtube.com/watch?v=Z0fmGAQSQG8&t=1565s)
+
+Ok so here is how my current state machine works and how AdamCYounis' works
+- Mine : Each frame, we call the physics_process function of an active state, and if that state decided that it needed to return a State which is different than itself, we change states and perform whichever logic is contained within it
+	- All state logic and transitions to other states are handled within each State independently of each other, leading to lots of duplicated function calls and transitions
+- AdamCYounis : Each frame, we call `Update()` (Unity's version of `physics_process()`) within our parent StateManager (PlayerManager, NPC) which will call `Do()` on our current State, and any substates down the hierarchy
+	- We can communicate that a new state should be selected by a parent State or a StateManager with the `is_complete` variable
+		- Communicating up the hierarchy
+		- Example is setting `is_complete` to true if `state.time` > 1 in Collect, which then is seen by NPC state manager, which decides to set our new state to Patrol 
+	- We can also forcibly `Set()` a child state within our State if certain conditions we decide are met
+		- Deciding children states down the hierarchy
+		- Example is setting our new state to Idle from within Collect, if we are in the Navigate state and are close enough to our target
+	- Having both the option to `Set()` in our StateManager and our children States let's us centralize logic for switching into new states, and organize our States better
+
+Here is the states organization from AdamCYounis
+- NPC
+	- Patrol State
+		- Navigate State
+		- Idle State
+	- Collect State
+		- Navigate
+		- Idle
+
+How would I organize my states with this approach?
+- I should look through all of the states that I already have and put repeated logic inside the PlayerManager
+- Since Adam thinks about the 'leaf' states as animations, maybe I should do that too
+
+States diagram 
+- PlayerManager
+	- Ground
+		- Idle
+		- Move
+		- (future) Dodge roll
+		- (future) Combat
+			- (future) Aim Runestone
+			- (future) Aim crossbow
+			- (future) Block
+		- (future) Ledge descend
+	- Air
+		- Jump
+		- Fall
+	- Ledge 
+		- Ledge hang
+		- (future) Ledge ascend
+	- Wall
+		- Wall climb
+			- Look right / Look left
+			- Reverse side jump
+		- Wall slide
+		- (future) Wall hang
+	- Rope climb
+		- Side jump
+
+What would my StateMachine class look like?
+```
+variable state State to keep track of
+
+function to compare a given State to state, and call exit() and all that and enter new state yada yada
+func SetState(new_state: State, forcereset: bool = false)
+	if new state != state or forcereset
+		state.exit
+		state = new_state
+		state.enter
+```
+
+
+What would my 'core' class look like?
+```
+class_name StateManagerCore
+default Godot nodes present in every player / npc / enemy, see if we can export these?
+	- AnimatedSprite2d
+	- CollisionShape2d
+	- Label (for now)
+
+instantiate a StateMachine object named state_machine here so that states can manage their own children states
+
+function SetUpStates() to instantiate the core in every child of a StateManager that is also a State
+	- probably use get_children
+```
+
+
+What would my PlayerManager class look like?
+```
+inherits StateManagerCore
+
+get reference to the following
+	- all raycasts
+	- the jump buffer timer
+
+export coyote_time : float
+
+input : Vector2
+
+on_ground : bool
+in_air : bool
+near_ledge : bool
+near_wall : bool
+near_rope : bool
+
+ropes : array
+
+_ready()
+	call SetUpStates() from our StateManagerCore
+	set up our starting state with state_machine.Set()
+
+_physics_process(delta: float)
+	check is_complete
+	else if other stuff
+	call Do() on our current state
+
+_process(delta: float)
+	update input with GetInput()
+
+GetInput():
+	just figure out what x and y should be for input based off of wasd, left is negative and down is negative
+
+OnGround() -> bool:
+	if we are on ground return true
+
+InAir() -> bool:
+	return if we are in the air
+
+NearLedge() -> bool:
+	return if we are near ledge, use the little raycasts and all that 
+
+NearWall() -> bool:
+	return if we are near a wall duh
+
+NearRope() -> bool:
+	return if we are near a rope
+
+SnapToLedge() -> void:
+	set player position to ledge 
+```
