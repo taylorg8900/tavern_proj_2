@@ -654,3 +654,19 @@ States diagram
 		- Side jump
 
 I am going to separate my pseudocode for each of the classes into their own md files since it is hard to keep track of everything when it is all together
+
+Now that I have something working, I should try and figure out when we want to switch states. I currently have this structure:
+- PlayerManager
+	- Ground
+		- Idle
+		- Move
+	- Air
+		- Jump
+		- Fall
+
+PlayerManager
+- Ground (if we are touching the ground)
+	- Idle (if we have no input and our velocity is exactly 0)
+	- Move (if we have input)
+- Jump (if we pressed jump and our current state is Ground)
+- Fall (if we are in the air and our y velocity is positive)

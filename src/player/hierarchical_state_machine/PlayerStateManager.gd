@@ -12,6 +12,8 @@ extends StateManagerCore
 @export_range(0, 1, 0.01) var coyote_time : float
 
 @export var ground_state : State
+@export var jump_state : State
+@export var fall_state : State
 
 var input : Vector2 = Vector2(0.0, 0.0)
 var on_ground : bool = false
@@ -28,10 +30,23 @@ func _ready() -> void:
 	Signals.rope_exited.connect(ExitRope)
 	SetUpStates(self)
 	state_machine.Set(ground_state)
-	print(state_machine.state.get_path())
+	#print(state_machine.state.get_path())
 
+
+#PlayerManager
+#- Ground (if we are touching the ground)
+	#- Idle (if we have no input and our velocity is exactly 0)
+	#- Move (if we have input)
+#- Jump (if we pressed jump and our current state is Ground)
+#- Fall (if we are in the air and our y velocity is positive)
 func _physics_process(delta: float) -> void:
 	CheckBools()
+	if on_ground:
+		state_machine.Set(ground_state)
+	if (state_machine.state == ground_state) and Input.is_action_just_pressed('jump'):
+		state_machine.Set(jump_state)
+	#if body.velocity.y >= 0:
+		#state_machine.Set(fall_state)
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
 

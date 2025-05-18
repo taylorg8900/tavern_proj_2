@@ -49,4 +49,3 @@ func Initialise(state : State) -> void:
 	# Called whenever we switch into this state from another one with Set()
 	parent_state = state
 	is_done = false
-	#state_machine = StateMachine.new()

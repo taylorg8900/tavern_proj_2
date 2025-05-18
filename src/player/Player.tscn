@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=20 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/PlayerStateManager.gd" id="1_rxpvx"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/ground.gd" id="4_imrch"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/idle.gd" id="5_yg451"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/move.gd" id="6_vqsy6"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/air.gd" id="7_ruf6v"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/jump.gd" id="8_ut8ag"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/fall.gd" id="9_ogudh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -85,9 +88,11 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "body", "animation", "collision_shape", "label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "fall_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
 ground_state = NodePath("States/Ground")
+jump_state = NodePath("States/Air/Jump")
+fall_state = NodePath("States/Air/Fall")
 body = NodePath(".")
 animation = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -150,15 +155,24 @@ script = ExtResource("3_neal8")
 
 [node name="Ground" type="Node" parent="States" node_paths=PackedStringArray("idle", "move")]
 script = ExtResource("4_imrch")
-idle = NodePath("../Idle")
-move = NodePath("../Move")
+idle = NodePath("Idle")
+move = NodePath("Move")
 
-[node name="Idle" type="Node" parent="States"]
+[node name="Idle" type="Node" parent="States/Ground"]
 script = ExtResource("5_yg451")
 animation_name = "idle"
 label_name = "idle"
 
-[node name="Move" type="Node" parent="States"]
+[node name="Move" type="Node" parent="States/Ground"]
 script = ExtResource("6_vqsy6")
 animation_name = "running"
 label_name = "move"
+
+[node name="Air" type="Node" parent="States"]
+script = ExtResource("7_ruf6v")
+
+[node name="Jump" type="Node" parent="States/Air"]
+script = ExtResource("8_ut8ag")
+
+[node name="Fall" type="Node" parent="States/Air"]
+script = ExtResource("9_ogudh")
