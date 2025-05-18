@@ -13,7 +13,6 @@ func enter() -> void:
 
 func process_physics(delta: float) -> State:
 	
-	
 	if get_movement_input() != 0.0:
 		return move_state
 	
