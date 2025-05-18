@@ -10,8 +10,6 @@ class_name StateManagerCore
 var state_machine = StateMachine.new()
 
 func SetUpStates(node : Node) -> void:
-	var children = node.get_children()
+	var children = node.find_children("", "State")
 	for child in children:
-		if child is State:
-			child.SetCore(self)
-		SetUpStates(child)
+		child.SetCore(self)

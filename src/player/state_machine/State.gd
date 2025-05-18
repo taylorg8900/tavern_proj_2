@@ -7,7 +7,7 @@ var is_done : bool
 
 var parent_state: State
 var core : StateManagerCore
-var state_machine = StateMachine.new()
+var state_machine = StateMachine
 
 func Enter() -> void:
 	core.animation.play(animation_name)
@@ -37,3 +37,4 @@ func Initialise(state : State) -> void:
 	# Called whenever we switch into this state from another one with Set()
 	parent_state = state
 	is_done = false
+	state_machine = StateMachine.new()
