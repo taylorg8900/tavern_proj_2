@@ -8,10 +8,10 @@ func DoPhysics(delta : float) -> void:
 
 func Do(delta : float) -> void:
 	if core.input.x == 0:
-		print('yeah baby')
 		state_machine.Set(idle)
-	if Input.is_action_pressed('down'):
-		print('yessir')
+	elif core.input.x != 0:
+		state_machine.Set(move)
+
 
 #Ground State stuff
 #

@@ -4,6 +4,9 @@ extends Node
 @export var animation_name : String
 @export var label_name : String
 
+@export var max_speed : int
+
+
 var is_done : bool
 
 var parent_state: State

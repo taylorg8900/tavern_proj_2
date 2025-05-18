@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=17 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/PlayerStateManager.gd" id="1_rxpvx"]
 [ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/ground.gd" id="4_imrch"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/idle.gd" id="5_yg451"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/move.gd" id="6_vqsy6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -147,9 +148,10 @@ gizmo_extents = 0.0
 
 [node name="States" type="Node" parent="."]
 
-[node name="Ground" type="Node" parent="States" node_paths=PackedStringArray("idle")]
+[node name="Ground" type="Node" parent="States" node_paths=PackedStringArray("idle", "move")]
 script = ExtResource("4_imrch")
 idle = NodePath("../Idle")
+move = NodePath("../Move")
 
 [node name="Idle" type="Node" parent="States"]
 script = ExtResource("5_yg451")
@@ -157,3 +159,5 @@ animation_name = "Idle"
 label_name = "OOdle"
 
 [node name="Move" type="Node" parent="States"]
+script = ExtResource("6_vqsy6")
+label_name = "move"
