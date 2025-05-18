@@ -1,5 +1,3 @@
-
-
 extends StateManagerCore
 
 @onready var hand_position: Marker2D = $HandPosition
@@ -36,25 +34,16 @@ func _physics_process(delta: float) -> void:
 	CheckBools()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
-	
-#_physics_process(delta: float) -> void:
-	#check all of our bools up there in here
-	#call Do() on our current state
-#
+
 func _process(delta : float) -> void:
 	CheckInput()
-	state_machine.state.Do(delta)
-#_process(delta: float)
-	#update input with GetInput()
-	#check our jump buffer or coyote time in here
-#
+	state_machine.state.DoBranch(delta)
+
 
 func CheckInput() -> void:
 	input = Vector2(
 		Input.get_axis('move_left', 'move_right'),
 		Input.get_axis('up', 'down'))
-	#print(input)
-	
 
 func CheckGround() -> void:
 	on_ground = body.is_on_floor()

@@ -7,10 +7,10 @@ func DoPhysics(delta : float) -> void:
 	pass
 
 func Do(delta : float) -> void:
-	if core.input.x == 0:
-		state_machine.Set(idle)
-	elif core.input.x != 0:
+	if core.input.x != 0:
 		state_machine.Set(move)
+	if core.input.x == 0 and core.body.velocity.x == 0:
+		state_machine.Set(idle)
 
 
 #Ground State stuff

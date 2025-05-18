@@ -4,7 +4,7 @@ extends Node
 @export var animation_name : String
 @export var label_name : String
 
-@export var max_speed : int
+@export var max_speed : int = 100
 @export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
 @export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float = .1
 
@@ -32,7 +32,8 @@ func DoPhysics(delta : float) -> void:
 
 func DoBranch(delta : float) -> void:
 	Do(delta)
-	state_machine.state.DoBranch(delta)
+	if state_machine != null and state_machine.state != null:
+		state_machine.state.DoBranch(delta)
 
 func DoPhysicsBranch(delta : float) -> void:
 	DoPhysics(delta)

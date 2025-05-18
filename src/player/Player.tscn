@@ -93,9 +93,6 @@ animation = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
 label = NodePath("Label")
 
-[node name="StateClass" type="Node" parent="."]
-script = ExtResource("3_neal8")
-
 [node name="JumpBufferTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -146,6 +143,9 @@ target_position = Vector2(0, 16)
 position = Vector2(4, -5)
 gizmo_extents = 0.0
 
+[node name="StateClass" type="Node" parent="."]
+script = ExtResource("3_neal8")
+
 [node name="States" type="Node" parent="."]
 
 [node name="Ground" type="Node" parent="States" node_paths=PackedStringArray("idle", "move")]
@@ -155,10 +155,10 @@ move = NodePath("../Move")
 
 [node name="Idle" type="Node" parent="States"]
 script = ExtResource("5_yg451")
-animation_name = "Idle"
-label_name = "OOdle"
+animation_name = "idle"
+label_name = "idle"
 
 [node name="Move" type="Node" parent="States"]
 script = ExtResource("6_vqsy6")
+animation_name = "running"
 label_name = "move"
-max_speed = 1
