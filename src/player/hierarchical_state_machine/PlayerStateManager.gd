@@ -54,6 +54,9 @@ func _process(delta : float) -> void:
 	CheckInput()
 	state_machine.state.DoBranch(delta)
 
+func SelectState() -> void:
+	
+	pass
 
 func CheckInput() -> void:
 	input = Vector2(

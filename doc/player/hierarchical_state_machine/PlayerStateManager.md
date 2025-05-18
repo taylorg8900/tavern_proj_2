@@ -107,50 +107,45 @@ Here is my current thought of a state diagram:
 
 
 Let me try and figure out what this would look like for our starter set of states
-- Ground
-	- Idle
-	- Move
-- Air
+- PlayerManager
+	- Ground
+		- Idle
+		- Move
 	- Jump
 	- Fall
+	- Wall
+		- Wall climb
+		- Wall slide
+		- (future) wall hang
+	- Rope climb
 
+PlayerManager
 ```
-PlayerManager stuff
-
-ground state
-air state
-
-_physics_process(delta: float)
-	update all of our bools
-	if state_machine.state == ground
-		if in air
-			Set(air, true)
-	elif state_machine.state == air
-		if on ground
-			Set(ground, true)
-	call DoPhysicsBranch(delta) on our current state
-
-_process(delta: float)
-	update input with GetInput()
-	call DoBranch(delta) on our current state
-```
-
-```
-Ground State stuff
-
-idle state : State
-move state : State
-
-func Enter():
-	do nothing here actually
-	maybe set y velocity to 0 (core.body.velocity.y = 0)
-
-func DoPhysics(delta : float) -> void:
-	pass
-
-func Do(delta : float) -> void:
-	if we have x input
-		Set(move, true)
-	else
-		Set(idle, true)
+func select state:
+	if on_ground
+		if jump buffer
+			Set(jump state)
+		Set(ground state)
+	if get_jump
+		if state == fall
+			if coyote timer
+				Set(jump state)
+		if state == ground
+			Set(jump)
+	if near_wall
+		if state == ground
+			if wall timer < 0
+				Set(wall state)
+		else
+			if input != 0 or y velocity < 0
+				Set(wall state)
+	if near_rope and input.y != 0
+		Set(rope state)
+	
+		
+		
+	if state == ground
+		if move into wall timer < 0
+			Set(wall state)
+	
 ```
