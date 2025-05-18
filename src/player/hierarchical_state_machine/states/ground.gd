@@ -7,9 +7,11 @@ func DoPhysics(delta : float) -> void:
 	pass
 
 func Do(delta : float) -> void:
-	pass
 	if core.input.x == 0:
+		print('yeah baby')
 		state_machine.Set(idle)
+	if Input.is_action_pressed('down'):
+		print('yessir')
 
 #Ground State stuff
 #

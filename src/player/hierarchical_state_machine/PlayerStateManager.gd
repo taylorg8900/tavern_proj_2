@@ -28,10 +28,11 @@ func _ready() -> void:
 	Signals.rope_exited.connect(ExitRope)
 	SetUpStates(self)
 	state_machine.Set(ground_state)
+	print(state_machine.state.get_path())
 
 func _physics_process(delta: float) -> void:
 	CheckBools()
-	state_machine.state.DoPhysicsBranch(delta)
+	state_machine.state.DoPhysics(delta)
 	
 #_physics_process(delta: float) -> void:
 	#check all of our bools up there in here
@@ -39,6 +40,7 @@ func _physics_process(delta: float) -> void:
 #
 func _process(delta : float) -> void:
 	CheckInput()
+	state_machine.state.Do(delta)
 #_process(delta: float)
 	#update input with GetInput()
 	#check our jump buffer or coyote time in here
@@ -48,6 +50,7 @@ func CheckInput() -> void:
 	input = Vector2(
 		Input.get_axis('move_left', 'move_right'),
 		Input.get_axis('up', 'down'))
+	#print(input)
 	
 
 func CheckGround() -> void:
