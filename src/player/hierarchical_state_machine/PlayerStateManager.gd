@@ -1,3 +1,5 @@
+
+
 extends StateManagerCore
 
 @onready var hand_position: Marker2D = $HandPosition
@@ -32,7 +34,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	CheckBools()
-	state_machine.state.DoPhysics(delta)
+	state_machine.state.DoPhysicsBranch(delta)
+	body.move_and_slide()
 	
 #_physics_process(delta: float) -> void:
 	#check all of our bools up there in here

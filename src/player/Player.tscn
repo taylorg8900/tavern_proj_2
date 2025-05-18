@@ -161,3 +161,4 @@ label_name = "OOdle"
 [node name="Move" type="Node" parent="States"]
 script = ExtResource("6_vqsy6")
 label_name = "move"
+max_speed = 1
