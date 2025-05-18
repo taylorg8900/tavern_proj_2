@@ -9,10 +9,9 @@ class_name StateManagerCore
 
 var state_machine = StateMachine.new()
 
-func SetUpStates() -> void:
-	var children = get_children()
-	for item in children:
-		if item is State:
-			item.SetCore(self)
-		# Recursive call so we can search through the entire scene's tree
-		item.SetUpStates()
+func SetUpStates(node : Node) -> void:
+	var children = node.get_children()
+	for child in children:
+		if child is State:
+			child.SetCore(self)
+		SetUpStates(child)

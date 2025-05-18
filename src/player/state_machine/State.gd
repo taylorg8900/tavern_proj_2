@@ -29,7 +29,7 @@ func DoPhysicsBranch(delta : float) -> void:
 	DoPhysics(delta)
 	state_machine.state.DoPhysics(delta)
 
-func SetUpCore(state_core : StateManagerCore) -> void:
+func SetCore(state_core : StateManagerCore) -> void:
 	# Called on creation of scene by our StateManagerCore, to get a reference to things like our AnimatedSprite2d
 	core = state_core
 

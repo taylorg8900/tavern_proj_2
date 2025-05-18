@@ -1,25 +1,9 @@
-[gd_scene load_steps=31 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=15 format=3 uid="uid://7ig53l6y6f6l"]
 
-[ext_resource type="Script" path="res://src/player/player.gd" id="1_blii3"]
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
-[ext_resource type="Script" path="res://src/player/state_machine/state_machine.gd" id="2_d0br6"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/PlayerStateManager.gd" id="1_rxpvx"]
 [ext_resource type="Script" path="res://src/player/state_machine/State.gd" id="3_neal8"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/idle.gd" id="3_tcss0"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/move.gd" id="4_7mxh0"]
-[ext_resource type="Script" path="res://src/player/state_machine/AirState.gd" id="4_l41eu"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/jump.gd" id="6_e0fh5"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/fall.gd" id="7_l34un"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/ledge_grab.gd" id="9_0bnn7"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/dropping.gd" id="10_2irxs"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/rope.gd" id="10_3t85p"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/rope_jump.gd" id="11_4sady"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/wall_slide.gd" id="11_7vdch"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/wall_hang.gd" id="11_sygnp"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/rope_fall.gd" id="12_8at8f"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/wall_jump.gd" id="13_3bwbt"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/wall_climb.gd" id="13_lpkdw"]
-[ext_resource type="Script" path="res://src/player/ledge_climb.gd" id="14_e8ufi"]
-[ext_resource type="Script" path="res://src/player/state_machine/states/wall_fall.gd" id="17_8gg3l"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/ground.gd" id="4_imrch"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -99,8 +83,12 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_blii3")
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("body", "animation", "collision_shape", "label")]
+script = ExtResource("1_rxpvx")
+body = NodePath(".")
+animation = NodePath("AnimatedSprite2D")
+collision_shape = NodePath("CollisionShape2D")
+label = NodePath("Label")
 
 [node name="JumpBufferTimer" type="Timer" parent="."]
 one_shot = true
@@ -113,146 +101,9 @@ speed_scale = 2.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_5j7w1")
-metadata/_edit_group_ = true
 
 [node name="StateClass" type="Node" parent="."]
 script = ExtResource("3_neal8")
-
-[node name="AirStateClass" type="Node" parent="StateClass"]
-script = ExtResource("4_l41eu")
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
-script = ExtResource("2_d0br6")
-starting_state = NodePath("DefaultStates/idle")
-
-[node name="DefaultStates" type="Node" parent="StateMachine"]
-
-[node name="idle" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("move_state", "jump_state", "fall_state", "rope_state")]
-script = ExtResource("3_tcss0")
-move_state = NodePath("../move")
-jump_state = NodePath("../jump")
-fall_state = NodePath("../fall")
-rope_state = NodePath("../rope")
-
-[node name="move" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "jump_state", "fall_state", "rope_state", "climb_state")]
-script = ExtResource("4_7mxh0")
-idle_state = NodePath("../idle")
-jump_state = NodePath("../jump")
-fall_state = NodePath("../fall")
-rope_state = NodePath("../rope")
-climb_state = NodePath("../../WallStates/wall_climb")
-
-[node name="jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_state", "wall_hang_state", "wall_climb_state", "ledge_hang_state")]
-script = ExtResource("6_e0fh5")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-fall_state = NodePath("../fall")
-rope_state = NodePath("../rope")
-wall_hang_state = NodePath("../../WallStates/wall_hang")
-wall_climb_state = NodePath("../../WallStates/wall_climb")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-peak_time_to_ground = 0.25
-
-[node name="fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
-script = ExtResource("7_l34un")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-jump_state = NodePath("../jump")
-rope_state = NodePath("../rope")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-wall_slide_state = NodePath("../../WallStates/wall_slide")
-
-[node name="rope" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_jump_state")]
-script = ExtResource("10_3t85p")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-fall_state = NodePath("../rope_fall")
-rope_jump_state = NodePath("../rope_jump")
-
-[node name="rope_jump" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_climb_state", "wall_climb_state", "ledge_hang_state")]
-script = ExtResource("11_4sady")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-fall_state = NodePath("../fall")
-rope_climb_state = NodePath("../rope")
-wall_climb_state = NodePath("../../WallStates/wall_climb")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-
-[node name="rope_fall" type="Node" parent="StateMachine/DefaultStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
-script = ExtResource("12_8at8f")
-idle_state = NodePath("../idle")
-move_state = NodePath("../move")
-jump_state = NodePath("../rope_jump")
-rope_state = NodePath("../rope")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-wall_slide_state = NodePath("../../WallStates/wall_slide")
-
-[node name="WallStates" type="Node" parent="StateMachine"]
-
-[node name="wall_slide" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "fall_state", "wall_hang_state")]
-script = ExtResource("11_7vdch")
-idle_state = NodePath("../../DefaultStates/idle")
-fall_state = NodePath("../wall_fall")
-wall_hang_state = NodePath("../wall_hang")
-tile_slow_per_second = 20.0
-
-[node name="wall_hang" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "climb_state", "wall_jump_state")]
-script = ExtResource("11_sygnp")
-fall_state = NodePath("../wall_fall")
-climb_state = NodePath("../wall_climb")
-wall_jump_state = NodePath("../wall_jump")
-
-[node name="wall_climb" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("fall_state", "wall_hang_state", "wall_jump_state", "ledge_hang_state")]
-script = ExtResource("13_lpkdw")
-fall_state = NodePath("../wall_fall")
-wall_hang_state = NodePath("../wall_hang")
-wall_jump_state = NodePath("../wall_jump")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-climb_speed = 30.0
-
-[node name="wall_jump" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "fall_state", "rope_climb_state", "wall_hang_state", "wall_climb_state", "ledge_hang_state")]
-script = ExtResource("13_3bwbt")
-idle_state = NodePath("../../DefaultStates/idle")
-move_state = NodePath("../../DefaultStates/move")
-fall_state = NodePath("../../DefaultStates/fall")
-rope_climb_state = NodePath("../../DefaultStates/rope")
-wall_hang_state = NodePath("../wall_hang")
-wall_climb_state = NodePath("../wall_climb")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-jump_height_multiplier = 0.65
-
-[node name="wall_fall" type="Node" parent="StateMachine/WallStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "rope_state", "ledge_hang_state", "wall_slide_state")]
-script = ExtResource("17_8gg3l")
-idle_state = NodePath("../../DefaultStates/idle")
-move_state = NodePath("../../DefaultStates/move")
-jump_state = NodePath("../../DefaultStates/rope_jump")
-rope_state = NodePath("../../DefaultStates/rope")
-ledge_hang_state = NodePath("../../LedgeStates/ledge_hang")
-wall_slide_state = NodePath("../wall_slide")
-
-[node name="LedgeStates" type="Node" parent="StateMachine"]
-
-[node name="ledge_hang" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("jump_state", "drop_state")]
-script = ExtResource("9_0bnn7")
-jump_state = NodePath("../ledge_climb")
-drop_state = NodePath("../ledge_fall")
-
-[node name="ledge_climb" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "fall_state", "rope_climb_state")]
-script = ExtResource("14_e8ufi")
-idle_state = NodePath("../../DefaultStates/idle")
-move_state = NodePath("../../DefaultStates/move")
-jump_state = NodePath("../../DefaultStates/jump")
-fall_state = NodePath("../ledge_fall")
-rope_climb_state = NodePath("../../DefaultStates/rope")
-peak_time_to_ground = 0.25
-
-[node name="ledge_fall" type="Node" parent="StateMachine/LedgeStates" node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "rope_climb_state", "wall_slide_state")]
-script = ExtResource("10_2irxs")
-idle_state = NodePath("../../DefaultStates/idle")
-move_state = NodePath("../../DefaultStates/move")
-jump_state = NodePath("../../DefaultStates/jump")
-rope_climb_state = NodePath("../../DefaultStates/rope")
-wall_slide_state = NodePath("../../WallStates/wall_slide")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
@@ -291,3 +142,12 @@ target_position = Vector2(0, 16)
 [node name="HandPosition" type="Marker2D" parent="."]
 position = Vector2(4, -5)
 gizmo_extents = 0.0
+
+[node name="States" type="Node" parent="."]
+
+[node name="Ground" type="Node" parent="States"]
+script = ExtResource("4_imrch")
+
+[node name="Idle" type="Node" parent="States"]
+
+[node name="Move" type="Node" parent="States"]

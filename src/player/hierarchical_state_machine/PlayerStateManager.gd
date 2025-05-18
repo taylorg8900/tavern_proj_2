@@ -26,7 +26,7 @@ var rope_pos : int
 func _ready() -> void:
 	Signals.rope_entered.connect(EnterRope)
 	Signals.rope_exited.connect(ExitRope)
-	SetUpStates()
+	SetUpStates(self)
 	state_machine.Set(ground_state)
 
 func _physics_process(delta: float) -> void:
