@@ -41,12 +41,7 @@ func _ready() -> void:
 #- Fall (if we are in the air and our y velocity is positive)
 func _physics_process(delta: float) -> void:
 	CheckBools()
-	if on_ground:
-		state_machine.Set(ground_state)
-	if (state_machine.state == ground_state) and Input.is_action_just_pressed('jump'):
-		state_machine.Set(jump_state)
-	#if body.velocity.y >= 0:
-		#state_machine.Set(fall_state)
+	SelectState()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
 
@@ -54,8 +49,33 @@ func _process(delta : float) -> void:
 	CheckInput()
 	state_machine.state.DoBranch(delta)
 
+#func select state:
+	#if on_ground
+		#if jump buffer
+			#Set(jump state)
+		#Set(ground state)
+	#if get_jump
+		#if state == fall
+			#if coyote timer
+				#Set(jump state)
+		#if state == ground
+			#Set(jump)
+	#if near_wall
+		#if state == ground
+			#if wall timer < 0
+				#Set(wall state)
+		#else
+			#if input != 0 or y velocity < 0
+				#Set(wall state)
+	#if near_rope and input.y != 0
+		#Set(rope state)
+
 func SelectState() -> void:
-	
+	if on_ground:
+		state_machine.Set(ground_state)
+	if Input.is_action_just_pressed('jump'):
+		if state_machine.state == ground_state:
+			state_machine.Set(jump_state)
 	pass
 
 func CheckInput() -> void:
@@ -129,3 +149,8 @@ func EnterRope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
 func ExitRope(node_entered: Node2D, rope: Node2D) -> void:
 	if node_entered is Player:
 		ropes.erase(rope.get_instance_id())
+
+func UpdateXVelocity(current_vel : float, max_speed : int, direction : int, acceleration : float, deceleration : float, delta : float):
+	if direction != 0:
+		return move_toward(current_vel, max_speed * direction, acceleration * delta)
+	return move_toward(current_vel, 0, deceleration * delta)

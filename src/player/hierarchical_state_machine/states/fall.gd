@@ -1,11 +1,24 @@
 extends State
 
+@export var terminal_velocity: float = 280
+@export_range(16, 160, .5) var jump_height : float = 40
+@export_range(0, 1, .01) var peak_time_to_ground : float = .35
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+@onready var fast_gravity : float = (2.0 * jump_height) / (peak_time_to_ground * peak_time_to_ground)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func Enter() -> void:
+	core.body.velocity.y = 0
+	super()
+
+func Exit() -> void:
 	pass
+
+func Do(delta : float) -> void:
+	pass
+	
+func DoPhysics(delta : float) -> void:
+	# update our y velocity
+	core.body.velocity.y = move_toward(core.body.velocity.y, terminal_velocity, fast_gravity * delta)
+	
+	

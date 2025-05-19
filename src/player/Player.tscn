@@ -173,6 +173,7 @@ script = ExtResource("7_ruf6v")
 
 [node name="Jump" type="Node" parent="States/Air"]
 script = ExtResource("8_ut8ag")
+label_name = "jump"
 
 [node name="Fall" type="Node" parent="States/Air"]
 script = ExtResource("9_ogudh")
