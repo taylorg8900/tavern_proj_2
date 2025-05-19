@@ -14,9 +14,12 @@ extends StateManagerCore
 @export var ground_state : State
 @export var jump_state : State
 @export var fall_state : State
-@export var ledge_state : State
+@export var wall_state : State
 
 var input : Vector2 = Vector2(0.0, 0.0)
+var jump : bool = false
+var crouch : bool = false
+
 var on_ground : bool = false
 var in_air : bool = false
 var near_ledge : bool = false
@@ -53,12 +56,10 @@ func SelectState() -> void:
 		else:
 			state_machine.Set(ground_state)
 	if Input.is_action_just_pressed('jump'):
-		if (state_machine.state == ground_state or state_machine.state == ledge_state) or (CheckCoyoteTime()):
+		if (state_machine.state == ground_state) or (CheckCoyoteTime()):
 			state_machine.Set(jump_state)
-	if near_ledge:
-		if state_machine.state.parent_state != ledge_state:
-			state_machine.Set(ledge_state, true)
-			SnapToLedge()
+	if near_wall:
+		state_machine.Set(wall_state)
 	if in_air:
 		if state_machine.state == ground_state:
 			ResetCoyoteTimer(coyote_time)
@@ -71,7 +72,10 @@ func SelectState() -> void:
 func CheckInput() -> void:
 	input = Vector2(
 		Input.get_axis('move_left', 'move_right'),
-		Input.get_axis('up', 'down'))
+		Input.get_axis('down', 'up'))
+	jump = Input.is_action_pressed('jump')
+	crouch = Input.is_action_pressed('crouch')
+	
 
 func CheckGround() -> void:
 	on_ground = body.is_on_floor()

@@ -1,11 +1,22 @@
 extends State
 
+@export var ledge_state : State
+@export var climb_state : State
+@export var slide_state : State
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func Enter() -> void:
+	super()
+
+func Exit() -> void:
+	pass
+
+func Do(delta : float) -> void:
+	pass
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func DoPhysics(delta : float) -> void:
+	if core.near_ledge:
+		state_machine.Set(ledge_state)
+	else:
+		state_machine.Set(climb_state)
 	pass

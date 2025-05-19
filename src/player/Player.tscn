@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=24 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/PlayerStateManager.gd" id="1_rxpvx"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/fall.gd" id="9_ogudh"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/wall.gd" id="10_ettcr"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/ledge.gd" id="10_wgo5e"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/wall_climb.gd" id="12_508hw"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/wall_slide.gd" id="13_yutbf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
 atlas = ExtResource("1_ojrco")
@@ -90,12 +92,12 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "fall_state", "ledge_state", "body", "animation", "collision_shape", "label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "fall_state", "wall_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Air/Jump")
 fall_state = NodePath("States/Air/Fall")
-ledge_state = NodePath("States/Wall/Ledge")
+wall_state = NodePath("States/Wall")
 body = NodePath(".")
 animation = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -187,16 +189,21 @@ label_name = "jump"
 script = ExtResource("9_ogudh")
 label_name = "fall"
 
-[node name="Wall" type="Node" parent="States"]
+[node name="Wall" type="Node" parent="States" node_paths=PackedStringArray("ledge_state", "climb_state", "slide_state")]
 script = ExtResource("10_ettcr")
+ledge_state = NodePath("Ledge")
+climb_state = NodePath("Wall climb")
+slide_state = NodePath("Wall slide")
 
-[node name="Ledge" type="Node" parent="States/Wall" node_paths=PackedStringArray("jump_state", "fall_state")]
+[node name="Ledge" type="Node" parent="States/Wall"]
 script = ExtResource("10_wgo5e")
-jump_state = NodePath("../../Air/Jump")
-fall_state = NodePath("../../Air/Fall")
 animation_name = "ledge"
 label_name = "ledge hang"
 
 [node name="Wall climb" type="Node" parent="States/Wall"]
+script = ExtResource("12_508hw")
+climb_speed = 30.0
+label_name = "wall climb"
 
 [node name="Wall slide" type="Node" parent="States/Wall"]
+script = ExtResource("13_yutbf")
