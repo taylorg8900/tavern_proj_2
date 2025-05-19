@@ -14,6 +14,7 @@ extends StateManagerCore
 @export var ground_state : State
 @export var jump_state : State
 @export var fall_state : State
+@export var ledge_state : State
 
 var input : Vector2 = Vector2(0.0, 0.0)
 var on_ground : bool = false
@@ -39,6 +40,7 @@ func _physics_process(delta: float) -> void:
 	SelectState()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
+	print(state_machine.state.label_name)
 
 func _process(delta : float) -> void:
 	CheckInput()
@@ -53,12 +55,15 @@ func SelectState() -> void:
 	if Input.is_action_just_pressed('jump'):
 		if (state_machine.state == ground_state) or (CheckCoyoteTime()):
 			state_machine.Set(jump_state)
+	if near_ledge:
+		state_machine.Set(ledge_state)
+		SnapToLedge()
 	if !on_ground:
 		if state_machine.state == ground_state:
 			ResetCoyoteTimer(coyote_time)
 			coyote_time_timer.start()
 			state_machine.Set(fall_state)
-		if (state_machine.state == jump_state and body.velocity.y > 0):
+		if (state_machine.state == jump_state) and (body.velocity.y > 0):
 			state_machine.Set(fall_state)
 	
 
