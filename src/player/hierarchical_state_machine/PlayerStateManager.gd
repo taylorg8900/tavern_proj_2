@@ -53,12 +53,13 @@ func SelectState() -> void:
 		else:
 			state_machine.Set(ground_state)
 	if Input.is_action_just_pressed('jump'):
-		if (state_machine.state == ground_state) or (CheckCoyoteTime()):
+		if (state_machine.state == ground_state or state_machine.state == ledge_state) or (CheckCoyoteTime()):
 			state_machine.Set(jump_state)
 	if near_ledge:
-		state_machine.Set(ledge_state)
-		SnapToLedge()
-	if !on_ground:
+		if state_machine.state.parent_state != ledge_state:
+			state_machine.Set(ledge_state, true)
+			SnapToLedge()
+	if in_air:
 		if state_machine.state == ground_state:
 			ResetCoyoteTimer(coyote_time)
 			coyote_time_timer.start()

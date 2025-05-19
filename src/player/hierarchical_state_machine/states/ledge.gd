@@ -12,10 +12,13 @@ func Exit() -> void:
 	pass
 
 func Do(delta : float) -> void:
-	if Input.is_action_just_pressed('jump'):
-		state_machine.Set(jump_state)
+	pass
+	#if Input.is_action_just_pressed('jump'):
+		#state_machine.Set(jump_state)
 
 func DoPhysics(delta : float) -> void:
-	if core.input.x != core.GetDirectionFacing():
-		core.FlipDirectionFacing(core.input.x < 0)
-		state_machine.Set(fall_state)
+	pass
+	#if core.input.x != 0:
+		#if core.input.x != core.GetDirectionFacing():
+			#core.FlipDirectionFacing(core.input.x < 0)
+			#state_machine.Set(fall_state)

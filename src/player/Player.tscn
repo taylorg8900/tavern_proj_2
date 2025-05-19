@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://7ig53l6y6f6l"]
+[gd_scene load_steps=22 format=3 uid="uid://7ig53l6y6f6l"]
 
 [ext_resource type="Texture2D" uid="uid://byeaxt4nl0aly" path="res://aseprite_files/Sprite Sheets/sprite sheet.png" id="1_ojrco"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/PlayerStateManager.gd" id="1_rxpvx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/air.gd" id="7_ruf6v"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/jump.gd" id="8_ut8ag"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/fall.gd" id="9_ogudh"]
+[ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/wall.gd" id="10_ettcr"]
 [ext_resource type="Script" path="res://src/player/hierarchical_state_machine/states/ledge.gd" id="10_wgo5e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r1obf"]
@@ -94,7 +95,7 @@ script = ExtResource("1_rxpvx")
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Air/Jump")
 fall_state = NodePath("States/Air/Fall")
-ledge_state = NodePath("States/Ledge")
+ledge_state = NodePath("States/Wall/Ledge")
 body = NodePath(".")
 animation = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -186,9 +187,16 @@ label_name = "jump"
 script = ExtResource("9_ogudh")
 label_name = "fall"
 
-[node name="Ledge" type="Node" parent="States" node_paths=PackedStringArray("jump_state", "fall_state")]
+[node name="Wall" type="Node" parent="States"]
+script = ExtResource("10_ettcr")
+
+[node name="Ledge" type="Node" parent="States/Wall" node_paths=PackedStringArray("jump_state", "fall_state")]
 script = ExtResource("10_wgo5e")
-jump_state = NodePath("../Air/Jump")
-fall_state = NodePath("../Air/Fall")
+jump_state = NodePath("../../Air/Jump")
+fall_state = NodePath("../../Air/Fall")
 animation_name = "ledge"
 label_name = "ledge hang"
+
+[node name="Wall climb" type="Node" parent="States/Wall"]
+
+[node name="Wall slide" type="Node" parent="States/Wall"]
