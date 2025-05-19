@@ -8,8 +8,8 @@ extends StateManagerCore
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_time_timer : Timer = $CoyoteTimer
 
-@export_range(0, 1, 0.01) var jump_buffer_time : float
-@export_range(0, 1, 0.01) var coyote_time : float
+@export_range(0, 1, 0.01) var jump_buffer_time : float = .1
+@export_range(0, 1, 0.01) var coyote_time : float = .12
 
 @export var ground_state : State
 @export var jump_state : State
@@ -30,19 +30,12 @@ func _ready() -> void:
 	Signals.rope_exited.connect(ExitRope)
 	SetUpStates(self)
 	state_machine.Set(ground_state)
-	#print(state_machine.state.get_path())
 
 
-#PlayerManager
-#- Ground (if we are touching the ground)
-	#- Idle (if we have no input and our velocity is exactly 0)
-	#- Move (if we have input)
-#- Jump (if we pressed jump and our current state is Ground)
-#- Fall (if we are in the air and our y velocity is positive)
 func _physics_process(delta: float) -> void:
 	CheckBools()
 	# SelectState() needs to be called here, because some of our logic requires updates from move_and_slide()
-	# Having it in _process will be asking it to switch based on out of date information
+	# Having it in _process will be asking it to switch based on out of date information, which will cause inconsistent and weird transitions
 	SelectState()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
@@ -53,16 +46,20 @@ func _process(delta : float) -> void:
 
 func SelectState() -> void:
 	if on_ground:
-		state_machine.Set(ground_state)
+		if CheckJumpBuffer():
+			state_machine.Set(jump_state)
+		else:
+			state_machine.Set(ground_state)
 	if Input.is_action_just_pressed('jump'):
-		if state_machine.state == ground_state:
-			state_machine.Set(jump_state, true)
-			#print(state_machine.state.label_name)
+		if (state_machine.state == ground_state) or (CheckCoyoteTime()):
+			state_machine.Set(jump_state)
 	if !on_ground:
-		if state_machine.state == ground_state or (state_machine.state == jump_state and body.velocity.y > 0):
-			#print(state_machine.state.label_name)
+		if state_machine.state == ground_state:
+			ResetCoyoteTimer(coyote_time)
+			coyote_time_timer.start()
 			state_machine.Set(fall_state)
-	print(state_machine.state.label_name)
+		if (state_machine.state == jump_state and body.velocity.y > 0):
+			state_machine.Set(fall_state)
 	
 
 func CheckInput() -> void:
@@ -126,6 +123,12 @@ func ResetJumpBuffer(time : float = jump_buffer_time) -> void:
 	if jump_buffer_timer.is_stopped():
 		jump_buffer_timer.stop()
 		jump_buffer_timer.set_wait_time(time)
+
+func CheckCoyoteTime() -> bool:
+	return coyote_time_timer.time_left > 0
+
+func CheckJumpBuffer() -> bool:
+	return jump_buffer_timer.time_left > 0
 
 func EnterRope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
 	if node_entered is Player:

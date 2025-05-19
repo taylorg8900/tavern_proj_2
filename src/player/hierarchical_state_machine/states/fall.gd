@@ -9,6 +9,7 @@ extends State
 
 func Enter() -> void:
 	core.body.velocity.y = 0
+	core.ResetJumpBuffer()
 	super()
 
 func Exit() -> void:
@@ -17,6 +18,8 @@ func Exit() -> void:
 func Do(delta : float) -> void:
 	if core.input.x != 0:
 		core.FlipDirectionFacing(core.input.x < 0)
+	if Input.is_action_just_pressed('jump'):
+		core.jump_buffer_timer.start()
 	
 func DoPhysics(delta : float) -> void:
 	# update our y velocity

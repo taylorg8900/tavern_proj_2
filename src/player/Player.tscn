@@ -101,6 +101,9 @@ label = NodePath("Label")
 [node name="JumpBufferTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="CoyoteTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_54v5a")
 animation = &"ledge"
