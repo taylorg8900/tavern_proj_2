@@ -157,6 +157,7 @@ script = ExtResource("3_neal8")
 script = ExtResource("4_imrch")
 idle = NodePath("Idle")
 move = NodePath("Move")
+label_name = "ground"
 
 [node name="Idle" type="Node" parent="States/Ground"]
 script = ExtResource("5_yg451")
@@ -173,7 +174,9 @@ script = ExtResource("7_ruf6v")
 
 [node name="Jump" type="Node" parent="States/Air"]
 script = ExtResource("8_ut8ag")
+peak_time_to_ground = 0.25
 label_name = "jump"
 
 [node name="Fall" type="Node" parent="States/Air"]
 script = ExtResource("9_ogudh")
+label_name = "fall"

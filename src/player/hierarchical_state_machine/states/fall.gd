@@ -15,10 +15,12 @@ func Exit() -> void:
 	pass
 
 func Do(delta : float) -> void:
-	pass
+	if core.input.x != 0:
+		core.FlipDirectionFacing(core.input.x < 0)
 	
 func DoPhysics(delta : float) -> void:
 	# update our y velocity
 	core.body.velocity.y = move_toward(core.body.velocity.y, terminal_velocity, fast_gravity * delta)
+	core.body.velocity.x = core.UpdateXVelocity(core.body.velocity.x, max_speed, core.input.x, acceleration, deceleration, delta)
 	
 	

@@ -41,6 +41,8 @@ func _ready() -> void:
 #- Fall (if we are in the air and our y velocity is positive)
 func _physics_process(delta: float) -> void:
 	CheckBools()
+	# SelectState() needs to be called here, because some of our logic requires updates from move_and_slide()
+	# Having it in _process will be asking it to switch based on out of date information
 	SelectState()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
@@ -49,34 +51,19 @@ func _process(delta : float) -> void:
 	CheckInput()
 	state_machine.state.DoBranch(delta)
 
-#func select state:
-	#if on_ground
-		#if jump buffer
-			#Set(jump state)
-		#Set(ground state)
-	#if get_jump
-		#if state == fall
-			#if coyote timer
-				#Set(jump state)
-		#if state == ground
-			#Set(jump)
-	#if near_wall
-		#if state == ground
-			#if wall timer < 0
-				#Set(wall state)
-		#else
-			#if input != 0 or y velocity < 0
-				#Set(wall state)
-	#if near_rope and input.y != 0
-		#Set(rope state)
-
 func SelectState() -> void:
 	if on_ground:
 		state_machine.Set(ground_state)
 	if Input.is_action_just_pressed('jump'):
 		if state_machine.state == ground_state:
-			state_machine.Set(jump_state)
-	pass
+			state_machine.Set(jump_state, true)
+			#print(state_machine.state.label_name)
+	if !on_ground:
+		if state_machine.state == ground_state or (state_machine.state == jump_state and body.velocity.y > 0):
+			#print(state_machine.state.label_name)
+			state_machine.Set(fall_state)
+	print(state_machine.state.label_name)
+	
 
 func CheckInput() -> void:
 	input = Vector2(

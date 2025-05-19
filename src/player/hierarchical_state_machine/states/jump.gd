@@ -21,16 +21,15 @@ func Exit() -> void:
 func Do(delta : float) -> void:
 	if !Input.is_action_pressed('jump'):
 		switch_to_fast_gravity = true
+	if core.input.x != 0:
+		core.FlipDirectionFacing(core.input.x < 0)
 	#print(switch_to_fast_gravity)
 
 func DoPhysics(delta : float) -> void:
 	core.body.velocity.x = core.UpdateXVelocity(core.body.velocity.x, max_speed, core.input.x, acceleration, deceleration, delta)
 	if switch_to_fast_gravity:
 		core.body.velocity.y += fast_gravity * delta
-		print(switch_to_fast_gravity)
-
 	else:
 		core.body.velocity.y += jump_gravity * delta
 	
-	if core.input.x != 0:
-		core.FlipDirectionFacing(core.input.x < 0)
+	
