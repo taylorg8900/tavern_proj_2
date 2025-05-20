@@ -97,9 +97,9 @@ Transitions into states (will not include requirements inside of individual tran
 	- Side jump
 	- Reverse side jump
 	- Fall
-	- Wall climb (state before wall climb was not idle)
+	- Wall climb (y input is negative)
 	- Wall slide
-	- Rope (state before rope was not idle)
+	- Rope (y input is negative)
 - Move
 	- Requirements for transitioning into this state
 		- We are on ground
@@ -206,7 +206,7 @@ Coming back to this the next day, and I've been thinking about how this is all s
 
 Also, I think that right now if I structure it like that it really isn't capable of having sub Managers below the PlayerStateManager outside of the following:
 - Ground (idle, move)
- - I still think I can have the transitions from Ground to either Jump or Wall climb because we can have the check for those separate
+ - I still think I can have the transitions from Ground to either Jump or Wall climb because we can have the check for those above this sub Managet
 
 I can't have these groupings for at least the following reasons:
 - Jump (jump, side jump, reverse side jump)
@@ -216,3 +216,49 @@ I can't have these groupings for at least the following reasons:
 - Wall (wall states + ledge)
 	- Certain transitions like (wall climb --('crouch')-> fall) should only apply to wall climb or ledge, and not other wall states such as wall sliding or the future overhang thing
 	- Since checking which states can transition into fall should be handled on the same level of the tree, they must all exist on the top level as well
+
+I should probably write pseudocode for determining how we are going to transition
+- I could have a big if/elif chain that checks which state is active
+	- This would lead to repeated functions calls and bool checks
+- I could have a if/elif chain that checks our bools first, then checks each state that can change while under the active bool
+	- Again lots of repetition and (if state == state_name) checks, which would lead to kind of the same problem as with the FSM where it is a big spiderweb
+
+I basically need a place where I can define all of the transitions out of a state, instead of in. Let me do that and see if I notice any patterns.
+
+Transitions out of states
+- Ground
+	- Jump (we press jump, or jump buffer is active)
+	- Fall (not on ground anymore)
+	- Wall climb (move into wall for long enough)
+	- Rope (near rope and want to go up)
+- Jump / side jump / reverse side jump
+	- Ground (we are on ground)
+	- Fall (y velocity is positive)
+	- Wall climb (near a wall)
+	- Rope (we are near rope and have y input)
+- Fall
+	- Ground (we are on ground)
+	- Jump (coyote time is active)
+	- Wall climb (we are near wall, we are below a certain y velocity, state before fall is not wall climb)
+	- Wall slide (we are near wall, we are above a certain y velocity, we have x input)
+	- Ledge (we are near ledge, we are below a certain y velocity, state before falling is not ledge)
+- Wall climb
+	- Ground (we are on ground, y input is negative)
+	- Fall (not near wall anymore, or we press crouch)
+	- Reverse side jump (we press jump, or jump buffer is active)
+	- Ledge (we are near ledge, y input is positive)
+- Wall slide
+	- Ground (we are on ground)
+	- Fall (we are not near wall)
+	- Wall climb (we are near wall, y velocity is 0)
+- Ledge 
+	- Jump (we press jump, or jump buffer is active)
+	- Fall (we press crouch)
+	- Wall climb (y input is negative)
+- Rope
+	- Ground (on ground, y input is negative)
+	- Side jump (press jump, or jump buffer is active)
+	- Fall (we press crouch)
+
+So this is way easier to follow and read. There definitely has to be a way I can define this and follow it's structure when we try and select a new state.
+- I am going to just try and have a if / elif chain thing going on, probably good enough. I don't think I need to separate out individual sections, that might just make it more complicated
