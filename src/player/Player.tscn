@@ -92,12 +92,11 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "fall_state", "wall_state", "body", "animation", "collision_shape", "label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "fall_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Air/Jump")
 fall_state = NodePath("States/Air/Fall")
-wall_state = NodePath("States/Wall")
 body = NodePath(".")
 animation = NodePath("AnimatedSprite2D")
 collision_shape = NodePath("CollisionShape2D")
@@ -107,6 +106,9 @@ label = NodePath("Label")
 one_shot = true
 
 [node name="CoyoteTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WallTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

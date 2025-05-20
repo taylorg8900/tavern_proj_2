@@ -7,21 +7,29 @@ extends StateManagerCore
 @onready var air_raycast: RayCast2D = $AirRayCast
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_time_timer : Timer = $CoyoteTimer
+@onready var wall_timer : Timer = $WallTimer
 
 @export_range(0, 1, 0.01) var jump_buffer_time : float = .1
 @export_range(0, 1, 0.01) var coyote_time : float = .12
+@export_range(0, 1, 0.01) var wall_timer_time : float = .1
+@export_range(0, 500, .5) var wall_speed_threshold : float = 100
+@export_range(0, 500, .5) var ledge_speed_threshold : float = 300
 
 @export var ground_state : State
 @export var jump_state : State
+@export var side_jump_state : State
+@export var reverse_side_jump_state : State
 @export var fall_state : State
-@export var wall_state : State
+@export var wall_climb_state : State
+@export var wall_slide_state : State
+@export var ledge_state : State
+@export var rope_state : State
 
 var input : Vector2 = Vector2(0.0, 0.0)
 var jump : bool = false
 var crouch : bool = false
 
 var on_ground : bool = false
-var in_air : bool = false
 var near_ledge : bool = false
 var near_wall : bool = false
 var near_rope : bool = false
@@ -50,24 +58,81 @@ func _process(delta : float) -> void:
 	state_machine.state.DoBranch(delta)
 
 func SelectState() -> void:
-	if on_ground:
-		if CheckJumpBuffer():
-			state_machine.Set(jump_state)
-		else:
-			state_machine.Set(ground_state)
-	if Input.is_action_just_pressed('jump'):
-		if (state_machine.state == ground_state) or (CheckCoyoteTime()):
-			state_machine.Set(jump_state)
-	if near_wall:
-		state_machine.Set(wall_state)
-	if in_air:
-		if state_machine.state == ground_state:
-			ResetCoyoteTimer(coyote_time)
-			coyote_time_timer.start()
-			state_machine.Set(fall_state)
-		if (state_machine.state == jump_state) and (body.velocity.y > 0):
-			state_machine.Set(fall_state)
+	var state = state_machine.state
 	
+	if state == ground_state:
+		if jump or CheckJumpBuffer():
+			state_machine.Set(jump_state)
+		if !on_ground:
+			state_machine.Set(fall_state)
+		if near_wall:
+			if input.x == GetDirectionFacing():
+				wall_timer.start()
+				if CheckWallTimer():
+					state_machine.Set(wall_climb_state)
+			else:
+				ResetWallTimer()
+		if near_rope:
+			if input.y > 0:
+				state_machine.Set(rope_state)
+	elif (state == jump_state) or (state == side_jump_state) or (state == reverse_side_jump_state):
+		if on_ground:
+			state_machine.Set(ground_state)
+		if body.velocity.y > 0:
+			state_machine.Set(fall_state)
+		if near_wall:
+			state_machine.Set(wall_climb_state)
+		if near_rope:
+			if input.y != 0:
+				state_machine.Set(rope_state)
+	elif state == fall_state:
+		if on_ground:
+			state_machine.Set(ground_state)
+		if CheckCoyoteTime():
+			state_machine.Set(jump_state)
+		if near_ledge:
+			if body.velocity.y < ledge_speed_threshold:
+				if state.parent_state != ledge_state:
+					state_machine.Set(ledge_state)
+		if near_wall: 
+			if body.velocity.y < wall_speed_threshold:
+				if state.parent_state != wall_climb_state:
+					state_machine.Set(wall_climb_state)
+			else:
+				if input.x != 0:
+					state_machine.Set(wall_slide_state)
+	elif state == wall_climb_state:
+		if on_ground:
+			if input.y < 0:
+				state_machine.Set(ground_state)
+		if !near_wall or crouch:
+			state_machine.Set(fall_state)
+		if jump or CheckJumpBuffer():
+			state_machine.Set(reverse_side_jump_state)
+		if near_ledge and input.y > 0:
+			state_machine.Set(ledge_state)
+	elif state == wall_slide_state:
+		if on_ground:
+			state_machine.Set(ground_state)
+		if !near_wall:
+			state_machine.Set(fall_state)
+		if body.velocity.y < 0:
+			state_machine.Set(wall_climb_state)
+	elif state == ledge_state:
+		if jump or CheckJumpBuffer():
+			state_machine.Set(jump_state)
+		if crouch:
+			state_machine.Set(fall_state)
+		if input.y < 0:
+			state_machine.Set(wall_climb_state)
+	elif state == rope_state:
+		if on_ground and input.y < 0:
+			state_machine.Set(ground_state)
+		if jump or CheckJumpBuffer():
+			state_machine.Set(side_jump_state)
+		if crouch:
+			state_machine.Set(fall_state)
+		
 
 func CheckInput() -> void:
 	input = Vector2(
@@ -80,9 +145,6 @@ func CheckInput() -> void:
 func CheckGround() -> void:
 	on_ground = body.is_on_floor()
 
-func CheckAir() -> void:
-	in_air = !body.is_on_floor()
-
 func CheckLedge() -> void:
 	near_ledge = !top_raycast.is_colliding() && wall_raycast.is_colliding()
 
@@ -94,7 +156,6 @@ func CheckRope() -> void:
 
 func CheckBools() -> void:
 	CheckGround()
-	CheckAir()
 	CheckLedge()
 	CheckWall()
 	CheckRope()
@@ -134,11 +195,18 @@ func ResetJumpBuffer(time : float = jump_buffer_time) -> void:
 		jump_buffer_timer.stop()
 		jump_buffer_timer.set_wait_time(time)
 
+func ResetWallTimer(time : float = wall_timer_time) -> void:
+	wall_timer.stop()
+	wall_timer.set_wait_time(time)
+
 func CheckCoyoteTime() -> bool:
 	return coyote_time_timer.time_left > 0
 
 func CheckJumpBuffer() -> bool:
 	return jump_buffer_timer.time_left > 0
+
+func CheckWallTimer() -> bool:
+	return wall_timer.time_left > 0
 
 func EnterRope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
 	if node_entered is Player:
