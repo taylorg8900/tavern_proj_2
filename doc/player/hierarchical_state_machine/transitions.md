@@ -63,3 +63,85 @@ How should I handle that situation?
 	- I don't want to immediately re enter the ledge hang on the next physics process
 2. We enter a jump state
 3. We only reenter a ledge hang from the jump state if it's parent is not a ledge hang
+
+I almost feel like I need to step back and analyze exactly what structure I actually need for all of this. 
+Because I am trying to get it to fit in with how AdamCYounis had it in his video, but I feel like that structure is really suited for just AI.
+I will list out all possible state transitions and see if I notice some kind of pattern - I might need a different structure for this.
+
+All current bools
+- on ground
+- in air
+- near wall
+- near ledge
+- near rope
+
+All current states
+- Idle
+- Move
+- Jump
+- Side jump
+- Reverse side jump
+- Fall
+- Wall climb
+- Wall slide
+- Ledge 
+- Rope
+
+Transitions into states (will not include requirements inside of how we got into the state, since it is implied)
+- Idle
+	- Requirements for transitioning into this state
+		- We are on ground
+		- No velocity
+	- Move (we stop moving by applying deceleration)
+	- Jump
+	- Side jump
+	- Reverse side jump
+	- Fall
+	- Wall climb (state before wall climb was not idle)
+	- Rope (state before rope was not idle)
+- Move
+	- Requirements for transitioning into this state
+		- We are on ground
+		- We have x input
+	- Idle
+	- Jump
+	- Side jump
+	- Fall
+	- Wall climb
+	- Rope
+- Jump
+	- Requirements for transitioning into this state
+		- We press jump
+	- Idle (jump buffer is active)
+	- Move (jump buffer is active)
+	- Fall (coyote time is active)
+	- Ledge (jump buffer is active)
+- Side jump
+	- Requirements for transitioning into this state
+		- We press jump
+	- Rope (jump buffer is active)
+- Reverse side jump
+	- Requirements for transitioning into this state
+		- We press jump
+	- Wall climb (jump buffer is active)
+- Fall
+	 - Requirements for transitioning into this state
+		- We are in air / not on ground
+	- Idle
+	- Move
+	- Jump (y velocity is positive)
+	- Side jump (y velocity is positive)
+	- Reverse side jump (y velocity is positive)
+	- Wall climb (we press 'crouch')
+	- Ledge (we press 'crouch')
+	- Rope (we press 'crouch')
+- Wall climb
+	- Requirements for transitioning into this state
+		- We are near a wall
+	- Move (we move into the wall long enough)
+	- Jump
+	- Side jump
+	- Reverse side jump
+	- Fall (we are below a certain positive y velocity)
+	- Wall slide (y velocity = 0)
+	
