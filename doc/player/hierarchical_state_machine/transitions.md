@@ -98,6 +98,7 @@ Transitions into states (will not include requirements inside of individual tran
 	- Reverse side jump
 	- Fall
 	- Wall climb (state before wall climb was not idle)
+	- Wall slide
 	- Rope (state before rope was not idle)
 - Move
 	- Requirements for transitioning into this state
@@ -109,6 +110,7 @@ Transitions into states (will not include requirements inside of individual tran
 	- Reverse side jump
 	- Fall
 	- Wall climb
+	- Wall slide
 	- Rope
 - Jump
 	- Requirements for transitioning into this state
@@ -197,3 +199,20 @@ Where could this go wrong?
 
 We can only have one leaf node active at a time
 We must always have one leaf node active 
+
+Coming back to this the next day, and I've been thinking about how this is all structured. My idea is this:
+- Above each 'leaf' on the branch, is at least one 'Manager' that knows about all possible state transitions and what is allowed / not allowed. This is where if/elif statements are placed.
+- Each 'leaf' only handles things like physics, and has no concept of switching into other states, that is all handled by the Manager above it.
+
+Also, I think that right now if I structure it like that it really isn't capable of having sub Managers below the PlayerStateManager outside of the following:
+- Ground (idle, move)
+ - I still think I can have the transitions from Ground to either Jump or Wall climb because we can have the check for those separate
+
+I can't have these groupings for at least the following reasons:
+- Jump (jump, side jump, reverse side jump)
+	- These will have to refer to where they came from to determine which one to enter (ground -> jump, wall climb -> reverse side jump, rope -> side jump)
+	- Having these references under a separate Manager than the PlayerStateManager defeats the point and makes things harder to follow, nesting where it is not needed
+	- I don't think that Managers need to know about whatever states even exist above them on the hierarchy in the first place, it feels weird
+- Wall (wall states + ledge)
+	- Certain transitions like (wall climb --('crouch')-> fall) should only apply to wall climb or ledge, and not other wall states such as wall sliding or the future overhang thing
+	- Since checking which states can transition into fall should be handled on the same level of the tree, they must all exist on the top level as well
