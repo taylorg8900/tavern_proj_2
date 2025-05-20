@@ -87,7 +87,7 @@ All current states
 - Ledge 
 - Rope
 
-Transitions into states (will not include requirements inside of how we got into the state, since it is implied)
+Transitions into states (will not include requirements inside of individual transitions, since it is implied)
 - Idle
 	- Requirements for transitioning into this state
 		- We are on ground
@@ -106,6 +106,7 @@ Transitions into states (will not include requirements inside of how we got into
 	- Idle
 	- Jump
 	- Side jump
+	- Reverse side jump
 	- Fall
 	- Wall climb
 	- Rope
@@ -126,7 +127,7 @@ Transitions into states (will not include requirements inside of how we got into
 	- Wall climb (jump buffer is active)
 - Fall
 	 - Requirements for transitioning into this state
-		- We are in air / not on ground
+		- We are in air
 	- Idle
 	- Move
 	- Jump (y velocity is positive)
@@ -144,4 +145,55 @@ Transitions into states (will not include requirements inside of how we got into
 	- Reverse side jump
 	- Fall (we are below a certain positive y velocity)
 	- Wall slide (y velocity = 0)
-	
+	- Ledge (y input is negative)
+- Wall slide
+	- Requirements for transitioning into this state
+		- We are near a wall
+		- X input is towards the wall
+		- Y velocity is above a certain amount
+	- Fall
+- Ledge
+	- Requirements for transitions into this state
+		- We are near a ledge
+	- Jump (state before jumping is not ledge)
+	- Side jump
+	- Reverse side jump
+	- Fall (we are below a certain positive y velocity, state before falling is not ledge)
+	- Wall climb (y input is positive)
+- Rope
+	- Requirements for transitioning into this state
+		- We are near a rope
+		- we have y input
+	- Idle
+	- Move
+	- Jump
+	- Side jump
+	- Reverse side jump
+	- Fall
+
+What I am noticing is that I need some way of determining from within managers that if we didn't switch into any of their substates, we can fall back to the first part of the branch where we are able to switch into a state.
+
+For example, look at this:
+1. We are in a fall state, next to a wall, with a very high velocity, and no x input
+2. We 'enter' the 'Wall' state manager from our PlayerStateManager, which is reponsible for various wall substates (such as wall climb, wall slide) because our bool `near_wall` was true
+3. We go through some function to select a substate within 'Wall', but it does not return us anything because we did not meet any conditions :(
+4. We did not get a new state from the 'Wall' state manager
+5. Since the furthest we could go on the branch was 'Fall', we execute the physics instructions it has within on our PlayerStateManager
+	- In this case, our 'branch' stops inside the PlayerStateManager and is only one layer deep
+
+What kind of a function do we need that can do the following?
+- go look inside of a manager (if the condition for looking inside passes), and see if it returns us a state
+- enter the returned state if it is not null and if it is different than what we already have
+
+Where could this go wrong?
+- What if we have multiple bools which are true, and we have conflicts for determining which state we should enter into?
+	- in air
+	- near wall
+	- `wall climb -> in air -> crouch pressed -> fall`
+	- `fall -> near wall -> moving too slowing -> wall climb`
+	- We could just make sure the new state can't be the previous state?
+		- This would mess up the `ledge --(y input negative)-> wall climb --(y input positive)-> ledge` allowed transition 
+	- Other games solve this by offsetting the player when this specific transition happens, so they don't immediately transition back
+
+We can only have one leaf node active at a time
+We must always have one leaf node active 
