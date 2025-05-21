@@ -263,3 +263,11 @@ Transitions out of states
 So this is way easier to follow and read. There definitely has to be a way I can define this and follow it's structure when we try and select a new state.
 - I am going to just try and have a if / elif chain thing going on, probably good enough. I don't think I need to separate out individual sections, that might just make it more complicated
 	- Like if I had some other script somewhere to keep track of each transition from each state, why would I not just include that in one spot with all the others? idk
+
+After getting that working, I need to reimplement coyote time and jump buffering. This should all be handled in the PlayerManager, not inside the individual states.
+- Reset coyote time when:
+	- we go from ground to fall
+- Reset jump buffer time when:
+	- we are in the air
+		- jumps, fall
+	- not when it is already active from a previous state (such as going from jumping to falling, we shouldn't reset it if the player already hit jump while in the jump state)

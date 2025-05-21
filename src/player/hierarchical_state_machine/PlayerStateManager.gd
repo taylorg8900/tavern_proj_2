@@ -119,9 +119,7 @@ func SelectState(delta : float) -> void:
 		if jump:
 			state_machine.Set(wall_jump)
 		if near_ledge:
-			# transition if y input is positive
-			# transition if x input, and we have no y input
-			# otherwise don't
+			# Avoids circular transitions if the player is holding both 'down' and 'side' simultaneously
 			if (input.y > 0) or (input.x != 0 and input.y == 0):
 				state_machine.Set(ledge_state)
 	

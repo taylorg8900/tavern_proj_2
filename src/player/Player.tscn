@@ -209,6 +209,7 @@ seconds_to_reach_zero_speed = 0.5
 
 [node name="Wall climb" type="Node" parent="States"]
 script = ExtResource("12_508hw")
+climb_down_speed = 35.0
 label_name = "wall climb"
 
 [node name="Wall slide" type="Node" parent="States"]
