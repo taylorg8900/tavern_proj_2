@@ -273,3 +273,15 @@ After getting that working, I need to reimplement coyote time and jump buffering
 	- not when it is already active from a previous state (such as going from jumping to falling, we shouldn't reset it if the player already hit jump while in the jump state)
 
 Wow, everything is working again! And it feels better and is way easier to read and change things if I need to. This is great.
+
+# Adding new states
+
+Here are some of the features that I wanted to include back before I got working on this version of the state machine a few days ago:
+- Corner correction (when you jump into a ceiling and there is an open space that you get moved to automatically)
+- Ledge magnetism (when you jump onto a ledge but miss just barely, teleport over a little bit)
+- Make walking down slopes not bouncy
+- Transitions
+	- (wall slide -> wall overhang hang) instead of (wall slide -> fall) if our velocity is under a certain threshold
+	- (wall climb -> wall hang) if we climb down to an overhang
+	- Transition (ground -> ledge climb down)
+		- Maybe if we are holding 'down' and press 'jump' 
