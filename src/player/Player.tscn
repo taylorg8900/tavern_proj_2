@@ -95,7 +95,7 @@ height = 14.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
-coyote_time = 0.32
+coyote_time = 0.2
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Jump")
 side_jump_state = NodePath("States/Side jump")
@@ -191,6 +191,7 @@ label_name = "move"
 script = ExtResource("8_ut8ag")
 peak_time_to_ground = 0.25
 label_name = "jump"
+seconds_to_reach_zero_speed = 0.4
 
 [node name="Side jump" type="Node" parent="States"]
 script = ExtResource("8_bs0mh")
@@ -208,7 +209,6 @@ seconds_to_reach_zero_speed = 0.5
 
 [node name="Wall climb" type="Node" parent="States"]
 script = ExtResource("12_508hw")
-climb_speed = 30.0
 label_name = "wall climb"
 
 [node name="Wall slide" type="Node" parent="States"]

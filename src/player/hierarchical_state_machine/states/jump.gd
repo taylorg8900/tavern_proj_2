@@ -12,7 +12,6 @@ var switch_to_fast_gravity : bool = false
 
 func Enter() -> void:
 	switch_to_fast_gravity = false
-	core.ResetJumpBuffer()
 	core.body.velocity.y = jump_velocity
 	super()
 
@@ -24,8 +23,7 @@ func Do(delta : float) -> void:
 		switch_to_fast_gravity = true
 	if core.input.x != 0:
 		core.FlipDirectionFacing(core.input.x < 0)
-	#if Input.is_action_just_pressed('jump'):
-		#core.jump_buffer_timer.start()
+
 
 func DoPhysics(delta : float) -> void:
 	core.body.velocity.x = core.UpdateXVelocity(core.body.velocity.x, max_speed, core.input.x, acceleration, deceleration, delta)

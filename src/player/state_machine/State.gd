@@ -4,7 +4,7 @@ extends Node
 @export var animation_name : String
 @export var label_name : String
 
-@export_range(0, 200, .5) var max_speed : int = 100
+@export_range(0, 200, .5) var max_speed : int = 95
 @export_range(0, 1, 0.01) var seconds_to_reach_max_speed: float = .1
 @export_range(0, 1, 0.01) var seconds_to_reach_zero_speed: float = .1
 

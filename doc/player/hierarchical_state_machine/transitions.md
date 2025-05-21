@@ -262,3 +262,4 @@ Transitions out of states
 
 So this is way easier to follow and read. There definitely has to be a way I can define this and follow it's structure when we try and select a new state.
 - I am going to just try and have a if / elif chain thing going on, probably good enough. I don't think I need to separate out individual sections, that might just make it more complicated
+	- Like if I had some other script somewhere to keep track of each transition from each state, why would I not just include that in one spot with all the others? idk

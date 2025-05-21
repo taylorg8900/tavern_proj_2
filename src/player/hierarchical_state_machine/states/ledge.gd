@@ -11,6 +11,5 @@ func Exit() -> void:
 func Do(delta : float) -> void:
 	pass
 
-
 func DoPhysics(delta : float) -> void:
 	pass
