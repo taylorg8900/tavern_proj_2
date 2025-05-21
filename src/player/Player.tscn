@@ -95,6 +95,7 @@ height = 14.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
+jump_buffer_time = 0.4
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Jump")
 side_jump_state = NodePath("States/Side jump")

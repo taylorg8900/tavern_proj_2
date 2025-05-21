@@ -66,7 +66,7 @@ func SelectState(delta : float) -> void:
 	var state = state_machine.state
 	
 	if state == ground_state:
-		if jump:
+		if jump or CheckJumpBuffer():
 			state_machine.Set(jump_state)
 		if !on_ground:
 			coyote_time_timer.start(coyote_time)
@@ -86,6 +86,9 @@ func SelectState(delta : float) -> void:
 			ResetWallTimer()
 	
 	elif (state == jump_state) or (state == side_jump_state) or (state == wall_jump):
+		ResetJumpBuffer()
+		if jump:
+			jump_buffer_timer.start()
 		if on_ground:
 			state_machine.Set(ground_state)
 		if body.velocity.y > 0:
@@ -97,6 +100,9 @@ func SelectState(delta : float) -> void:
 				state_machine.Set(rope_state)
 	
 	elif state == fall_state:
+		ResetJumpBuffer()
+		if jump:
+			jump_buffer_timer.start()
 		if on_ground:
 			state_machine.Set(ground_state)
 		if near_wall: 
@@ -119,7 +125,7 @@ func SelectState(delta : float) -> void:
 				state_machine.Set(ground_state)
 		if !near_wall or crouch:
 			state_machine.Set(fall_state)
-		if jump:
+		if jump or CheckJumpBuffer():
 			state_machine.Set(wall_jump)
 		if near_ledge:
 			# Avoids circular transitions if the player is holding both 'down' and 'side' simultaneously
@@ -135,7 +141,7 @@ func SelectState(delta : float) -> void:
 			state_machine.Set(wall_climb_state)
 	
 	elif state == ledge_state:
-		if jump:
+		if jump or CheckJumpBuffer():
 			state_machine.Set(jump_state)
 		if crouch:
 			state_machine.Set(fall_state)
@@ -145,7 +151,7 @@ func SelectState(delta : float) -> void:
 	elif state == rope_state:
 		if on_ground and input.y < 0:
 			state_machine.Set(ground_state)
-		if jump:
+		if jump or CheckJumpBuffer():
 			state_machine.Set(side_jump_state)
 		if crouch:
 			state_machine.Set(fall_state)
@@ -208,9 +214,9 @@ func ResetCoyoteTimer(time : float = coyote_time) -> void:
 	coyote_time_timer.set_wait_time(time)
 
 func ResetJumpBuffer(time : float = jump_buffer_time) -> void:
-	#if jump_buffer_timer.is_stopped():
-	jump_buffer_timer.stop()
-	jump_buffer_timer.set_wait_time(time)
+	# Restart the jump buffer, if it is not already active
+	if jump_buffer_timer.is_stopped():
+		jump_buffer_timer.set_wait_time(time)
 
 func ResetWallTimer(time : float = wall_timer_time) -> void:
 	wall_timer = wall_timer_time
