@@ -51,17 +51,20 @@ func _physics_process(delta: float) -> void:
 	SelectState()
 	state_machine.state.DoPhysicsBranch(delta)
 	body.move_and_slide()
-	print(state_machine.state.label_name)
+	if Input.is_action_just_pressed('jump'):
+		jump_buffer_timer.start()
 
 func _process(delta : float) -> void:
 	CheckInput()
 	state_machine.state.DoBranch(delta)
+	print(jump_buffer_timer.time_left)
+	#print(state_machine.state.label_name)
 
 func SelectState() -> void:
 	var state = state_machine.state
 	
 	if state == ground_state:
-		if jump or CheckJumpBuffer():
+		if Input.is_action_just_pressed('jump') or CheckJumpBuffer():
 			state_machine.Set(jump_state)
 		if !on_ground:
 			state_machine.Set(fall_state)
@@ -96,7 +99,7 @@ func SelectState() -> void:
 					state_machine.Set(ledge_state)
 		if near_wall: 
 			if body.velocity.y < wall_speed_threshold:
-				if state.parent_state != wall_climb_state:
+				if (state.parent_state != wall_climb_state) and (state.parent_state != ledge_state):
 					state_machine.Set(wall_climb_state)
 			else:
 				if input.x != 0:
@@ -109,14 +112,14 @@ func SelectState() -> void:
 			state_machine.Set(fall_state)
 		if jump or CheckJumpBuffer():
 			state_machine.Set(reverse_side_jump_state)
-		if near_ledge and input.y > 0:
+		if near_ledge and (input.y > 0 or input.x != 0):
 			state_machine.Set(ledge_state)
 	elif state == wall_slide_state:
 		if on_ground:
 			state_machine.Set(ground_state)
 		if !near_wall:
 			state_machine.Set(fall_state)
-		if body.velocity.y < 0:
+		if body.velocity.y == 0:
 			state_machine.Set(wall_climb_state)
 	elif state == ledge_state:
 		if jump or CheckJumpBuffer():
@@ -191,9 +194,9 @@ func ResetCoyoteTimer(time : float = coyote_time) -> void:
 	coyote_time_timer.set_wait_time(time)
 
 func ResetJumpBuffer(time : float = jump_buffer_time) -> void:
-	if jump_buffer_timer.is_stopped():
-		jump_buffer_timer.stop()
-		jump_buffer_timer.set_wait_time(time)
+	#if jump_buffer_timer.is_stopped():
+	jump_buffer_timer.stop()
+	jump_buffer_timer.set_wait_time(time)
 
 func ResetWallTimer(time : float = wall_timer_time) -> void:
 	wall_timer.stop()

@@ -1,6 +1,5 @@
 extends State
 
-
 func Enter() -> void:
 	super()
 	core.SnapToLedge()
