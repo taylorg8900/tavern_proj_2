@@ -11,7 +11,8 @@ func Exit() -> void:
 	pass
 
 func Do(delta : float) -> void:
-	pass
+	if core.input.x != 0:
+		core.FlipDirectionFacing(core.input.x < 0)
 
 func DoPhysics(delta : float) -> void:
 	if core.input.y > 0:

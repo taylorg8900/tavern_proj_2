@@ -1,4 +1,7 @@
+#extends CharacterBody2D
 extends StateManagerCore
+
+class_name PlayerStateManager
 
 @onready var hand_position: Marker2D = $HandPosition
 @onready var top_raycast: RayCast2D = $TopRayCast
@@ -60,7 +63,8 @@ func _process(delta : float) -> void:
 	
 	state_machine.state.DoBranch(delta)
 	#print(jump_buffer_timer.time_left)
-	print(state_machine.state.label_name)
+	#print(state_machine.state.label_name)
+	#print(near_rope)
 
 func SelectState(delta : float) -> void:
 	var state = state_machine.state
@@ -118,6 +122,9 @@ func SelectState(delta : float) -> void:
 					state_machine.Set(ledge_state)
 		if jump and coyote_time_timer.time_left > 0:
 			state_machine.Set(jump_state)
+		if near_rope:
+			if input.y != 0:
+				state_machine.Set(rope_state)
 	
 	elif state == wall_climb_state:
 		if on_ground:
@@ -154,6 +161,8 @@ func SelectState(delta : float) -> void:
 		if jump or CheckJumpBuffer():
 			state_machine.Set(side_jump_state)
 		if crouch:
+			state_machine.Set(fall_state)
+		if !near_rope:
 			state_machine.Set(fall_state)
 		
 
@@ -230,14 +239,14 @@ func CheckJumpBuffer() -> bool:
 #func CheckWallTimer() -> bool:
 	#return wall_timer.time_left > 0
 
-func EnterRope(node_entered: Node2D, rope: Node2D, x_pos: int) -> void:
-	if node_entered is Player:
+func EnterRope(node_entered: Node, rope: Node2D, x_pos: int) -> void:
+	if node_entered is PlayerStateManager:
 		near_rope = true
 		ropes.append(rope.get_instance_id())
 		rope_pos = x_pos
 
-func ExitRope(node_entered: Node2D, rope: Node2D) -> void:
-	if node_entered is Player:
+func ExitRope(node_entered: Node, rope: Node2D) -> void:
+	if node_entered is PlayerStateManager:
 		ropes.erase(rope.get_instance_id())
 
 func UpdateXVelocity(current_vel : float, max_speed : int, direction : int, acceleration : float, deceleration : float, delta : float):
