@@ -69,6 +69,7 @@ func SelectState(delta : float) -> void:
 		if jump:
 			state_machine.Set(jump_state)
 		if !on_ground:
+			coyote_time_timer.start(coyote_time)
 			state_machine.Set(fall_state)
 		if near_rope:
 			if input.y > 0:
@@ -109,6 +110,8 @@ func SelectState(delta : float) -> void:
 			if body.velocity.y < ledge_speed_threshold:
 				if state.parent_state != ledge_state:
 					state_machine.Set(ledge_state)
+		if jump and coyote_time_timer.time_left > 0:
+			state_machine.Set(jump_state)
 	
 	elif state == wall_climb_state:
 		if on_ground:
