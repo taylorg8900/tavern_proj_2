@@ -670,3 +670,20 @@ PlayerManager
 	- Move (if we have input)
 - Jump (if we pressed jump and our current state is Ground)
 - Fall (if we are in the air and our y velocity is positive)
+
+# Upgraded to a hierarchical State Machine
+
+I have been working on moving from this starting state machine to a more organized one that is hierarchical in nature. Here are all of the benefits that I am noticing after getting it to a point where the functionality is the same as this one, but a little more tuned and cleaned up.
+- States are decoupled from the state machine
+	- They can now be reused in different areas if I need them to be
+- We have an actual manager now
+	- We have a PlayerStateManager that will select new states based on conditions, which was previously delegated to each and every single state independently of each other
+- States don't need to know about other states, or systems they interact with
+	- This is the biggest benefit so far : if I create a new state or have some system like the coyote time or jump buffer, states don't need to directly interact with any of them anymore.
+	- This makes implementing things SO MUCH EASIER. I took all of the logic for coyote time and jump buffering and put it in the PlayerStateManager, and no joke it took literally about 2 minutes to get it working whereas with this starter state machine it took analyzing every single state's possible transitions, and that took somewhere between 30 minutes and an hour just to implement a very simple feature.
+- States can be their own managers, if they need to
+	- I can define logic that affects an entire branch at once, if it is suited for that
+	- Currently I have the 'grounded' state (which could be considered a branch really) which is also a Manager, responsible for substates 'move' and 'idle' right now.
+	- This makes any parent managers only directly interact with the state underneath them, and not every possible state that can conceivably exist
+
+I am going to fast forward the master branch to the current hierarchical branch, and any work I continue will be done over there. Later skaters
