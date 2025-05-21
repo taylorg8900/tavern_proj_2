@@ -100,7 +100,7 @@ func SelectState(delta : float) -> void:
 		if near_wall:
 			state_machine.Set(wall_climb_state)
 		if near_rope:
-			if input.y != 0:
+			if input.y != 0 and !Input.is_action_pressed('jump'):
 				state_machine.Set(rope_state)
 	
 	elif state == fall_state:
@@ -158,7 +158,7 @@ func SelectState(delta : float) -> void:
 	elif state == rope_state:
 		if on_ground and input.y < 0:
 			state_machine.Set(ground_state)
-		if jump or CheckJumpBuffer():
+		if jump:
 			state_machine.Set(side_jump_state)
 		if crouch:
 			state_machine.Set(fall_state)
