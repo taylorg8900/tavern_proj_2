@@ -18,7 +18,7 @@ extends StateManagerCore
 @export var ground_state : State
 @export var jump_state : State
 @export var side_jump_state : State
-@export var reverse_side_jump_state : State
+@export var wall_jump : State
 @export var fall_state : State
 @export var wall_climb_state : State
 @export var wall_slide_state : State
@@ -57,8 +57,8 @@ func _physics_process(delta: float) -> void:
 func _process(delta : float) -> void:
 	CheckInput()
 	state_machine.state.DoBranch(delta)
-	print(jump_buffer_timer.time_left)
-	#print(state_machine.state.label_name)
+	#print(jump_buffer_timer.time_left)
+	print(state_machine.state.label_name)
 
 func SelectState() -> void:
 	var state = state_machine.state
@@ -78,7 +78,7 @@ func SelectState() -> void:
 		if near_rope:
 			if input.y > 0:
 				state_machine.Set(rope_state)
-	elif (state == jump_state) or (state == side_jump_state) or (state == reverse_side_jump_state):
+	elif (state == jump_state) or (state == side_jump_state) or (state == wall_jump):
 		if on_ground:
 			state_machine.Set(ground_state)
 		if body.velocity.y > 0:
@@ -93,10 +93,6 @@ func SelectState() -> void:
 			state_machine.Set(ground_state)
 		if CheckCoyoteTime():
 			state_machine.Set(jump_state)
-		if near_ledge:
-			if body.velocity.y < ledge_speed_threshold:
-				if state.parent_state != ledge_state:
-					state_machine.Set(ledge_state)
 		if near_wall: 
 			if body.velocity.y < wall_speed_threshold:
 				if (state.parent_state != wall_climb_state) and (state.parent_state != ledge_state):
@@ -104,6 +100,10 @@ func SelectState() -> void:
 			else:
 				if input.x != 0:
 					state_machine.Set(wall_slide_state)
+		if near_ledge:
+			if body.velocity.y < ledge_speed_threshold:
+				if state.parent_state != ledge_state:
+					state_machine.Set(ledge_state)
 	elif state == wall_climb_state:
 		if on_ground:
 			if input.y < 0:
@@ -111,7 +111,7 @@ func SelectState() -> void:
 		if !near_wall or crouch:
 			state_machine.Set(fall_state)
 		if jump or CheckJumpBuffer():
-			state_machine.Set(reverse_side_jump_state)
+			state_machine.Set(wall_jump)
 		if near_ledge and (input.y > 0 or input.x != 0):
 			state_machine.Set(ledge_state)
 	elif state == wall_slide_state:

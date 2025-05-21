@@ -93,12 +93,13 @@ animations = [{
 radius = 4.0
 height = 14.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "reverse_side_jump_state", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
 script = ExtResource("1_rxpvx")
+coyote_time = 0.32
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Jump")
 side_jump_state = NodePath("States/Side jump")
-reverse_side_jump_state = NodePath("States/Wall jump")
+wall_jump = NodePath("States/Wall jump")
 fall_state = NodePath("States/Fall")
 wall_climb_state = NodePath("States/Wall climb")
 wall_slide_state = NodePath("States/Wall slide")
@@ -147,7 +148,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, -6)
-target_position = Vector2(4.5, 0)
+target_position = Vector2(5, 0)
 
 [node name="WallRayCast" type="RayCast2D" parent="."]
 position = Vector2(0, -2)
