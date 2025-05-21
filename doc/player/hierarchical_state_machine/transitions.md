@@ -271,3 +271,5 @@ After getting that working, I need to reimplement coyote time and jump buffering
 	- we are in the air
 		- jumps, fall
 	- not when it is already active from a previous state (such as going from jumping to falling, we shouldn't reset it if the player already hit jump while in the jump state)
+
+Wow, everything is working again! And it feels better and is way easier to read and change things if I need to. This is great.

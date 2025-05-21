@@ -199,6 +199,7 @@ label_name = "side jump"
 [node name="Wall jump" type="Node" parent="States"]
 script = ExtResource("9_doh5c")
 label_name = "wall jump"
+max_speed = 110
 
 [node name="Fall" type="Node" parent="States"]
 script = ExtResource("9_ogudh")
