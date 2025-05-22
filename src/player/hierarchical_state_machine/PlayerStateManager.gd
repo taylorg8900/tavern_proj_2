@@ -4,7 +4,6 @@ extends StateManagerCore
 class_name PlayerStateManager
 
 @onready var hand_position: Marker2D = $HandPosition
-@onready var ceiling_correction_position : Marker2D = $CeilingCorrectionPosition
 @onready var top_raycast: RayCast2D = $TopRayCast
 @onready var wall_raycast: RayCast2D = $WallRayCast
 @onready var floor_raycast: RayCast2D = $FloorRayCast
@@ -58,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	# Having it in _process will be asking it to switch based on out of date information, which will cause inconsistent and weird transitions
 	SelectState(delta)
 	state_machine.state.DoPhysicsBranch(delta)
-	CornerCorrection(delta, 5)
+	ApplyCornerCorrection()
 	body.move_and_slide()
 
 
@@ -210,11 +209,16 @@ func SnapToLedge() -> void:
 	#the float = raycast global pos - collision global pos
 #add the float to our player position
 
-func GetCeilingCornerOffset(max_distance : int) -> float:
+func GetCeilingCornerCorrectionOffset() -> float:
 	if corner_raycast.is_colliding():
 		var collision_pos = corner_raycast.get_collision_point().x
-		var offset = ceiling_correction_position.global_position.x 
+		return corner_raycast.target_position.x - corner_raycast.global_position.x - collision_pos
+		#return collision_pos - corner_raycast.global_position.x
 	return 0.0
+
+func ApplyCornerCorrection() -> void:
+	if body.velocity.y < 0:
+		body.position.x += GetCeilingCornerCorrectionOffset()
 
 func GetDirectionFacing() -> int:
 	if animation.flip_h:

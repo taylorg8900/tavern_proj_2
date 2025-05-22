@@ -93,6 +93,7 @@ animations = [{
 size = Vector2(8, 14)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
+safe_margin = 0.001
 script = ExtResource("1_rxpvx")
 ground_state = NodePath("States/Ground")
 jump_state = NodePath("States/Jump")
@@ -166,10 +167,6 @@ target_position = Vector2(-8, 0)
 
 [node name="HandPosition" type="Marker2D" parent="."]
 position = Vector2(4, -5)
-gizmo_extents = 1.0
-
-[node name="CeilingCorrectionPosition" type="Marker2D" parent="."]
-position = Vector2(-1, -8)
 gizmo_extents = 1.0
 
 [node name="StateClass" type="Node" parent="."]
