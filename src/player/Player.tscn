@@ -89,8 +89,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_04ty4"]
-size = Vector2(8, 14)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qmvcs"]
+radius = 4.0
+height = 14.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
 safe_margin = 0.001
@@ -125,7 +126,7 @@ speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_04ty4")
+shape = SubResource("CapsuleShape2D_qmvcs")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)

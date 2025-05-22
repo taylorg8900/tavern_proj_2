@@ -212,7 +212,7 @@ func SnapToLedge() -> void:
 func GetCeilingCornerCorrectionOffset() -> float:
 	if corner_raycast.is_colliding():
 		var collision_pos = corner_raycast.get_collision_point().x
-		return corner_raycast.target_position.x - corner_raycast.global_position.x - collision_pos
+		return collision_pos - (corner_raycast.target_position.x + corner_raycast.global_position.x)
 		#return collision_pos - corner_raycast.global_position.x
 	return 0.0
 
