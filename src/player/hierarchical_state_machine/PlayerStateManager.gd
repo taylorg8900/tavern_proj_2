@@ -4,10 +4,12 @@ extends StateManagerCore
 class_name PlayerStateManager
 
 @onready var hand_position: Marker2D = $HandPosition
+@onready var ceiling_correction_position : Marker2D = $CeilingCorrectionPosition
 @onready var top_raycast: RayCast2D = $TopRayCast
 @onready var wall_raycast: RayCast2D = $WallRayCast
 @onready var floor_raycast: RayCast2D = $FloorRayCast
 @onready var air_raycast: RayCast2D = $AirRayCast
+@onready var corner_raycast: RayCast2D = $CornerRayCast
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_time_timer : Timer = $CoyoteTimer
 #@onready var wall_timer : Timer = $WallTimer
@@ -193,13 +195,26 @@ func CheckBools() -> void:
 	CheckWall()
 	CheckRope()
 
-func SnapToLedge() -> void:
-	body.position += GetLedgeOffset()
-
 func GetLedgeOffset() -> Vector2:
 	var intersection = Vector2(wall_raycast.get_collision_point().x, air_raycast.get_collision_point().y)
 	var target_pos = hand_position.global_position
 	return intersection - hand_position.global_position
+
+func SnapToLedge() -> void:
+	body.position += GetLedgeOffset()
+
+#have a raycast 2d shoot backwards from in front of the player with the same width as our hitbox
+#if it is hitting a ceiling, find out where the global collision point was at
+#subtract the collision point from our raycast's global position
+#if the absolute value is less than our defined max, return the float
+	#the float = raycast global pos - collision global pos
+#add the float to our player position
+
+func GetCeilingCornerOffset(max_distance : int) -> float:
+	if corner_raycast.is_colliding():
+		var collision_pos = corner_raycast.get_collision_point().x
+		var offset = ceiling_correction_position.global_position.x 
+	return 0.0
 
 func GetDirectionFacing() -> int:
 	if animation.flip_h:
@@ -255,26 +270,18 @@ func UpdateXVelocity(current_vel : float, max_speed : int, direction : int, acce
 		return move_toward(current_vel, max_speed * direction, acceleration * delta)
 	return move_toward(current_vel, 0, deceleration * delta)
 
+
+
+
+
 func CornerCorrection(delta : float, pixel_amount : int) -> void:
 	 #If we are jumping, and we are going to hit a ceiling on the next frame
 	if body.velocity.y < 0 and body.test_move(body.global_transform, Vector2(0, body.velocity.y * delta)):
 		# Test for a number of pixels left and right 
-		# If we won't hit the ceiling, move the player over so it is a nice experience :)
+		# If we won't hit the ceiling, move the player over
 		for pixel in range(1, pixel_amount + 1):
 			for direction in [-1, 1]:
 				if !body.test_move(body.global_transform.translated(Vector2(pixel * direction, 0)), Vector2(0, body.velocity.y * delta)):
-					body.translate(Vector2(pixel * direction, 0))
-					#body.position.x = round(body.position.x + (pixel * direction))
-					print(body.position.x)
-					
+					body.position.x = (body.position.x + (pixel * direction))
+					#body.position.y -= body.velocity.y * delta
 					return
-
-#func attempt_correction(amount: int):
-	#var delta = get_physics_process_delta_time()
-	#if velocity.y < 0 and test_move(global_transform, Vector2(0, velocity.y*delta)):
-		#for i in range(1, amount*2+1):
-			#for j in [-1.0, 1.0]:
-				#if !test_move(global_transform.translated(Vector2(i*j/2, 0)), Vector2(0, velocity.y*delta)):
-					#translate(Vector2(i*j/2, 0))
-					#if velocity.x * j < 0: velocity.x = 0
-					#return

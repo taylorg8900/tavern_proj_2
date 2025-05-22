@@ -287,8 +287,27 @@ Here are some of the features that I wanted to include back before I got working
 		- Maybe if we are holding 'down' and press 'jump' 
 
 Corner correction
-	- [this video](https://www.youtube.com/watch?v=tW-Nxbxg5qs) has a way of implementing corner correction that I did not consider and seems better than what i had in mind
+- [this video](https://www.youtube.com/watch?v=tW-Nxbxg5qs) has a way of implementing corner correction that I did not consider and seems better than what i had in mind
 	- Here is what it does:
 		1. It will check to see if we will hit a ceiling on the next physics process using delta
 		2. If we do, it will check to the left and right a certain amount of pixels and see if we would still hit the ceiling
 		3. If we don't still hit the ceiling on the left / right, move the player that many pixels over
+- My idea was to use raycasts, which I am going to actually try and implement. There are two reasons for this:
+	1. I can make this work better with raycasts anyways
+	2. The solution above doesn't work properly because test_move detects collisions with an extra margin
+		- If we were in a wall climb, and fell down, and then jumped back up, we *would* have pixel perfect collision. But test_move checks an additional .01 pixels or something so it freaks out 
+		- For the same reason, even if we move the player over and round their x coordinate so it is now pixel perfect and should work, test_move will prevent the player from actually travelling upwards and will lock them in place pretty much
+
+I am going to consider the following
+- Corner correction should only occur in the direction that you are travelling in, but if you are not moving it is fine to check both directions
+	- Having a ceiling to the left while you are moving to the left will snap the player backwards and it is kind of jarring, as an example
+
+pseudocode
+```
+have a raycast 2d shoot backwards from in front of the player with the same width as our hitbox
+if it is hitting a ceiling, find out where the global collision point was at
+subtract the collision point from our raycast's global position
+if the absolute value is less than our defined max, return the float
+	the float = raycast global pos - collision global pos
+add the float to our player position
+```
