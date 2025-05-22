@@ -9,6 +9,7 @@ class_name PlayerStateManager
 @onready var floor_raycast: RayCast2D = $FloorRayCast
 @onready var air_raycast: RayCast2D = $AirRayCast
 @onready var corner_raycast: RayCast2D = $CornerRayCast
+@onready var corner_checker_raycast: RayCast2D = $CornerCheckerRayCast
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_time_timer : Timer = $CoyoteTimer
 #@onready var wall_timer : Timer = $WallTimer
@@ -211,9 +212,10 @@ func SnapToLedge() -> void:
 
 func GetCeilingCornerCorrectionOffset() -> float:
 	if corner_raycast.is_colliding():
-		var collision_pos = corner_raycast.get_collision_point().x
-		return collision_pos - (corner_raycast.target_position.x + corner_raycast.global_position.x)
-		#return collision_pos - corner_raycast.global_position.x
+		if !corner_checker_raycast.is_colliding():
+			var collision_pos = corner_raycast.get_collision_point().x
+			return collision_pos - (corner_raycast.target_position.x + corner_raycast.global_position.x)
+			#return collision_pos - corner_raycast.global_position.x
 	return 0.0
 
 func ApplyCornerCorrection() -> void:
@@ -232,11 +234,17 @@ func FlipDirectionFacing(flip : bool) -> void:
 		wall_raycast.rotation_degrees = 180
 		air_raycast.position.x = -1 * abs(air_raycast.position.x)
 		hand_position.position.x = -1 * abs(hand_position.position.x)
+		corner_raycast.position.x = -1 * abs(corner_raycast.position.x)
+		corner_raycast.rotation_degrees = 180
+		corner_checker_raycast.position.x = -1 * abs(corner_checker_raycast.position.x)
 	else:
 		top_raycast.rotation_degrees = 0
 		wall_raycast.rotation_degrees = 0
 		air_raycast.position.x = abs(air_raycast.position.x)
 		hand_position.position.x = abs(hand_position.position.x)
+		corner_raycast.position.x = abs(corner_raycast.position.x)
+		corner_raycast.rotation_degrees = 0
+		corner_checker_raycast.position.x = abs(corner_checker_raycast.position.x)
 
 func ResetCoyoteTimer(time : float = coyote_time) -> void:
 	coyote_time_timer.stop()

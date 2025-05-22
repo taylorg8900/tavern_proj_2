@@ -166,6 +166,10 @@ target_position = Vector2(0, 16)
 position = Vector2(4, -8)
 target_position = Vector2(-8, 0)
 
+[node name="CornerCheckerRayCast" type="RayCast2D" parent="."]
+position = Vector2(4, -6)
+target_position = Vector2(0, -2)
+
 [node name="HandPosition" type="Marker2D" parent="."]
 position = Vector2(4, -5)
 gizmo_extents = 1.0
