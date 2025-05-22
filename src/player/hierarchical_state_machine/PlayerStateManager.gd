@@ -60,6 +60,7 @@ func _physics_process(delta: float) -> void:
 	state_machine.state.DoPhysicsBranch(delta)
 	ApplyCornerCorrection()
 	body.move_and_slide()
+	print(corner_raycast.target_position)
 
 
 func _process(delta : float) -> void:
@@ -213,9 +214,8 @@ func SnapToLedge() -> void:
 func GetCeilingCornerCorrectionOffset() -> float:
 	if corner_raycast.is_colliding():
 		if !corner_checker_raycast.is_colliding():
-			var collision_pos = corner_raycast.get_collision_point().x
-			return collision_pos - (corner_raycast.target_position.x + corner_raycast.global_position.x)
-			#return collision_pos - corner_raycast.global_position.x
+			var target_pos = corner_raycast.global_position.x + (corner_raycast.target_position.x * GetDirectionFacing())
+			return corner_raycast.get_collision_point().x - target_pos
 	return 0.0
 
 func ApplyCornerCorrection() -> void:
