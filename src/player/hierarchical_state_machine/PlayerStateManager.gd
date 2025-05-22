@@ -9,7 +9,10 @@ class_name PlayerStateManager
 @onready var floor_raycast: RayCast2D = $FloorRayCast
 @onready var air_raycast: RayCast2D = $AirRayCast
 @onready var corner_raycast: RayCast2D = $CornerRayCast
+@onready var corner_raycast_idle : RayCast2D = $IdleCornerRayCast
 @onready var corner_checker_raycast: RayCast2D = $CornerCheckerRayCast
+@onready var corner_checker_raycast_idle : RayCast2D = $IdleCornerCheckerRayCast
+
 @onready var jump_buffer_timer: Timer = $JumpBufferTimer
 @onready var coyote_time_timer : Timer = $CoyoteTimer
 #@onready var wall_timer : Timer = $WallTimer
@@ -212,10 +215,14 @@ func SnapToLedge() -> void:
 #add the float to our player position
 
 func GetCeilingCornerCorrectionOffset() -> float:
+	#if input.x != 0:
 	if corner_raycast.is_colliding():
-		if !corner_checker_raycast.is_colliding():
-			var target_pos = corner_raycast.global_position.x + (corner_raycast.target_position.x * GetDirectionFacing())
-			return corner_raycast.get_collision_point().x - target_pos
+		#if !corner_checker_raycast.is_colliding():
+			# We use GetDirectionFacing because target_position is not global, and I don't have it change it in the FlipDirectionFacing function
+		var target_pos = corner_raycast.global_position.x + (corner_raycast.target_position.x * GetDirectionFacing())
+		return corner_raycast.get_collision_point().x - target_pos
+	else:
+		pass
 	return 0.0
 
 func ApplyCornerCorrection() -> void:

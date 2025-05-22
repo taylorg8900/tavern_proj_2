@@ -147,10 +147,14 @@ horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="TopRayCast" type="RayCast2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0, 1, 0, 1)
 position = Vector2(0, -6)
 target_position = Vector2(5, 0)
 
 [node name="WallRayCast" type="RayCast2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0, 1, 0, 1)
 position = Vector2(0, -2)
 target_position = Vector2(5, 0)
 
@@ -159,6 +163,8 @@ position = Vector2(0, 8)
 target_position = Vector2(0, 4)
 
 [node name="AirRayCast" type="RayCast2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0, 1, 0, 1)
 position = Vector2(5, -13)
 target_position = Vector2(0, 16)
 
@@ -166,8 +172,18 @@ target_position = Vector2(0, 16)
 position = Vector2(4, -8)
 target_position = Vector2(-8, 0)
 
+[node name="IdleCornerRayCast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(-4, -8)
+target_position = Vector2(8, 0)
+
 [node name="CornerCheckerRayCast" type="RayCast2D" parent="."]
 position = Vector2(4, -6)
+target_position = Vector2(0, -2)
+
+[node name="IdleCornerCheckerRayCast" type="RayCast2D" parent="."]
+visible = false
+position = Vector2(-4, -6)
 target_position = Vector2(0, -2)
 
 [node name="HandPosition" type="Marker2D" parent="."]

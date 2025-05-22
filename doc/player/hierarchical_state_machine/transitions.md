@@ -314,3 +314,5 @@ add the float to our player position
 
 An issue that I am facing is that if the object we are detecting a collision on is different than the one the raycast2d is inside, it will still report a collision.
 This means if the player jumps into a ceiling nowhere near a corner, between two blocks, it will still try to apply corner correction. I could probably fix this by adding another raycast2d that checks if the first one is inside of anything.
+
+I have it working for both directions, but I want it to also work in either direction if the player is not moving.
