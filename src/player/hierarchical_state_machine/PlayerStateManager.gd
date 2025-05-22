@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 	# Having it in _process will be asking it to switch based on out of date information, which will cause inconsistent and weird transitions
 	SelectState(delta)
 	state_machine.state.DoPhysicsBranch(delta)
+	CornerCorrection(delta, 5)
 	body.move_and_slide()
 
 
@@ -254,9 +255,26 @@ func UpdateXVelocity(current_vel : float, max_speed : int, direction : int, acce
 		return move_toward(current_vel, max_speed * direction, acceleration * delta)
 	return move_toward(current_vel, 0, deceleration * delta)
 
-#func CornerCorrection(delta : float, pixel_amount : int) -> void:
-	#if body.velocity.y < 0 and body.test_move(body.position, Vector2(0, body.velocity.y * delta)):
-		#for pixel in range(1, pixel_amount * 2):
-			#for direction in [-1.0, 1.0]:
-				#if !test_move(body.position.translated(Vector2(pixel * direction, 0)), Vector2(0, body.velocity.y * delta)):
-					#body.position.translate(Vector2(i * j / 2, 0))
+func CornerCorrection(delta : float, pixel_amount : int) -> void:
+	 #If we are jumping, and we are going to hit a ceiling on the next frame
+	if body.velocity.y < 0 and body.test_move(body.global_transform, Vector2(0, body.velocity.y * delta)):
+		# Test for a number of pixels left and right 
+		# If we won't hit the ceiling, move the player over so it is a nice experience :)
+		for pixel in range(1, pixel_amount + 1):
+			for direction in [-1, 1]:
+				if !body.test_move(body.global_transform.translated(Vector2(pixel * direction, 0)), Vector2(0, body.velocity.y * delta)):
+					body.translate(Vector2(pixel * direction, 0))
+					#body.position.x = round(body.position.x + (pixel * direction))
+					print(body.position.x)
+					
+					return
+
+#func attempt_correction(amount: int):
+	#var delta = get_physics_process_delta_time()
+	#if velocity.y < 0 and test_move(global_transform, Vector2(0, velocity.y*delta)):
+		#for i in range(1, amount*2+1):
+			#for j in [-1.0, 1.0]:
+				#if !test_move(global_transform.translated(Vector2(i*j/2, 0)), Vector2(0, velocity.y*delta)):
+					#translate(Vector2(i*j/2, 0))
+					#if velocity.x * j < 0: velocity.x = 0
+					#return
