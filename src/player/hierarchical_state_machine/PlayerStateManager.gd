@@ -253,3 +253,10 @@ func UpdateXVelocity(current_vel : float, max_speed : int, direction : int, acce
 	if direction != 0:
 		return move_toward(current_vel, max_speed * direction, acceleration * delta)
 	return move_toward(current_vel, 0, deceleration * delta)
+
+#func CornerCorrection(delta : float, pixel_amount : int) -> void:
+	#if body.velocity.y < 0 and body.test_move(body.position, Vector2(0, body.velocity.y * delta)):
+		#for pixel in range(1, pixel_amount * 2):
+			#for direction in [-1.0, 1.0]:
+				#if !test_move(body.position.translated(Vector2(pixel * direction, 0)), Vector2(0, body.velocity.y * delta)):
+					#body.position.translate(Vector2(i * j / 2, 0))

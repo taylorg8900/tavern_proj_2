@@ -274,7 +274,7 @@ After getting that working, I need to reimplement coyote time and jump buffering
 
 Wow, everything is working again! And it feels better and is way easier to read and change things if I need to. This is great.
 
-# Adding new states
+# Adding new states and QOL
 
 Here are some of the features that I wanted to include back before I got working on this version of the state machine a few days ago:
 - Corner correction (when you jump into a ceiling and there is an open space that you get moved to automatically)
@@ -285,3 +285,10 @@ Here are some of the features that I wanted to include back before I got working
 	- (wall climb -> wall hang) if we climb down to an overhang
 	- Transition (ground -> ledge climb down)
 		- Maybe if we are holding 'down' and press 'jump' 
+
+Corner correction
+	- [this video](https://www.youtube.com/watch?v=tW-Nxbxg5qs) has a way of implementing corner correction that I did not consider and seems better than what i had in mind
+	- Here is what it does:
+		1. It will check to see if we will hit a ceiling on the next physics process using delta
+		2. If we do, it will check to the left and right a certain amount of pixels and see if we would still hit the ceiling
+		3. If we don't still hit the ceiling on the left / right, move the player that many pixels over
