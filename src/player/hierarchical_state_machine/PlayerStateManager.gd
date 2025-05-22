@@ -215,13 +215,17 @@ func SnapToLedge() -> void:
 #add the float to our player position
 
 func GetCeilingCornerCorrectionOffset() -> float:
-	#if input.x != 0:
+	
 	if corner_raycast.is_colliding():
-		#if !corner_checker_raycast.is_colliding():
+		if !corner_checker_raycast.is_colliding():
 			# We use GetDirectionFacing because target_position is not global, and I don't have it change it in the FlipDirectionFacing function
-		var target_pos = corner_raycast.global_position.x + (corner_raycast.target_position.x * GetDirectionFacing())
-		return corner_raycast.get_collision_point().x - target_pos
-	else:
+			var target_pos = corner_raycast.global_position.x + (corner_raycast.target_position.x * GetDirectionFacing())
+			return corner_raycast.get_collision_point().x - target_pos
+	elif corner_raycast_idle.is_colliding():
+		if !corner_checker_raycast_idle.is_colliding():
+			if input.x == 0:
+				var target_pos = corner_raycast_idle.global_position.x + (corner_raycast_idle.target_position.x * GetDirectionFacing())
+				return corner_raycast_idle.get_collision_point().x - target_pos
 		pass
 	return 0.0
 
@@ -243,7 +247,11 @@ func FlipDirectionFacing(flip : bool) -> void:
 		hand_position.position.x = -1 * abs(hand_position.position.x)
 		corner_raycast.position.x = -1 * abs(corner_raycast.position.x)
 		corner_raycast.rotation_degrees = 180
+		corner_raycast_idle.position.x = abs(corner_raycast.position.x)
+		corner_raycast_idle.rotation_degrees = 180
 		corner_checker_raycast.position.x = -1 * abs(corner_checker_raycast.position.x)
+		corner_checker_raycast_idle.position.x = abs(corner_checker_raycast.position.x)
+
 	else:
 		top_raycast.rotation_degrees = 0
 		wall_raycast.rotation_degrees = 0
@@ -251,7 +259,13 @@ func FlipDirectionFacing(flip : bool) -> void:
 		hand_position.position.x = abs(hand_position.position.x)
 		corner_raycast.position.x = abs(corner_raycast.position.x)
 		corner_raycast.rotation_degrees = 0
+		corner_raycast_idle.position.x = -1 * abs(corner_raycast_idle.position.x)
+		corner_raycast_idle.rotation_degrees = 0
 		corner_checker_raycast.position.x = abs(corner_checker_raycast.position.x)
+		corner_checker_raycast_idle.position.x = -1 * abs(corner_checker_raycast.position.x)
+
+func FlipRaycastPosition(raycast : RayCast2D) -> void:
+	pass
 
 func ResetCoyoteTimer(time : float = coyote_time) -> void:
 	coyote_time_timer.stop()

@@ -169,21 +169,21 @@ position = Vector2(5, -13)
 target_position = Vector2(0, 16)
 
 [node name="CornerRayCast" type="RayCast2D" parent="."]
-position = Vector2(4, -8)
-target_position = Vector2(-8, 0)
+position = Vector2(3, -8)
+target_position = Vector2(-7, 0)
 
 [node name="IdleCornerRayCast" type="RayCast2D" parent="."]
-visible = false
-position = Vector2(-4, -8)
-target_position = Vector2(8, 0)
+modulate = Color(1, 0, 1, 1)
+self_modulate = Color(1, 0, 1, 1)
+position = Vector2(-3, -8)
+target_position = Vector2(7, 0)
 
 [node name="CornerCheckerRayCast" type="RayCast2D" parent="."]
-position = Vector2(4, -6)
+position = Vector2(3, -6)
 target_position = Vector2(0, -2)
 
 [node name="IdleCornerCheckerRayCast" type="RayCast2D" parent="."]
-visible = false
-position = Vector2(-4, -6)
+position = Vector2(-3, -6)
 target_position = Vector2(0, -2)
 
 [node name="HandPosition" type="Marker2D" parent="."]
@@ -236,6 +236,7 @@ seconds_to_reach_zero_speed = 0.5
 script = ExtResource("12_508hw")
 climb_down_speed = 35.0
 label_name = "wall climb"
+seconds_to_reach_zero_speed = 0.08
 
 [node name="Wall slide" type="Node" parent="States"]
 script = ExtResource("13_yutbf")
