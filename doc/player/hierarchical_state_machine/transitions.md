@@ -316,3 +316,4 @@ An issue that I am facing is that if the object we are detecting a collision on 
 This means if the player jumps into a ceiling nowhere near a corner, between two blocks, it will still try to apply corner correction. I could probably fix this by adding another raycast2d that checks if the first one is inside of anything.
 
 I have it working for both directions, but I want it to also work in either direction if the player is not moving.
+- I have this implemented with just another set of raycasts

@@ -63,7 +63,6 @@ func _physics_process(delta: float) -> void:
 	state_machine.state.DoPhysicsBranch(delta)
 	ApplyCornerCorrection()
 	body.move_and_slide()
-	print(corner_raycast.target_position)
 
 
 func _process(delta : float) -> void:
