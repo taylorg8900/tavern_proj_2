@@ -191,7 +191,7 @@ func CheckWall() -> void:
 
 func CheckRope() -> void:
 	near_rope = !ropes.is_empty()
-
+	
 func CheckBools() -> void:
 	CheckGround()
 	CheckLedge()

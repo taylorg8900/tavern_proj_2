@@ -96,7 +96,6 @@ height = 14.0
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("ground_state", "jump_state", "side_jump_state", "wall_jump", "fall_state", "wall_climb_state", "wall_slide_state", "ledge_state", "rope_state", "body", "animation", "collision_shape", "label")]
 floor_stop_on_slope = false
 floor_constant_speed = true
-floor_max_angle = 0.759218
 floor_snap_length = 2.0
 safe_margin = 0.001
 script = ExtResource("1_rxpvx")
@@ -127,12 +126,14 @@ one_shot = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_54v5a")
-animation = &"ledge"
+animation = &"idle"
 speed_scale = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 1)
 shape = SubResource("CapsuleShape2D_qmvcs")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
