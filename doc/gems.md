@@ -67,3 +67,29 @@ Satisfying
 - Dave the diver
 	- Just like with some of the other games I felt like spamming smaller items and shoving them into my inventory space when I had a ton to spare was satisfying
 	- I still felt like the inventory could sometimes be a little too small though, but maybe that helped make it satisfying to put small things in idk
+
+
+So I feel like there are different types of things that make looting or mining satisfying or fun for me. I am going to try and list them now:
+- Bursts
+	- When there is a huge bulk amount of small but still valuable items and you get them all in a burst
+		- Blowing up a bunch of things at once in BotW, getting starbit cluster in Super Mario Galaxy, running through a big pile of gold nuggets in Noita
+- Feedback
+	- Visuals or audio that is really nice to listen to or look at, adds a little bit of a sparkle to what you are collecting
+		- Minecraft XP orbs and pickup sounds, hitting weakpoint in Rust, sounds that gems make when hitting ground in Dome Keeper
+- Anticipation
+	- When you find something and aren't sure of it's size/worth/value immediately, and you have to explore it a little bit and sometimes it is revealed to be a juicer
+		- Ore veins in minecraft or dome keeper sometimes being way bigger than you expected
+- Juicers
+	- Finding things that are worth more or contain more value than other items usually do
+		- Red items in delta force, a super expensive weapon an enemy was using in Skyrim, a giant shark in Dave the Diver
+		- A really nice rock or metal scrap pile in Fortnite
+		- Griffin statue from REPO, cash register from Lethal Company, etc
+		- 'We're rich!' in Deep Rock Galactic
+- Binge eating
+	- When you come across a really nice group of valuable stuff all in one spot, and you haven't seen anything in a while
+		- When you see like 3+ nitra veins all right next to each other on 'Extract liquid morkite' levels in Deep Rock Galactic
+		- Finding a room with several small items in the same spot in REPO or Lethal Company
+		- when you find more than 3-4 sulfur nodes right next to each other in Rust
+- Vacuuming
+	- When your inventory is pretty much empty and you can dump whatever into it without thinking about it
+		- This applies to a lot of games so I don't think I need to mention all of them 
